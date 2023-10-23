@@ -2,35 +2,28 @@ package agh.ics.oop.model;
 
 public enum MapDirection {
     NORTH,
-    SOUTH,
     EAST,
+    SOUTH,
     WEST;
 
     public String toString(){
         return switch(this){
             case NORTH -> "Północ";
-            case SOUTH -> "Południe";
             case EAST -> "Wschód";
+            case SOUTH -> "Południe";
             case WEST -> "Zachód";
         };
     }
 
     public MapDirection next(){
-        return switch(this) {
-            case NORTH -> EAST;
-            case SOUTH -> WEST;
-            case EAST -> SOUTH;
-            case WEST -> NORTH;
-        };
+        int nxt = (this.ordinal() + 1) % MapDirection.values().length;
+        return MapDirection.values()[nxt];
     }
 
     public MapDirection previous(){
-        return switch(this) {
-            case NORTH -> WEST;
-            case SOUTH -> EAST;
-            case EAST -> NORTH;
-            case WEST -> SOUTH;
-        };
+        int l = MapDirection.values().length;
+        int prev = (this.ordinal() - 1 + l) % l;
+        return MapDirection.values()[prev];
     }
 
     public Vector2d toUnitVector(){
