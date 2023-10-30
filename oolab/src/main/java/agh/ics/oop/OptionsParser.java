@@ -3,12 +3,15 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class OptionsParser {
-    public static MoveDirection[] parse(String[] args) {
-        MoveDirection[] directions = new MoveDirection[args.length];
-        int idx = 0;
+    public static List<MoveDirection> parse(String[] args) {
+        List<MoveDirection> directions = new LinkedList<>(); //wybrałem LinkedList, gdyż dodawanie nowych elementów
+        // jest szybciej w niej realizowane niż w ArrayList, a głównie z dodawania będziemy korzystać
 
         for (String arg: args) {
             MoveDirection direction = switch (arg) {
@@ -19,11 +22,10 @@ public class OptionsParser {
                 default -> null;
             };
             if (direction != null){
-                directions[idx] = direction;
-                idx++;
+                directions.add(direction);
             }
         }
 
-        return Arrays.copyOfRange(directions, 0, idx);
+        return directions;
     }
 }
