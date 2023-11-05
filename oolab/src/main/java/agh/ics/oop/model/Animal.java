@@ -24,7 +24,7 @@ public class Animal {
         return getPosition().equals(position);
     }
 
-    public void move(MoveDirection direction, MoveValidator validator){
+    public void move(MoveDirection direction, MoveValidator<Vector2d> validator){
         Vector2d currPos= getPosition();
         MapDirection currOrient = getOrientation();
 

@@ -13,6 +13,24 @@ public class World {
         Simulation simulation = new Simulation(directions, positions, new RectangularMap(5, 3));
         simulation.run();
 
+        List<String> stringList = List.of("ala", "ma", "kota");
+        List<MapDirection> orientList = List.of(MapDirection.EAST, MapDirection.EAST, MapDirection.EAST);
+        TextMap map = new TextMap();
+        map.place("ala");
+        map.place("ma");
+        map.place("kota");
+        System.out.println(map);
+        map.move("ma", MoveDirection.FORWARD);
+        System.out.println(map);
+        map.move("ma", MoveDirection.FORWARD);
+        System.out.println(map);
+        map.move("kota", MoveDirection.LEFT);
+        System.out.println(map);
+        map.move("kota", MoveDirection.LEFT);
+        System.out.println(map);
+        map.move("kota", MoveDirection.BACKWARD);
+        System.out.println(map);
+
 
         System.out.println("system zakończył działanie");
 
