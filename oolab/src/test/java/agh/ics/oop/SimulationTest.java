@@ -1,13 +1,12 @@
 package agh.ics.oop;
 
 
-import agh.ics.oop.model.MapDirection;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 public class SimulationTest {
 
@@ -27,24 +26,27 @@ public class SimulationTest {
         List<Vector2d> positions2 = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(1, 2));
         List<Vector2d> positions3 = List.of(new Vector2d(2,2), new Vector2d(3,4),
                 new Vector2d(2,0), new Vector2d(4,4), new Vector2d(0, 0));
+        RectangularMap map1 = new RectangularMap(4, 4);
+        RectangularMap map2 = new RectangularMap(5, 3);
+        RectangularMap map3 = new RectangularMap(9, 7);
 
-        Simulation simulation1 = new Simulation(directions1, positions1);
-        Simulation simulation2 = new Simulation(directions2, positions2);
-        Simulation simulation3 = new Simulation(directions3, positions3);
+        Simulation simulation1 = new Simulation(directions1, positions1, map1);
+        Simulation simulation2 = new Simulation(directions2, positions2, map2);
+        Simulation simulation3 = new Simulation(directions3, positions3, map3);
 
         MapDirection expectedOrient1_f = MapDirection.SOUTH;
         MapDirection expectedOrient2_f = MapDirection.NORTH;
 
-        Vector2d expectedPosition1_f = new Vector2d(3, 0);
-        Vector2d expectedPosition2_f = new Vector2d(2, 4);
+        Vector2d expectedPosition1_f = new Vector2d(2, 0);
+        Vector2d expectedPosition2_f = new Vector2d(3, 4);
 
-        MapDirection expectedOrient1_s = MapDirection.WEST;
-        MapDirection expectedOrient2_s = MapDirection.EAST;
-        MapDirection expectedOrient3_s = MapDirection.WEST;
+        MapDirection expectedOrient1_s = MapDirection.EAST;
+//        MapDirection expectedOrient2_s poza mapą
+        MapDirection expectedOrient3_s = MapDirection.SOUTH;
 
-        Vector2d expectedPosition1_s = new Vector2d(0, 2);
-        Vector2d expectedPosition2_s = new Vector2d(4, 4 );
-        Vector2d expectedPosition3_s = new Vector2d(0, 0);
+        Vector2d expectedPosition1_s = new Vector2d(5, 3);
+//        Vector2d expectedPosition2_s = new Vector2d(3,4); poza mapą
+        Vector2d expectedPosition3_s = new Vector2d(2, 0);
 
         MapDirection expectedOrient1_t = MapDirection.NORTH;
         MapDirection expectedOrient2_t = MapDirection.SOUTH;
@@ -52,11 +54,45 @@ public class SimulationTest {
         MapDirection expectedOrient4_t = MapDirection.WEST;
         MapDirection expectedOrient5_t = MapDirection.WEST;
 
-        Vector2d expectedPosition1_t = new Vector2d(2, 3);
+        Vector2d expectedPosition1_t = new Vector2d(2, 5);
         Vector2d expectedPosition2_t = new Vector2d(3, 3);
         Vector2d expectedPosition3_t = new Vector2d(2, 0);
         Vector2d expectedPosition4_t = new Vector2d(2, 4);
         Vector2d expectedPosition5_t = new Vector2d(1, 1);
+
+        String exp_map1 =
+                " y\\x  0 1 2 3 4" + System.lineSeparator() +
+                "  5: -----------" + System.lineSeparator() +
+                "  4: | | | |^| |" + System.lineSeparator() +
+                "  3: | | | | | |" + System.lineSeparator() +
+                "  2: | | | | | |" + System.lineSeparator() +
+                "  1: | | | | | |" + System.lineSeparator() +
+                "  0: | | |v| | |" + System.lineSeparator() +
+                " -1: -----------" + System.lineSeparator();
+
+        String exp_map2 =
+                " y\\x  0 1 2 3 4 5" + System.lineSeparator() +
+                "  4: -------------" + System.lineSeparator() +
+                "  3: | | | | | |>|" + System.lineSeparator() +
+                "  2: | | | | | | |" + System.lineSeparator() +
+                "  1: | | | | | | |" + System.lineSeparator() +
+                "  0: | | |v| | | |" + System.lineSeparator() +
+                " -1: -------------" + System.lineSeparator();
+
+        String exp_map3 =
+                " y\\x  0 1 2 3 4 5 6 7 8 9" + System.lineSeparator() +
+                "  8: ---------------------" + System.lineSeparator() +
+                "  7: | | | | | | | | | | |" + System.lineSeparator() +
+                "  6: | | | | | | | | | | |" + System.lineSeparator() +
+                "  5: | | |^| | | | | | | |" + System.lineSeparator() +
+                "  4: | | |<| | | | | | | |" + System.lineSeparator() +
+                "  3: | | | |v| | | | | | |" + System.lineSeparator() +
+                "  2: | | | | | | | | | | |" + System.lineSeparator() +
+                "  1: | |<| | | | | | | | |" + System.lineSeparator() +
+                "  0: | | |v| | | | | | | |" + System.lineSeparator() +
+                " -1: ---------------------" + System.lineSeparator();
+
+
 
 
         //WHEN
@@ -71,12 +107,25 @@ public class SimulationTest {
         Assertions.assertEquals(expectedPosition1_f, simulation1.getAnimals().get(0).getPosition());
         Assertions.assertEquals(expectedPosition2_f, simulation1.getAnimals().get(1).getPosition());
 
+        for (Map.Entry<Vector2d, Animal> entry: map1.getAnimals().entrySet()){
+            Vector2d key = entry.getKey();
+            Animal value = entry.getValue();
+            Assertions.assertEquals(value.getPosition(), key);
+        }
+
+//
         Assertions.assertEquals(expectedOrient1_s, simulation2.getAnimals().get(0).getOrientation());
-        Assertions.assertEquals(expectedOrient2_s, simulation2.getAnimals().get(1).getOrientation());
-        Assertions.assertEquals(expectedOrient3_s, simulation2.getAnimals().get(2).getOrientation());
+//        Assertions.assertEquals(expectedOrient2_s, simulation2.getAnimals().get(1).getOrientation());
+        Assertions.assertEquals(expectedOrient3_s, simulation2.getAnimals().get(1).getOrientation());
         Assertions.assertEquals(expectedPosition1_s, simulation2.getAnimals().get(0).getPosition());
-        Assertions.assertEquals(expectedPosition2_s, simulation2.getAnimals().get(1).getPosition());
-        Assertions.assertEquals(expectedPosition3_s, simulation2.getAnimals().get(2).getPosition());
+//        Assertions.assertEquals(expectedPosition2_s, simulation2.getAnimals().get(1).getPosition());
+        Assertions.assertEquals(expectedPosition3_s, simulation2.getAnimals().get(1).getPosition());
+
+        for (Map.Entry<Vector2d, Animal> entry: map2.getAnimals().entrySet()){
+            Vector2d key = entry.getKey();
+            Animal value = entry.getValue();
+            Assertions.assertEquals(value.getPosition(), key);
+        }
 
         Assertions.assertEquals(expectedOrient1_t, simulation3.getAnimals().get(0).getOrientation());
         Assertions.assertEquals(expectedOrient2_t, simulation3.getAnimals().get(1).getOrientation());
@@ -88,5 +137,15 @@ public class SimulationTest {
         Assertions.assertEquals(expectedPosition3_t, simulation3.getAnimals().get(2).getPosition());
         Assertions.assertEquals(expectedPosition4_t, simulation3.getAnimals().get(3).getPosition());
         Assertions.assertEquals(expectedPosition5_t, simulation3.getAnimals().get(4).getPosition());
+
+        for (Map.Entry<Vector2d, Animal> entry: map3.getAnimals().entrySet()){
+            Vector2d key = entry.getKey();
+            Animal value = entry.getValue();
+            Assertions.assertEquals(value.getPosition(), key);
+        }
+
+        Assertions.assertEquals(exp_map1, map1.toString());
+        Assertions.assertEquals(exp_map2, map2.toString());
+        Assertions.assertEquals(exp_map3, map3.toString());
     }
 }

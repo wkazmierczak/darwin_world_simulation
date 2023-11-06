@@ -15,28 +15,38 @@ public class Animal {
         this.orientation = MapDirection.NORTH;
     }
 
-    public String to_String(){
-        return getPosition().toString() + ", " + getOrientation().toString();
+    @Override
+    public String toString(){
+        return getOrientation().toString();
     }
 
     public boolean isAt(Vector2d position){
         return getPosition().equals(position);
     }
 
-    public void move(MoveDirection direction){
+    public void move(MoveDirection direction, MoveValidator<Vector2d> validator){
         Vector2d currPos= getPosition();
         MapDirection currOrient = getOrientation();
 
         switch (direction){
             case RIGHT -> this.orientation = currOrient.next();
             case LEFT -> this.orientation = currOrient.previous();
-            case FORWARD -> currPos = currPos.add(currOrient.toUnitVector());
-            case BACKWARD -> currPos = currPos.substract(currOrient.toUnitVector());
+            case FORWARD -> {
+                currPos = currPos.add(currOrient.toUnitVector());
+                if (validator.canMoveTo(currPos)){
+                    this.position = currPos;
+                }
+                ;
+            }
+            case BACKWARD -> {
+                currPos = currPos.substract(currOrient.toUnitVector());
+                if (validator.canMoveTo(currPos)){
+                    this.position = currPos;
+                }
+            }
         };
 
-        if (currPos.precedes(RIGHT_TOP) && currPos.follows(LEFT_BOTTOM)){
-            this.position = currPos;
-        }
+
     }
 
     public MapDirection getOrientation() {

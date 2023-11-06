@@ -1,9 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MapDirection;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
 
 import java.util.List;
 
@@ -11,49 +8,29 @@ public class World {
     public static void main(String[] args){
         System.out.println("system wystartował");
 
-        Animal zwierz = new Animal();
-        System.out.println(zwierz.to_String());
-        zwierz.move(MoveDirection.FORWARD);
-        System.out.println(zwierz.to_String());
-        zwierz.move(MoveDirection.LEFT);
-        System.out.println(zwierz.to_String());
-        zwierz.move(MoveDirection.BACKWARD);
-        System.out.println(zwierz.to_String());
-
-        System.out.println("=======================");
-
         List<MoveDirection> directions = OptionsParser.parse(args);
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        Simulation simulation = new Simulation(directions, positions);
+        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(1, 2));
+        Simulation simulation = new Simulation(directions, positions, new RectangularMap(5, 3));
         simulation.run();
 
-//        MoveDirection[] directions = OptionsParser.parse(args);
-//        run(directions);
-//
-//        System.out.println("=======================");
-//
-//        Vector2d position1 = new Vector2d(1,2);
-//        System.out.println(position1);
-//        Vector2d position2 = new Vector2d(-2,1);
-//        System.out.println(position2);
-//        System.out.println(position1.add(position2));
-//
-//        System.out.println("=======================");
-//
-//        MapDirection direction = MapDirection.NORTH;
-//        System.out.println(direction);
-//        System.out.println(direction.toUnitVector());
-//        for (int i =0; i<4; i++){
-//            direction = direction.previous();
-//            System.out.println(direction);
-//            System.out.println(direction.toUnitVector());
-//        }
-//
-//        for (int i =0; i<4; i++){
-//            direction = direction.next();
-//            System.out.println(direction);
-//            System.out.println(direction.toUnitVector());
-//        }
+        List<String> stringList = List.of("ala", "ma", "kota");
+        List<MapDirection> orientList = List.of(MapDirection.EAST, MapDirection.EAST, MapDirection.EAST);
+        TextMap map = new TextMap();
+        map.place("ala");
+        map.place("ma");
+        map.place("kota");
+        System.out.println(map);
+        map.move("ma", MoveDirection.FORWARD);
+        System.out.println(map);
+        map.move("ma", MoveDirection.FORWARD);
+        System.out.println(map);
+        map.move("kota", MoveDirection.LEFT);
+        System.out.println(map);
+        map.move("kota", MoveDirection.LEFT);
+        System.out.println(map);
+        map.move("kota", MoveDirection.BACKWARD);
+        System.out.println(map);
+
 
         System.out.println("system zakończył działanie");
 

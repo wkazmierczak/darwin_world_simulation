@@ -10,21 +10,22 @@ public class AnimalTest {
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(new Vector2d(3, 4));
         Animal animal3 = new Animal();
+        WorldMap map = new RectangularMap(4, 4);
         MapDirection sol1 = MapDirection.NORTH;
         MapDirection sol2 = MapDirection.SOUTH;
         MapDirection sol3 = MapDirection.WEST;
 
 
 
-        animal1.move(MoveDirection.FORWARD);
-        animal1.move(MoveDirection.BACKWARD);
+        animal1.move(MoveDirection.FORWARD, map);
+        animal1.move(MoveDirection.BACKWARD, map);
 
-        animal2.move(MoveDirection.LEFT);
-        animal2.move(MoveDirection.LEFT);
+        animal2.move(MoveDirection.LEFT, map);
+        animal2.move(MoveDirection.LEFT, map);
 
-        animal3.move(MoveDirection.RIGHT);
-        animal3.move(MoveDirection.RIGHT);
-        animal3.move(MoveDirection.RIGHT);
+        animal3.move(MoveDirection.RIGHT, map);
+        animal3.move(MoveDirection.RIGHT, map);
+        animal3.move(MoveDirection.RIGHT, map);
 
 
 
@@ -42,22 +43,23 @@ public class AnimalTest {
         Vector2d sol1 = new Vector2d(2, 2);
         Vector2d sol2 = new Vector2d(2, 3);
         Vector2d sol3 = new Vector2d(0, 1);
+        WorldMap map = new RectangularMap(4, 4);
 
 
 
-        animal1.move(MoveDirection.FORWARD);
-        animal1.move(MoveDirection.BACKWARD);
+        animal1.move(MoveDirection.FORWARD, map);
+        animal1.move(MoveDirection.BACKWARD, map);
 
-        animal2.move(MoveDirection.LEFT);
-        animal2.move(MoveDirection.FORWARD);
-        animal2.move(MoveDirection.LEFT);
-        animal2.move(MoveDirection.FORWARD);
+        animal2.move(MoveDirection.LEFT, map);
+        animal2.move(MoveDirection.FORWARD, map);
+        animal2.move(MoveDirection.LEFT, map);
+        animal2.move(MoveDirection.FORWARD, map);
 
-        animal3.move(MoveDirection.LEFT);
-        animal3.move(MoveDirection.FORWARD);
-        animal3.move(MoveDirection.FORWARD);
-        animal3.move(MoveDirection.RIGHT);
-        animal3.move(MoveDirection.BACKWARD);
+        animal3.move(MoveDirection.LEFT, map);
+        animal3.move(MoveDirection.FORWARD, map);
+        animal3.move(MoveDirection.FORWARD, map);
+        animal3.move(MoveDirection.RIGHT, map);
+        animal3.move(MoveDirection.BACKWARD, map);
 
 
 
@@ -78,22 +80,25 @@ public class AnimalTest {
         Animal animal2 = new Animal(new Vector2d(3, 4));
         Animal animal3 = new Animal();
         Animal animal4 = new Animal();
+        int height = 4;
+        int width = 4;
+        WorldMap map = new RectangularMap(width, height);
 
 
 
         for (int i = 0; i<10; i++){
-            animal1.move(MoveDirection.FORWARD);
+            animal1.move(MoveDirection.FORWARD, map);
         }
 
-        animal2.move(MoveDirection.LEFT);
+        animal2.move(MoveDirection.LEFT, map);
         for (int i = 0; i<10; i++){
-            animal1.move(MoveDirection.FORWARD);
+            animal2.move(MoveDirection.FORWARD, map);
         }
 
 
-        animal3.move(MoveDirection.RIGHT);
+        animal3.move(MoveDirection.RIGHT, map);
         for (int i = 0; i<4; i++){
-            animal1.move(MoveDirection.FORWARD);
+            animal3.move(MoveDirection.FORWARD, map);
         }
 
 
