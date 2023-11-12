@@ -1,19 +1,16 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.WorldMap;
+import agh.ics.oop.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation {
-    private final WorldMap<Animal, Vector2d> worldMap;
+    private final WorldMap<WorldElement, Vector2d> worldMap;
     private final List<Animal> animals;
     private final List<MoveDirection> moves;
 
-    public Simulation(List<MoveDirection> moves, List<Vector2d> initialPositions, WorldMap<Animal, Vector2d> worldMap){
+    public Simulation(List<MoveDirection> moves, List<Vector2d> initialPositions, WorldMap<WorldElement, Vector2d> worldMap){
         this.animals = new ArrayList<>(); // wybrałem ArrayList, gdyż szybciej jest realizowane odczytywanie elementu
         // na i-tej pozycji(niż w LinkedList), a z animals będziemy często potrzebowali element na i-tym polu
 

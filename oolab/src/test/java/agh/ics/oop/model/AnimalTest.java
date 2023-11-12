@@ -10,7 +10,7 @@ public class AnimalTest {
         Animal animal1 = new Animal();
         Animal animal2 = new Animal(new Vector2d(3, 4));
         Animal animal3 = new Animal();
-        WorldMap map = new RectangularMap(4, 4);
+        WorldMap<WorldElement, Vector2d> map = new RectangularMap(4, 4);
         MapDirection sol1 = MapDirection.NORTH;
         MapDirection sol2 = MapDirection.SOUTH;
         MapDirection sol3 = MapDirection.WEST;
@@ -43,7 +43,7 @@ public class AnimalTest {
         Vector2d sol1 = new Vector2d(2, 2);
         Vector2d sol2 = new Vector2d(2, 3);
         Vector2d sol3 = new Vector2d(0, 1);
-        WorldMap map = new RectangularMap(4, 4);
+        WorldMap<WorldElement, Vector2d> map = new RectangularMap(4, 4);
 
 
 
@@ -82,7 +82,7 @@ public class AnimalTest {
         Animal animal4 = new Animal();
         int height = 4;
         int width = 4;
-        WorldMap map = new RectangularMap(width, height);
+        WorldMap<WorldElement, Vector2d> map = new RectangularMap(width, height);
 
 
 

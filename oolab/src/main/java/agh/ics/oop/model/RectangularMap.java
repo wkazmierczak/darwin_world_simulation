@@ -5,14 +5,15 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RectangularMap implements WorldMap<Animal, Vector2d>{
+public class RectangularMap extends AbstractWorldMap implements WorldMap<WorldElement, Vector2d>{
     private final int width;
     private final int height;
 
     private final Vector2d lowerLeft;
 
     private final Vector2d upperRight;
-    private final Map<Vector2d, Animal> animals = new HashMap<>();
+
+//    private final Map<Vector2d, WorldElement> animals = new HashMap<>();
 
     public RectangularMap(int width, int height){
         this.height = height;
@@ -21,43 +22,11 @@ public class RectangularMap implements WorldMap<Animal, Vector2d>{
         this.upperRight = new Vector2d(width, height);
     }
 
-    @Override
-    public boolean place(Animal animal){
-        Vector2d currPos = animal.getPosition();
-
-        if (canMoveTo(currPos)){
-            animals.put(currPos, animal);
-            return true;
-        }
-        return false;
-
-    }
-
-    @Override
-    public void move(Animal animal, MoveDirection direction) {
-        Vector2d prevPos = animal.getPosition();
-        animal.move(direction, this);
-        Vector2d currPos = animal.getPosition();
-        if (!currPos.equals(prevPos)){
-            animals.put(currPos, animal);
-            animals.remove(prevPos);
-        }
-    }
-
-    @Override
-    public boolean isOccupied(Vector2d position) {
-        return animals.containsKey(position);
-    }
-
-    @Override
-    public Animal objectAt(Vector2d position) {
-        return animals.get(position);
-    }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
         return position.follows(lowerLeft)
-                && position.precedes(upperRight) && !isOccupied(position);
+                && position.precedes(upperRight) && super.canMoveTo(position);
     }
 
     @Override
@@ -74,7 +43,7 @@ public class RectangularMap implements WorldMap<Animal, Vector2d>{
         return width;
     }
 
-    public Map<Vector2d, Animal> getAnimals() {
+    public Map<Vector2d, WorldElement> getAnimals() {
         return animals;
     }
 
