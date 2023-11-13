@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class GrassField extends AbstractWorldMap implements WorldMap<WorldElement, Vector2d>{
+public class GrassField extends AbstractWorldMap{
 
     private final int numOfTufts;
 
