@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class TextMap implements WorldMap<String, Integer> {
@@ -75,6 +76,11 @@ public class TextMap implements WorldMap<String, Integer> {
     @Override
     public String objectAt(Integer position) {
         return stringList.get(position);
+    }
+
+    @Override
+    public Collection<String> getElements() {
+        return stringList;
     }
 
     @Override

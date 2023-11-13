@@ -8,28 +8,33 @@ public class World {
     public static void main(String[] args){
         System.out.println("system wystartował");
 
+//        List<MoveDirection> directions = OptionsParser.parse(args);
+//        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(1, 2));
+//        Simulation simulation = new Simulation(directions, positions, new RectangularMap(5, 3));
+//        simulation.run();
+
         List<MoveDirection> directions = OptionsParser.parse(args);
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(1, 2));
-        Simulation simulation = new Simulation(directions, positions, new RectangularMap(5, 3));
+        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(-1, 2));
+        Simulation simulation = new Simulation(directions, positions, new GrassField(10));
         simulation.run();
 
-        List<String> stringList = List.of("ala", "ma", "kota");
-        List<MapDirection> orientList = List.of(MapDirection.EAST, MapDirection.EAST, MapDirection.EAST);
-        TextMap map = new TextMap();
-        map.place("ala");
-        map.place("ma");
-        map.place("kota");
-        System.out.println(map);
-        map.move("ma", MoveDirection.FORWARD);
-        System.out.println(map);
-        map.move("ma", MoveDirection.FORWARD);
-        System.out.println(map);
-        map.move("kota", MoveDirection.LEFT);
-        System.out.println(map);
-        map.move("kota", MoveDirection.LEFT);
-        System.out.println(map);
-        map.move("kota", MoveDirection.BACKWARD);
-        System.out.println(map);
+//        List<String> stringList = List.of("ala", "ma", "kota");
+//        List<MapDirection> orientList = List.of(MapDirection.EAST, MapDirection.EAST, MapDirection.EAST);
+//        TextMap map = new TextMap();
+//        map.place("ala");
+//        map.place("ma");
+//        map.place("kota");
+//        System.out.println(map);
+//        map.move("ma", MoveDirection.FORWARD);
+//        System.out.println(map);
+//        map.move("ma", MoveDirection.FORWARD);
+//        System.out.println(map);
+//        map.move("kota", MoveDirection.LEFT);
+//        System.out.println(map);
+//        map.move("kota", MoveDirection.LEFT);
+//        System.out.println(map);
+//        map.move("kota", MoveDirection.BACKWARD);
+//        System.out.println(map);
 
 
         System.out.println("system zakończył działanie");

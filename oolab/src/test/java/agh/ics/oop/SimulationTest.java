@@ -30,9 +30,17 @@ public class SimulationTest {
         RectangularMap map2 = new RectangularMap(5, 3);
         RectangularMap map3 = new RectangularMap(9, 7);
 
+        GrassField map4 = new GrassField(5);
+        GrassField map5 = new GrassField(10);
+        GrassField map6 = new GrassField(15);
+
         Simulation simulation1 = new Simulation(directions1, positions1, map1);
         Simulation simulation2 = new Simulation(directions2, positions2, map2);
         Simulation simulation3 = new Simulation(directions3, positions3, map3);
+
+        Simulation sim4 = new Simulation(directions1, positions1, map4);
+        Simulation sim5 = new Simulation(directions1, positions1, map5);
+        Simulation sim6 = new Simulation(directions1, positions1, map6);
 
         MapDirection expectedOrient1_f = MapDirection.SOUTH;
         MapDirection expectedOrient2_f = MapDirection.NORTH;
@@ -100,6 +108,10 @@ public class SimulationTest {
         simulation2.run();
         simulation3.run();
 
+        sim4.run();
+        sim5.run();
+        sim6.run();
+
 
         //THEN
         Assertions.assertEquals(expectedOrient1_f, simulation1.getAnimals().get(0).getOrientation());
@@ -107,9 +119,9 @@ public class SimulationTest {
         Assertions.assertEquals(expectedPosition1_f, simulation1.getAnimals().get(0).getPosition());
         Assertions.assertEquals(expectedPosition2_f, simulation1.getAnimals().get(1).getPosition());
 
-        for (Map.Entry<Vector2d, Animal> entry: map1.getAnimals().entrySet()){
+        for (Map.Entry<Vector2d, WorldElement> entry: map1.getAnimals().entrySet()){
             Vector2d key = entry.getKey();
-            Animal value = entry.getValue();
+            WorldElement value = entry.getValue();
             Assertions.assertEquals(value.getPosition(), key);
         }
 
@@ -121,9 +133,9 @@ public class SimulationTest {
 //        Assertions.assertEquals(expectedPosition2_s, simulation2.getAnimals().get(1).getPosition());
         Assertions.assertEquals(expectedPosition3_s, simulation2.getAnimals().get(1).getPosition());
 
-        for (Map.Entry<Vector2d, Animal> entry: map2.getAnimals().entrySet()){
+        for (Map.Entry<Vector2d, WorldElement> entry: map2.getAnimals().entrySet()){
             Vector2d key = entry.getKey();
-            Animal value = entry.getValue();
+            WorldElement value = entry.getValue();
             Assertions.assertEquals(value.getPosition(), key);
         }
 
@@ -138,14 +150,33 @@ public class SimulationTest {
         Assertions.assertEquals(expectedPosition4_t, simulation3.getAnimals().get(3).getPosition());
         Assertions.assertEquals(expectedPosition5_t, simulation3.getAnimals().get(4).getPosition());
 
-        for (Map.Entry<Vector2d, Animal> entry: map3.getAnimals().entrySet()){
+        for (Map.Entry<Vector2d, WorldElement> entry: map3.getAnimals().entrySet()){
             Vector2d key = entry.getKey();
-            Animal value = entry.getValue();
+            WorldElement value = entry.getValue();
             Assertions.assertEquals(value.getPosition(), key);
         }
 
         Assertions.assertEquals(exp_map1, map1.toString());
         Assertions.assertEquals(exp_map2, map2.toString());
         Assertions.assertEquals(exp_map3, map3.toString());
+
+
+        for (Map.Entry<Vector2d, WorldElement> entry: map4.getAnimals().entrySet()){
+            Vector2d key = entry.getKey();
+            WorldElement value = entry.getValue();
+            Assertions.assertEquals(value.getPosition(), key);
+        }
+
+        for (Map.Entry<Vector2d, WorldElement> entry: map5.getAnimals().entrySet()){
+            Vector2d key = entry.getKey();
+            WorldElement value = entry.getValue();
+            Assertions.assertEquals(value.getPosition(), key);
+        }
+
+        for (Map.Entry<Vector2d, WorldElement> entry: map6.getAnimals().entrySet()){
+            Vector2d key = entry.getKey();
+            WorldElement value = entry.getValue();
+            Assertions.assertEquals(value.getPosition(), key);
+        }
     }
 }
