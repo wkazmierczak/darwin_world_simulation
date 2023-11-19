@@ -16,26 +16,31 @@ class GrassFieldTest {
         Animal animal2 = new Animal(new Vector2d(1, 3));
         Animal animal3 = new Animal(new Vector2d(1, 3));
 
-
-        boolean res1 = map.place(animal1);
-        boolean res2 = map.place(animal2);
-        boolean res3 = map.place(animal3);
+        try {
+            map.place(animal1);
+        } catch (PositionAlreadyOccupiedException ignored){};
+        try {
+            map.place(animal2);
+        } catch (PositionAlreadyOccupiedException ignored){};
+        try {
+            map.place(animal3);
+        } catch (PositionAlreadyOccupiedException ignored){};
 
 
         Assertions.assertEquals(2, map.getTufts().size());
         Assertions.assertEquals(animal1, map.getAnimals().get(new Vector2d(1, 1)));
         Assertions.assertEquals(animal2, map.getAnimals().get(new Vector2d(1, 3)));
         assertNull(map.getAnimals().get(new Vector2d(2, 2)));
-        Assertions.assertTrue(res1);
-        Assertions.assertTrue(res2);
-        Assertions.assertFalse(res3);
     }
 
     @Test
     void move() {
         GrassField map = new GrassField(2);
         Animal animal1 = new Animal(new Vector2d(2, 3));
-        map.place(animal1);
+
+        try {
+            map.place(animal1);
+        } catch (PositionAlreadyOccupiedException ignored){};
 
         map.move(animal1, MoveDirection.FORWARD);
 
@@ -47,7 +52,10 @@ class GrassFieldTest {
     void isOccupied() {
         GrassField map = new GrassField( 2);
         Animal animal1 = new Animal(new Vector2d(1, 1));
-        map.place(animal1);
+
+        try {
+            map.place(animal1);
+        } catch (PositionAlreadyOccupiedException ignored){};
 
         Assertions.assertTrue(map.isOccupied(new Vector2d(1, 1)));
         Assertions.assertFalse(map.isOccupied(new Vector2d(2, 1)));
@@ -57,7 +65,10 @@ class GrassFieldTest {
     void objectAt() {
         GrassField map = new GrassField(2);
         Animal animal1 = new Animal(new Vector2d(1, 1));
-        map.place(animal1);
+
+        try {
+            map.place(animal1);
+        } catch (PositionAlreadyOccupiedException ignored){};
 
         for (Map.Entry<Vector2d, WorldElement> ent2 : map.getTufts().entrySet()) {
             Vector2d key = ent2.getKey();
@@ -78,7 +89,10 @@ class GrassFieldTest {
     void canMoveTo() {
         GrassField map = new GrassField(2);
         Animal animal1 = new Animal(new Vector2d(1, 1));
-        map.place(animal1);
+
+        try {
+            map.place(animal1);
+        } catch (PositionAlreadyOccupiedException ignored){};
 
         Assertions.assertFalse(map.canMoveTo(new Vector2d(1, 1)));
         Assertions.assertTrue(map.canMoveTo(new Vector2d(2, 1)));

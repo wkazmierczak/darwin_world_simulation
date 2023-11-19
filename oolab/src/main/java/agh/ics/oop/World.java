@@ -8,55 +8,27 @@ public class World {
     public static void main(String[] args){
         System.out.println("system wystartował");
 
-//        List<MoveDirection> directions = OptionsParser.parse(args);
-//        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(1, 2));
-//        Simulation simulation = new Simulation(directions, positions, new RectangularMap(5, 3));
-//        simulation.run();
+
+        GrassField map1 = new GrassField(5);
+        ConsoleMapDisplay mapDisplay = new ConsoleMapDisplay();
+
+        map1.addListener(mapDisplay);
 
         List<MoveDirection> directions = OptionsParser.parse(args);
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(-1, 2));
-        Simulation simulation = new Simulation(directions, positions, new GrassField(10));
+        Simulation simulation = new Simulation(directions, positions, map1);
         simulation.run();
-
-//        List<String> stringList = List.of("ala", "ma", "kota");
-//        List<MapDirection> orientList = List.of(MapDirection.EAST, MapDirection.EAST, MapDirection.EAST);
-//        TextMap map = new TextMap();
-//        map.place("ala");
-//        map.place("ma");
-//        map.place("kota");
-//        System.out.println(map);
-//        map.move("ma", MoveDirection.FORWARD);
-//        System.out.println(map);
-//        map.move("ma", MoveDirection.FORWARD);
-//        System.out.println(map);
-//        map.move("kota", MoveDirection.LEFT);
-//        System.out.println(map);
-//        map.move("kota", MoveDirection.LEFT);
-//        System.out.println(map);
-//        map.move("kota", MoveDirection.BACKWARD);
-//        System.out.println(map);
-
 
         System.out.println("system zakończył działanie");
 
     }
 
     public static void run(MoveDirection[] directions){
-//        System.out.println("Zwierzak idzie do przodu");
-//        int i = 0;
-//        int l = arguments.length;
+
         System.out.println("Start");
 
         for (MoveDirection argument: directions){
 
-//            System.out.print(argument);
-//            i++;
-//            if(i < l){
-//                System.out.print(", ");
-//            }
-//            else{
-//                System.out.print("\n");
-//            }
 
             switch (argument) {
                 case FORWARD -> System.out.println("Zwierzak idzie do przodu");

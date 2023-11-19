@@ -13,9 +13,6 @@ public class GrassField extends AbstractWorldMap{
 
     private final Map<Vector2d, WorldElement> tufts = new HashMap<>();
 
-    private Vector2d lowerLeft = new Vector2d(0, 0);
-    private Vector2d upperRight = new Vector2d(0, 0);
-
 
     public GrassField(Integer numOfTufts){
         this.numOfTufts = numOfTufts;
@@ -65,9 +62,14 @@ public class GrassField extends AbstractWorldMap{
 
 
     @Override
-    public String toString() {
-        MapVisualizer visualizer = new MapVisualizer(this);
+    public Collection<WorldElement> getElements(){
+        Collection<WorldElement> res = super.getElements();
+        res.addAll(tufts.values());
+        return res;
+    }
 
+    @Override
+    public Boundary getCurrentBounds() {
         Vector2d lowerLeft = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Vector2d upperRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
@@ -85,16 +87,7 @@ public class GrassField extends AbstractWorldMap{
             upperRight = key.upperRight(upperRight);
             lowerLeft = key.lowerLeft(lowerLeft);
         }
-
-        return visualizer.draw(lowerLeft, upperRight);
-
-    }
-
-    @Override
-    public Collection<WorldElement> getElements(){
-        Collection<WorldElement> res = super.getElements();
-        res.addAll(tufts.values());
-        return res;
+        return new Boundary(lowerLeft, upperRight);
     }
 
     public Map<Vector2d, WorldElement> getTufts() {
@@ -110,11 +103,4 @@ public class GrassField extends AbstractWorldMap{
         return animals;
     }
 
-    public Vector2d getLowerLeft() {
-        return lowerLeft;
-    }
-
-    public Vector2d getUpperRight() {
-        return upperRight;
-    }
 }

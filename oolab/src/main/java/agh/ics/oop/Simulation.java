@@ -18,19 +18,18 @@ public class Simulation {
         this.worldMap = worldMap;
         for (Vector2d pos: initialPositions){
             Animal animal = new Animal(pos);
-            if (worldMap.place(animal)) {
+            try {
+                worldMap.place(animal);
                 this.animals.add(animal);
-            }
+            } catch (PositionAlreadyOccupiedException ignored){}
         }
     }
 
     public void run(){
-        System.out.println(worldMap);
         int numOfAnimals = animals.size();
         int i = 0;
         for (MoveDirection m : moves){
             worldMap.move(animals.get(i % numOfAnimals), m);
-            System.out.println(worldMap);
             i++;
         }
 
