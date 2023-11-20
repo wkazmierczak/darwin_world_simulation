@@ -1,9 +1,6 @@
 package agh.ics.oop.model.util;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.RectangularMap;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,8 +29,13 @@ class MapVisualizerTest {
         RectangularMap map = new RectangularMap(3, 2);
         Animal animal1 = new Animal(new Vector2d(2,2));
         Animal animal2 = new Animal(new Vector2d(3, 1));
-        map.place(animal1);
-        map.place(animal2);
+        try {
+            map.place(animal1);
+        } catch (PositionAlreadyOccupiedException ignored){};
+        try {
+            map.place(animal2);
+        } catch (PositionAlreadyOccupiedException ignored){};
+
         map.move(animal1, MoveDirection.LEFT);
         map.move(animal1, MoveDirection.LEFT);
         map.move(animal2, MoveDirection.RIGHT);

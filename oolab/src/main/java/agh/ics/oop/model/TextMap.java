@@ -12,10 +12,9 @@ public class TextMap implements WorldMap<String, Integer> {
     private final List<MapDirection> orientList = new ArrayList<>();
 
     @Override
-    public boolean place(String text){
+    public void place(String text){
         stringList.add(text);
         orientList.add(MapDirection.EAST);
-        return true;
     }
 
     @Override
@@ -81,6 +80,11 @@ public class TextMap implements WorldMap<String, Integer> {
     @Override
     public Collection<String> getElements() {
         return stringList;
+    }
+
+    @Override
+    public Boundary getCurrentBounds() {
+        return null;
     }
 
     @Override

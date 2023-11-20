@@ -19,7 +19,7 @@ public class SimulationTest {
         String[] input3 = {"f", "b", "r", "l", "f", "f", "r", "r", "f", "l", "f", "r", "f", "f", "b", "b"};
 
         List<MoveDirection> directions1 = OptionsParser.parse(input1);
-        List<MoveDirection> directions2 = OptionsParser.parse(input2);
+        Exception sol2 = Assertions.assertThrows(IllegalArgumentException.class, () -> {OptionsParser.parse(input2);});
         List<MoveDirection> directions3 = OptionsParser.parse(input3);
 
         List<Vector2d> positions1 = List.of(new Vector2d(2,2), new Vector2d(3,4));
@@ -35,7 +35,7 @@ public class SimulationTest {
         GrassField map6 = new GrassField(15);
 
         Simulation simulation1 = new Simulation(directions1, positions1, map1);
-        Simulation simulation2 = new Simulation(directions2, positions2, map2);
+        Assertions.assertEquals(sol2.getMessage(), "t is not legal move specification");
         Simulation simulation3 = new Simulation(directions3, positions3, map3);
 
         Simulation sim4 = new Simulation(directions1, positions1, map4);
@@ -105,7 +105,7 @@ public class SimulationTest {
 
         //WHEN
         simulation1.run();
-        simulation2.run();
+//        simulation2.run();
         simulation3.run();
 
         sim4.run();
@@ -125,19 +125,7 @@ public class SimulationTest {
             Assertions.assertEquals(value.getPosition(), key);
         }
 
-//
-        Assertions.assertEquals(expectedOrient1_s, simulation2.getAnimals().get(0).getOrientation());
-//        Assertions.assertEquals(expectedOrient2_s, simulation2.getAnimals().get(1).getOrientation());
-        Assertions.assertEquals(expectedOrient3_s, simulation2.getAnimals().get(1).getOrientation());
-        Assertions.assertEquals(expectedPosition1_s, simulation2.getAnimals().get(0).getPosition());
-//        Assertions.assertEquals(expectedPosition2_s, simulation2.getAnimals().get(1).getPosition());
-        Assertions.assertEquals(expectedPosition3_s, simulation2.getAnimals().get(1).getPosition());
 
-        for (Map.Entry<Vector2d, WorldElement> entry: map2.getAnimals().entrySet()){
-            Vector2d key = entry.getKey();
-            WorldElement value = entry.getValue();
-            Assertions.assertEquals(value.getPosition(), key);
-        }
 
         Assertions.assertEquals(expectedOrient1_t, simulation3.getAnimals().get(0).getOrientation());
         Assertions.assertEquals(expectedOrient2_t, simulation3.getAnimals().get(1).getOrientation());
@@ -157,7 +145,7 @@ public class SimulationTest {
         }
 
         Assertions.assertEquals(exp_map1, map1.toString());
-        Assertions.assertEquals(exp_map2, map2.toString());
+//        Assertions.assertEquals(exp_map2, map2.toString());
         Assertions.assertEquals(exp_map3, map3.toString());
 
 
