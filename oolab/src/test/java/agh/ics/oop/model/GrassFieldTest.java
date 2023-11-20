@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.OptionsParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,21 +16,22 @@ class GrassFieldTest {
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(1, 3));
         Animal animal3 = new Animal(new Vector2d(1, 3));
+        Animal animal4 = new Animal(new Vector2d(1, 1));
 
-        try {
-            map.place(animal1);
-        } catch (PositionAlreadyOccupiedException ignored){};
-        try {
-            map.place(animal2);
-        } catch (PositionAlreadyOccupiedException ignored){};
-        try {
-            map.place(animal3);
-        } catch (PositionAlreadyOccupiedException ignored){};
+        Assertions.assertDoesNotThrow(()->{map.place(animal1);});
+        Assertions.assertDoesNotThrow(()->{map.place(animal2);});
+
+        Exception sol3 = Assertions.assertThrows(PositionAlreadyOccupiedException.class, () -> {
+            map.place(animal3);});
+        Exception sol4 = Assertions.assertThrows(PositionAlreadyOccupiedException.class, () -> {
+            map.place(animal4);});
 
 
         Assertions.assertEquals(2, map.getTufts().size());
         Assertions.assertEquals(animal1, map.getAnimals().get(new Vector2d(1, 1)));
         Assertions.assertEquals(animal2, map.getAnimals().get(new Vector2d(1, 3)));
+        Assertions.assertEquals("Position (1,3) is already occupied", sol3.getMessage());
+        Assertions.assertEquals("Position (1,1) is already occupied", sol4.getMessage());
         assertNull(map.getAnimals().get(new Vector2d(2, 2)));
     }
 

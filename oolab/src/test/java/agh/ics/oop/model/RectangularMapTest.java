@@ -12,16 +12,21 @@ class RectangularMapTest {
         RectangularMap map = new RectangularMap(2, 2);
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(1, 3));
+        Animal animal3 = new Animal(new Vector2d(1, 3));
+        Animal animal4 = new Animal(new Vector2d(1, 1));
 
-        try {
-            map.place(animal1);
-        } catch (PositionAlreadyOccupiedException ignored){};
-        try {
-            map.place(animal2);
-        } catch (PositionAlreadyOccupiedException ignored){};
+        Assertions.assertDoesNotThrow(()->{map.place(animal1);});
+        Assertions.assertThrows(PositionAlreadyOccupiedException.class, ()->{map.place(animal2);});
+
+        Exception sol3 = Assertions.assertThrows(PositionAlreadyOccupiedException.class, () -> {
+            map.place(animal3);});
+        Exception sol4 = Assertions.assertThrows(PositionAlreadyOccupiedException.class, () -> {
+            map.place(animal4);});
 
         Assertions.assertEquals(animal1, map.getAnimals().get(new Vector2d(1, 1)));
         Assertions.assertNotEquals(animal2, map.getAnimals().get(new Vector2d(1, 3)));
+        Assertions.assertEquals("Position (1,3) is already occupied", sol3.getMessage());
+        Assertions.assertEquals("Position (1,1) is already occupied", sol4.getMessage());
         Assertions.assertTrue(map.isOccupied(new Vector2d(1, 1)));
     }
 

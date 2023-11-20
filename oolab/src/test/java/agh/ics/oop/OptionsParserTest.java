@@ -44,5 +44,8 @@ public class OptionsParserTest {
         Assertions.assertEquals(sol3.getMessage(), "fblr is not legal move specification");
         Assertions.assertEquals(sol4, OptionsParser.parse(tab4));
 
+        Assertions.assertDoesNotThrow(()->OptionsParser.parse(tab2));
+        Assertions.assertDoesNotThrow(()->OptionsParser.parse(tab4));
+
     }
 }
