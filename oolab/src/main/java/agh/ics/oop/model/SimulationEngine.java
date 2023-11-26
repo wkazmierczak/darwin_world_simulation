@@ -33,26 +33,30 @@ public class SimulationEngine{
     }
 
     public void awaitSimulationEnd(){
-        for (Thread th : threads){
-            try {
-                th.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+//        for (Thread th : threads){
+//            try {
+//                th.join();
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+
         executorService.shutdown();
         try {
-            executorService.awaitTermination(10, TimeUnit.SECONDS);
+            if(!executorService.awaitTermination(10, TimeUnit.SECONDS)){
+                System.out.println("Force shutdown after 10 secs");
+                executorService.shutdownNow();
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public void runAsyncInThreadPool(){
         for(Simulation sim : simulations){
             executorService.submit(sim);
         }
-
     }
 
 }
