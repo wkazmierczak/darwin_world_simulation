@@ -2,10 +2,7 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class GrassField extends AbstractWorldMap{
 
@@ -16,6 +13,7 @@ public class GrassField extends AbstractWorldMap{
 
     public GrassField(Integer numOfTufts){
         this.numOfTufts = numOfTufts;
+        this.id = "Grass";
         placeTufts(numOfTufts);
     }
 
@@ -88,6 +86,11 @@ public class GrassField extends AbstractWorldMap{
             lowerLeft = key.lowerLeft(lowerLeft);
         }
         return new Boundary(lowerLeft, upperRight);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     public Map<Vector2d, WorldElement> getTufts() {
