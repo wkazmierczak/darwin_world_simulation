@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class RectangularMap extends AbstractWorldMap{
     private final int width;
@@ -10,6 +11,7 @@ public class RectangularMap extends AbstractWorldMap{
 
     private final Boundary boundaries;
 
+    private static int rectId = 1;
 
 //    private final Map<Vector2d, WorldElement> animals = new HashMap<>();
 
@@ -17,7 +19,8 @@ public class RectangularMap extends AbstractWorldMap{
         this.height = height;
         this.width = width;
         this.boundaries = new Boundary(new Vector2d(0, 0), new Vector2d(width, height));
-
+        this.id = "Rect: " + rectId;
+        rectId++;
     }
 
 
@@ -44,5 +47,10 @@ public class RectangularMap extends AbstractWorldMap{
     @Override
     public Boundary getCurrentBounds() {
         return boundaries;
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 }

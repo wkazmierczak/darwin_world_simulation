@@ -25,12 +25,6 @@ public class OptionsParser {
 
             directions.add(direction);
 
-
-//            if (direction != null){
-
-
-
-//            }
         }
 
         return directions;

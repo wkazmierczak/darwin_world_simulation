@@ -9,6 +9,7 @@ public abstract class AbstractWorldMap implements WorldMap<WorldElement, Vector2
     protected final Map<Vector2d, WorldElement> animals = new HashMap<>();
 
     private final List<MapChangeListener> mapChangeListeners = new ArrayList<>();
+    protected String id;
 
     public void addListener(MapChangeListener listener) {
         mapChangeListeners.add(listener);
@@ -23,8 +24,6 @@ public abstract class AbstractWorldMap implements WorldMap<WorldElement, Vector2
             listener.mapChanged(this, message);
         }
     }
-
-
 
 
     @Override
