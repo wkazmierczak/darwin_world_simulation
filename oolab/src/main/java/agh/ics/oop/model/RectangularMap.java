@@ -11,6 +11,7 @@ public class RectangularMap extends AbstractWorldMap{
 
     private final Boundary boundaries;
 
+    private static int rectId = 1;
 
 //    private final Map<Vector2d, WorldElement> animals = new HashMap<>();
 
@@ -18,7 +19,8 @@ public class RectangularMap extends AbstractWorldMap{
         this.height = height;
         this.width = width;
         this.boundaries = new Boundary(new Vector2d(0, 0), new Vector2d(width, height));
-        this.id = "Rect";
+        this.id = "Rect: " + rectId;
+        rectId++;
     }
 
 

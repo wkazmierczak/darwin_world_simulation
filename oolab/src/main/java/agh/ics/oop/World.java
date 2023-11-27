@@ -66,11 +66,11 @@ public class World {
 //        Simulation simulation2 = new Simulation(directions2, positions2, map2);
 //        List<Simulation> sims = List.of(simulation1, simulation2);
 //        SimulationEngine engine = new SimulationEngine(sims);
-//        engine.runSync();
+////        engine.runSync();
 //        engine.runAsync();
 //        engine.awaitSimulationEnd();
-
-        System.out.println("system zakończył działanie");
+//
+//        System.out.println("system zakończył działanie");
 
     }
 

@@ -10,10 +10,14 @@ public class GrassField extends AbstractWorldMap{
 
     private final Map<Vector2d, WorldElement> tufts = new HashMap<>();
 
+    private static int mapId = 1;
+
 
     public GrassField(Integer numOfTufts){
         this.numOfTufts = numOfTufts;
-        this.id = "Grass";
+        this.id = "Grass: " + mapId;
+        mapId++;
+
         placeTufts(numOfTufts);
     }
 
