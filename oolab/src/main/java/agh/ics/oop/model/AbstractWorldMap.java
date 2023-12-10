@@ -50,9 +50,9 @@ public abstract class AbstractWorldMap implements WorldMap<WorldElement, Vector2
         animal.move(direction, this);
         Vector2d currPos = animal.getPosition();
         if (!currPos.equals(prevPos)){
-            mapChanged(animal + " moved from " + prevPos + " to " +currPos);
             animals.put(currPos, animal);
             animals.remove(prevPos);
+            mapChanged(animal + " moved from " + prevPos + " to " +currPos);
         }
         else {
             mapChanged(animal.getPosition() + " rotated from " + animalToString + " to " + animal);
