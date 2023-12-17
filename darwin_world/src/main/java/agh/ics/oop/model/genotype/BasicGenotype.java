@@ -1,5 +1,6 @@
 package agh.ics.oop.model.genotype;
 
+import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MoveDirection;
 
 public class BasicGenotype extends AbstractGenotype {
@@ -9,8 +10,8 @@ public class BasicGenotype extends AbstractGenotype {
         super(length);
     }
 
-    BasicGenotype(Genotype parent1, Genotype parent2) {
-        super(parent1, parent2);
+    BasicGenotype(Animal stronger, Animal weaker) {
+        super(stronger, weaker);
     }
 
     @Override

@@ -1,18 +1,27 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.genotype.AbstractGenotype;
+import agh.ics.oop.model.genotype.Genotype;
+
 public class Animal implements WorldElement{
     private MapDirection orientation;
     private Vector2d position;
 
+    private int energyLevel;
+
+    private final Genotype genotype;
+
     private final static Vector2d LEFT_BOTTOM = new Vector2d(0, 0);
     private final static Vector2d RIGHT_TOP = new Vector2d(4, 4);
 
-    public Animal(){
-        this(new Vector2d(2, 2));
+    public Animal(Genotype genotype){
+        this(new Vector2d(2, 2), genotype);
     }
-    public Animal(Vector2d position){
+    public Animal(Vector2d position, Genotype genotype){
         this.position = position;
         this.orientation = MapDirection.NORTH;
+        this.energyLevel = 0;
+        this.genotype = genotype;
     }
 
     @Override
@@ -63,5 +72,13 @@ public class Animal implements WorldElement{
 
     public static Vector2d getRightTop() {
         return RIGHT_TOP;
+    }
+
+    public Genotype getGenotype() {
+        return genotype;
+    }
+
+    public int getEnergyLevel() {
+        return energyLevel;
     }
 }
