@@ -14,9 +14,6 @@ public class Animal implements WorldElement{
     private final static Vector2d LEFT_BOTTOM = new Vector2d(0, 0);
     private final static Vector2d RIGHT_TOP = new Vector2d(4, 4);
 
-    public Animal(Genotype genotype){
-        this(new Vector2d(2, 2), genotype);
-    }
     public Animal(Vector2d position, Genotype genotype){
         this.position = position;
         this.orientation = MapDirection.NORTH;
