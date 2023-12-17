@@ -4,7 +4,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
 
-public abstract class AbstractWorldMap implements WorldMap<WorldElement, Vector2d>{
+public abstract class AbstractWorldMap implements WorldMap<WorldElement, Vector2d> {
 
     protected final Map<Vector2d, WorldElement> animals = new HashMap<>();
 
@@ -27,15 +27,14 @@ public abstract class AbstractWorldMap implements WorldMap<WorldElement, Vector2
 
 
     @Override
-    public void place(WorldElement animal) throws PositionAlreadyOccupiedException{
+    public void place(WorldElement animal) throws PositionAlreadyOccupiedException {
 
         Vector2d currPos = animal.getPosition();
 
-        if (canMoveTo(currPos)){
+        if (canMoveTo(currPos)) {
             animals.put(currPos, animal);
             mapChanged(animal + " placed at " + currPos);
-        }
-        else {
+        } else {
             throw new PositionAlreadyOccupiedException(currPos);
         }
     }
@@ -49,12 +48,11 @@ public abstract class AbstractWorldMap implements WorldMap<WorldElement, Vector2
         Vector2d prevPos = animal.getPosition();
         animal.move(direction, this);
         Vector2d currPos = animal.getPosition();
-        if (!currPos.equals(prevPos)){
+        if (!currPos.equals(prevPos)) {
             animals.put(currPos, animal);
             animals.remove(prevPos);
-            mapChanged(animal + " moved from " + prevPos + " to " +currPos);
-        }
-        else {
+            mapChanged(animal + " moved from " + prevPos + " to " + currPos);
+        } else {
             mapChanged(animal.getPosition() + " rotated from " + animalToString + " to " + animal);
         }
     }
@@ -80,7 +78,7 @@ public abstract class AbstractWorldMap implements WorldMap<WorldElement, Vector2
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         MapVisualizer visualizer = new MapVisualizer(this);
 
         Boundary boundaries = getCurrentBounds();
