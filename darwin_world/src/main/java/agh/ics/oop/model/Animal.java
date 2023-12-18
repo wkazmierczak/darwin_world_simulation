@@ -1,8 +1,8 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.genotype.AbstractGenotype;
 import agh.ics.oop.model.genotype.BasicGenotype;
 import agh.ics.oop.model.genotype.Genotype;
+import agh.ics.oop.model.worldElements.WorldElement;
 
 public class Animal implements WorldElement {
     private MapDirection orientation;
