@@ -3,16 +3,17 @@ package agh.ics.oop.model.genotype;
 import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MoveDirection;
 
-public class PingPongGenotype extends AbstractGenotype{
+public class PingPongGenotype extends AbstractGenotype {
 
     private int currentIdx = 0;
 
     private int genMove = 1;
-    PingPongGenotype(int length) {
+
+    public PingPongGenotype(int length) {
         super(length);
     }
 
-    PingPongGenotype(Animal stronger, Animal weaker) {
+    public PingPongGenotype(Animal stronger, Animal weaker) {
         super(stronger, weaker);
     }
 
@@ -21,7 +22,7 @@ public class PingPongGenotype extends AbstractGenotype{
         if (currentIdx == 0) {
             genMove = 1;
         }
-        if (currentIdx == genotypeList.size()-1) {
+        if (currentIdx == genotypeList.size() - 1) {
             genMove = -1;
         }
 
