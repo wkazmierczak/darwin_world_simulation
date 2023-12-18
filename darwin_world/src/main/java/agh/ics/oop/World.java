@@ -54,19 +54,19 @@ public class World {
 //        GrassField map1 = new GrassField(5);
 //        ConsoleMapDisplay mapDisplay1 = new ConsoleMapDisplay();
 //
-        RectangularMap map2 = new RectangularMap(4, 4);
-        ConsoleMapDisplay mapDisplay2 = new ConsoleMapDisplay();
-
-        map2.addListener(mapDisplay2);
+//        RectangularMap map2 = new RectangularMap(4, 4);
+//        ConsoleMapDisplay mapDisplay2 = new ConsoleMapDisplay();
 //
-//        List<MoveDirection> directions1 = OptionsParser.parse(args);
-//        List<Vector2d> positions1 = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(-1, 2));
-//        Simulation simulation1 = new Simulation(directions1, positions1, map1);
-        String[] input1 = {"f", "f"};
-        List<MoveDirection> directions2 = OptionsParser.parse(input1);
-        List<Vector2d> positions2 = List.of(new Vector2d(2,2), new Vector2d(3,2));
-        Simulation simulation2 = new Simulation(directions2, positions2, map2);
-        simulation2.run();
+//        map2.addListener(mapDisplay2);
+////
+////        List<MoveDirection> directions1 = OptionsParser.parse(args);
+////        List<Vector2d> positions1 = List.of(new Vector2d(2,2), new Vector2d(3,4), new Vector2d(-1, 2));
+////        Simulation simulation1 = new Simulation(directions1, positions1, map1);
+//        String[] input1 = {"f", "f"};
+//        List<MoveDirection> directions2 = OptionsParser.parse(input1);
+//        List<Vector2d> positions2 = List.of(new Vector2d(2,2), new Vector2d(3,2));
+//        Simulation simulation2 = new Simulation(directions2, positions2, map2);
+//        simulation2.run();
 //        List<Simulation> sims = List.of(simulation1, simulation2);
 //        SimulationEngine engine = new SimulationEngine(sims);
 ////        engine.runSync();

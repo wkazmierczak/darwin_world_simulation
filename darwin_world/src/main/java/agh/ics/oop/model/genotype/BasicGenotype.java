@@ -6,11 +6,11 @@ import agh.ics.oop.model.MoveDirection;
 public class BasicGenotype extends AbstractGenotype {
     private int currentIdx = 0;
 
-    BasicGenotype(int length) {
+    public BasicGenotype(int length) {
         super(length);
     }
 
-    BasicGenotype(Animal stronger, Animal weaker) {
+    public BasicGenotype(Animal stronger, Animal weaker) {
         super(stronger, weaker);
     }
 
