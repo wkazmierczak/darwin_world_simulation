@@ -3,7 +3,7 @@ package agh.ics.oop.presenter;
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
-import agh.ics.oop.model.Maps.WorldMap;
+import agh.ics.oop.model.Maps.PlanetMap;
 import agh.ics.oop.model.worldElements.WorldElement;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,7 +21,7 @@ import java.util.List;
 public class SimulationPresenter implements MapChangeListener {
     private static final double CELL_WIDTH = 30 ;
     private static final double CELL_HEIGHT = 30;
-    private static WorldMap<WorldElement, Vector2d> map;
+    private static PlanetMap<WorldElement, Vector2d> map;
 
     @FXML
     public Button startButton;
@@ -35,7 +35,7 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private TextField textField;
 
-    public void setWorldMap(WorldMap<WorldElement, Vector2d> map) {
+    public void setWorldMap(PlanetMap<WorldElement, Vector2d> map) {
         this.map = map;
     }
 
@@ -111,7 +111,7 @@ public class SimulationPresenter implements MapChangeListener {
 
 
     @Override
-    public void mapChanged(WorldMap<WorldElement, Vector2d> worldMap, String message) {
+    public void mapChanged(PlanetMap<WorldElement, Vector2d> worldMap, String message) {
 
 
         Platform.runLater(() -> {

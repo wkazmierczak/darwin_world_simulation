@@ -4,7 +4,6 @@ import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.PositionAlreadyOccupiedException;
-import agh.ics.oop.model.worldElements.Plant;
 
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
  *
  * @author apohllo, idzik
  */
-public interface WorldMap<T, P> {
+public interface PlanetMap<T, P> extends Teleporter {
 
     /**
      * Place a animal on the map.
@@ -29,32 +28,16 @@ public interface WorldMap<T, P> {
      * Moves an animal (if it is present on the map) according to specified direction.
      * If the move is not possible, this method has no effect.
      */
-    void move(T object, MoveDirection direction);
+    void move(T object);
 
-    /**
-     * Return true if given position on the map is occupied. Should not be
-     * confused with canMove since there might be empty positions where the animal
-     * cannot move.
-     *
-     * @param position Position to check.
-     * @return True if the position is occupied.
-     */
-//    boolean isOccupied(P position);
+    Collection<T> animalsAt(P position);
 
-    /**
-     * Returns a plant at a given position.
-     *
-     * @param position The position of the plant.
-     * @return plant or null if no plants grows on position.
-     */
-    Plant plantAt(P position);
+    void removeDead(List<T> animals);
 
-    void removeDead(List<Animal> animals);
-
-    void growPlants();
+    void growPlants(int count);
 
 
-    Collection<T> getElements();
+//    Collection<T> getElements();
 
     Boundary getCurrentBounds();
 

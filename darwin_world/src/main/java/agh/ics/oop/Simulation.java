@@ -1,7 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
-import agh.ics.oop.model.Maps.WorldMap;
+import agh.ics.oop.model.Maps.PlanetMap;
 import agh.ics.oop.model.genotype.BasicGenotype;
 import agh.ics.oop.model.worldElements.WorldElement;
 
@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation implements Runnable {
-    private final WorldMap<WorldElement, Vector2d> worldMap;
+    private final PlanetMap<WorldElement, Vector2d> worldMap;
     private final List<Animal> animals;
     private final List<MoveDirection> moves;
 
-    public Simulation(List<MoveDirection> moves, List<Vector2d> initialPositions, WorldMap<WorldElement, Vector2d> worldMap) {
+    public Simulation(List<MoveDirection> moves, List<Vector2d> initialPositions, PlanetMap<WorldElement, Vector2d> worldMap) {
         this.animals = new ArrayList<>(); // wybrałem ArrayList, gdyż szybciej jest realizowane odczytywanie elementu
         // na i-tej pozycji(niż w LinkedList), a z animals będziemy często potrzebowali element na i-tym polu
 

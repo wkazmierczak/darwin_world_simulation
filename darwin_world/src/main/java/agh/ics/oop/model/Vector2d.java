@@ -46,7 +46,7 @@ public class Vector2d {
     }
 
     int returnCycled(int xl, int x0, int xr) {
-        return (x0 + xl) % (xr - xl) - xl;
+        return (x0 - xl) % Math.abs(xr - xl) + xl;
     }
 
     public Vector2d closeIn(Boundary boundary) {
@@ -55,6 +55,10 @@ public class Vector2d {
         int yd = boundary.bottomLeft().getY();
         int yu = boundary.upperRight().getY();
         return new Vector2d(returnCycled(xl, getX(), xr), returnCycled(yd, getY(), yu));
+    }
+
+    public boolean inBounds(Boundary boundary) {
+        return boundary.bottomLeft().precedes(this) && boundary.upperRight().follows(this);
     }
 
     @Override

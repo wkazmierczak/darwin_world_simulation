@@ -2,10 +2,10 @@ package agh.ics.oop.model.util;
 
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.worldElements.WorldElement;
-import agh.ics.oop.model.Maps.WorldMap;
+import agh.ics.oop.model.Maps.PlanetMap;
 
 /**
- * The map visualizer converts the {@link WorldMap} map into a string
+ * The map visualizer converts the {@link PlanetMap} map into a string
  * representation.
  *
  * @author apohllo, idzik
@@ -14,7 +14,7 @@ public class MapVisualizer {
     private static final String EMPTY_CELL = " ";
     private static final String FRAME_SEGMENT = "-";
     private static final String CELL_SEGMENT = "|";
-    private final WorldMap<WorldElement, Vector2d> map;
+    private final PlanetMap map;
 
 
     /**
@@ -22,7 +22,7 @@ public class MapVisualizer {
      *
      * @param map
      */
-    public MapVisualizer(WorldMap<WorldElement, Vector2d> map) {
+    public MapVisualizer(PlanetMap map) {
         this.map = map;
     }
 
