@@ -3,7 +3,8 @@ package agh.ics.oop.model.Maps;
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.util.MapVisualizer;
-import agh.ics.oop.model.worldElements.Plant;
+import agh.ics.oop.model.worldElements.Animal;
+import agh.ics.oop.model.worldElements.Plants.Plant;
 
 import java.util.*;
 

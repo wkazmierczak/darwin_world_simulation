@@ -2,6 +2,7 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.Maps.PlanetMap;
+import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.genotype.BasicGenotype;
 import agh.ics.oop.model.worldElements.WorldElement;
 
@@ -12,10 +13,11 @@ public class Simulation implements Runnable {
     private final PlanetMap<WorldElement, Vector2d> worldMap;
     private final List<Animal> animals;
     private final List<MoveDirection> moves;
+    private int dayOfSimulation;
 
     public Simulation(List<MoveDirection> moves, List<Vector2d> initialPositions, PlanetMap<WorldElement, Vector2d> worldMap) {
         this.animals = new ArrayList<>(); // wybrałem ArrayList, gdyż szybciej jest realizowane odczytywanie elementu
-        // na i-tej pozycji(niż w LinkedList), a z animals będziemy często potrzebowali element na i-tym polu
+        // na i-tej pozycji (niż w LinkedList), a z animals będziemy często potrzebowali element na i-tym polu
 
         this.moves = moves;
         this.worldMap = worldMap;
@@ -35,7 +37,7 @@ public class Simulation implements Runnable {
         int numOfAnimals = animals.size();
         int i = 0;
         for (MoveDirection m : moves) {
-            worldMap.move(animals.get(i % numOfAnimals), m);
+            worldMap.move(animals.get(i % numOfAnimals));
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -52,5 +54,9 @@ public class Simulation implements Runnable {
 
     public List<MoveDirection> getMoves() {
         return moves;
+    }
+
+    public int getDayOfSimulation() {
+        return dayOfSimulation;
     }
 }

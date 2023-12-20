@@ -4,6 +4,7 @@ import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.worldElements.WorldElement;
 import agh.ics.oop.model.Maps.PlanetMap;
 
+
 /**
  * The map visualizer converts the {@link PlanetMap} map into a string
  * representation.

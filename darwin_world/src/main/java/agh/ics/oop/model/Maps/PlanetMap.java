@@ -1,6 +1,6 @@
 package agh.ics.oop.model.Maps;
 
-import agh.ics.oop.model.Animal;
+import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.PositionAlreadyOccupiedException;

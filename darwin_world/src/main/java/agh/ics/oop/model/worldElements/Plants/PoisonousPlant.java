@@ -1,4 +1,4 @@
-package agh.ics.oop.model.worldElements;
+package agh.ics.oop.model.worldElements.Plants;
 
 public class PoisonousPlant extends AbstractPlant implements Plant {
     public PoisonousPlant(int energyAfterConsuming) {

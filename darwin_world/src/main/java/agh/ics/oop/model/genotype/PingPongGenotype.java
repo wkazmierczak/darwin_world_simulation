@@ -1,6 +1,6 @@
 package agh.ics.oop.model.genotype;
 
-import agh.ics.oop.model.Animal;
+import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.MoveDirection;
 
 public class PingPongGenotype extends AbstractGenotype {
@@ -18,11 +18,6 @@ public class PingPongGenotype extends AbstractGenotype {
     }
 
     @Override
-    public Genotype createNewFrom(Animal animal1, Animal animal2) {
-        return new PingPongGenotype(animal1, animal2);
-    }
-
-    @Override
     public MoveDirection next() {
         if (currentIdx == 0) {
             genMove = 1;
@@ -35,6 +30,11 @@ public class PingPongGenotype extends AbstractGenotype {
         currentIdx += genMove;
 
         return result;
+    }
+
+    @Override
+    public PingPongGenotype createNewFrom(Animal animal1, Animal animal2) {
+        return new PingPongGenotype(animal1, animal2);
     }
 
 }
