@@ -60,7 +60,8 @@ public class Animal implements WorldElement {
         return getPosition().equals(position);
     }
 
-    public void move(MoveDirection direction, Teleporter teleport) {
+    public void move(Teleporter teleport) {
+        MoveDirection direction = genotype.next();
         Vector2d prevPos = getPosition();
         MapDirection prevOrient = getOrientation();
 
@@ -76,7 +77,6 @@ public class Animal implements WorldElement {
                             otherRotations.add(i);
                         }
                     }
-
                     orientation = prevOrient.rotateNTimes(otherRotations.get(new Random().nextInt(otherRotations.size())));
                     nextPosition = teleport.moveIntoDirection(prevPos, orientation.toUnitVector());
                 }
@@ -103,8 +103,8 @@ public class Animal implements WorldElement {
 
     public void nextDay(Teleporter teleport) {
         energyLevel--;
-        MoveDirection direction = genotype.next();
-        move(direction, teleport);
+//        MoveDirection direction = genotype.next();
+        move(teleport);
         Plant plant = teleport.plantAt(position);
         if (plant != null){
             eat(plant);
