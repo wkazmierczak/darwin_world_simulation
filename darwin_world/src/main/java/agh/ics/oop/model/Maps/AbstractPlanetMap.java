@@ -26,7 +26,7 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
 
     //JUST FOR TESTS
     protected AbstractPlanetMap(int width, int height) {
-        this(width, height, 10, 3, 5);
+        this(width, height, 10, 3, 2);
     }
 
     public void addListener(MapChangeListener listener) {
@@ -155,6 +155,18 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
     @Override
     public String getId() {
         return id;
+    }
+
+    protected List<Vector2d> getAllPositionsShuffled() {
+
+        List<Vector2d> positions = new ArrayList<>(getWidth() * getHeight());
+        for (int i = getCurrentBounds().bottomLeft().getX(); i < getCurrentBounds().upperRight().getX(); i++) {
+            for (int j = getCurrentBounds().bottomLeft().getY(); j < getCurrentBounds().upperRight().getY(); j++) {
+                positions.add(new Vector2d(i, j));
+            }
+        }
+        Collections.shuffle(positions);
+        return positions;
     }
 
 }

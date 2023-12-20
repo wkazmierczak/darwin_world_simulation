@@ -1,8 +1,6 @@
 package agh.ics.oop.model.Maps;
 
-import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.Boundary.Boundary;
-import agh.ics.oop.model.RandomPositionGenerator;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.worldElements.BasicPlant;
 import agh.ics.oop.model.worldElements.Plant;
@@ -14,8 +12,11 @@ public class EquatorMap extends AbstractPlanetMap {
 
     private final Boundary equatorBounds;
 
-    protected EquatorMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount) {
-        super(width, height, startingPlantsCount, everyDayPlantsCount);
+    private final float equatorSurface = 0.2F;
+    private final float equatorRatioToGrowNew = 0.8F;
+
+    protected EquatorMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
+        super(width, height, startingPlantsCount, everyDayPlantsCount, energyAfterConsumingPlant);
         this.equatorBounds = getEquatorBounds();
     }
 
@@ -24,28 +25,24 @@ public class EquatorMap extends AbstractPlanetMap {
         this.equatorBounds = getEquatorBounds();
     }
 
+
     private Boundary getEquatorBounds() {
         int xl = boundary.bottomLeft().getX();
         int xr = boundary.upperRight().getY();
         int yd = boundary.bottomLeft().getY();
         int yu = boundary.upperRight().getY();
         int yMid = (yu + yd) / 2;
-        int range = (int) Math.floor(Math.abs(yu - yd) * 0.1);
+        int range = (int) Math.floor(Math.abs(yu - yd) * equatorSurface / 2);
         return new Boundary(new Vector2d(xl, yMid - range), new Vector2d(xr, yMid + range));
+
     }
 
     @Override
     public void growPlants(int count) {
 //        RandomPositionGenerator generator = new RandomPositionGenerator(getWidth(), getHeight());
-        List<Vector2d> positions = new ArrayList<>(getWidth() * getHeight());
-        for (int i = getCurrentBounds().bottomLeft().getX(); i < getCurrentBounds().upperRight().getX(); i++) {
-            for (int j = getCurrentBounds().bottomLeft().getY(); j < getCurrentBounds().upperRight().getY(); j++) {
-                positions.add(new Vector2d(i, j));
-            }
-        }
-        Collections.shuffle(positions);
+        List<Vector2d> positions = getAllPositionsShuffled();
 
-        List<Boolean> onEquator = new Random().doubles(0, 1).mapToObj(i -> i < 0.8).limit(count).collect(Collectors.toCollection(ArrayList<Boolean>::new));
+        List<Boolean> onEquator = new Random().doubles(0, 1).mapToObj(i -> i < equatorRatioToGrowNew).limit(count).collect(Collectors.toCollection(ArrayList<Boolean>::new));
         for (var placeOnEquator : onEquator) {
             Plant newPlant = new BasicPlant(energyAfterConsumingPlant);
             int i = 0;
