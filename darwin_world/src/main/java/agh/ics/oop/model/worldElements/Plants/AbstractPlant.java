@@ -1,4 +1,4 @@
-package agh.ics.oop.model.worldElements;
+package agh.ics.oop.model.worldElements.Plants;
 
 abstract class AbstractPlant {
     protected final int energyAfterConsuming;

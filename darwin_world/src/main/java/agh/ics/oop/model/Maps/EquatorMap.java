@@ -2,8 +2,8 @@ package agh.ics.oop.model.Maps;
 
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.worldElements.BasicPlant;
-import agh.ics.oop.model.worldElements.Plant;
+import agh.ics.oop.model.worldElements.Plants.BasicPlant;
+import agh.ics.oop.model.worldElements.Plants.Plant;
 
 import java.util.*;
 import java.util.stream.Collectors;

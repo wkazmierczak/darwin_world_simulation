@@ -3,7 +3,9 @@ package agh.ics.oop.presenter;
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
+
 import agh.ics.oop.model.Maps.PlanetMap;
+
 import agh.ics.oop.model.worldElements.WorldElement;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -90,7 +92,7 @@ public class SimulationPresenter implements MapChangeListener {
             for (int y = upperRight.getY();y>=lowerLeft.getY();y--) {
 
                 Vector2d currentPosition = new Vector2d(x, y);
-                WorldElement elem = map.plantAt(currentPosition);
+                WorldElement elem = (WorldElement) map.plantAt(currentPosition);
                 if (elem != null){
                     Label cellLabel = new Label();
                     cellLabel.setMinSize(10, 10);

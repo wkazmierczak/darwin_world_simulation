@@ -32,4 +32,8 @@ public enum MoveDirection {
 //    }
 
     }
+
+    public int getIndex() {
+        return index;
+    }
 }
