@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.Maps.WorldMap;
 import agh.ics.oop.model.genotype.BasicGenotype;
 import agh.ics.oop.model.worldElements.WorldElement;
 

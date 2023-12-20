@@ -1,10 +1,13 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.Maps;
 
+import agh.ics.oop.model.Animal;
+import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.PositionAlreadyOccupiedException;
+import agh.ics.oop.model.worldElements.Plant;
 
 import java.util.Collection;
-import java.util.UUID;
+import java.util.List;
 
 /**
  * The interface responsible for interacting with the map of the world.
@@ -12,7 +15,7 @@ import java.util.UUID;
  *
  * @author apohllo, idzik
  */
-public interface WorldMap<T, P> extends MoveValidator<P> {
+public interface WorldMap<T, P> {
 
     /**
      * Place a animal on the map.
@@ -36,19 +39,24 @@ public interface WorldMap<T, P> extends MoveValidator<P> {
      * @param position Position to check.
      * @return True if the position is occupied.
      */
-    boolean isOccupied(P position);
+//    boolean isOccupied(P position);
 
     /**
-     * Return an animal at a given position.
+     * Returns a plant at a given position.
      *
-     * @param position The position of the animal.
-     * @return animal or null if the position is not occupied.
+     * @param position The position of the plant.
+     * @return plant or null if no plants grows on position.
      */
-    T objectAt(P position);
+    Plant plantAt(P position);
+
+    void removeDead(List<Animal> animals);
+
+    void growPlants();
+
 
     Collection<T> getElements();
 
-     Boundary getCurrentBounds();
+    Boundary getCurrentBounds();
 
-     String getId();
+    String getId();
 }
