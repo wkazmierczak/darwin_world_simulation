@@ -26,6 +26,10 @@ public class Animal implements WorldElement {
         this(position, new BasicGenotype(5));
     }
 
+    public boolean isDead() {
+        return false;
+    }
+
     @Override
     public String toString() {
         return getOrientation().toString();
