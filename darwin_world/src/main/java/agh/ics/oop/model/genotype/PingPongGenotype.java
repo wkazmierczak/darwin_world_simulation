@@ -18,6 +18,11 @@ public class PingPongGenotype extends AbstractGenotype {
     }
 
     @Override
+    public Genotype createNewFrom(Animal animal1, Animal animal2) {
+        return new PingPongGenotype(animal1, animal2);
+    }
+
+    @Override
     public MoveDirection next() {
         if (currentIdx == 0) {
             genMove = 1;

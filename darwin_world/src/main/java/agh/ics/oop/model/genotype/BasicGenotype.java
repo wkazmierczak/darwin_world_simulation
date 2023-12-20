@@ -15,6 +15,11 @@ public class BasicGenotype extends AbstractGenotype {
     }
 
     @Override
+    public Genotype createNewFrom(Animal animal1, Animal animal2) {
+        return new BasicGenotype(animal1,animal2);
+    }
+
+    @Override
     public MoveDirection next() {
         var result = genotypeList.get(currentIdx);
         currentIdx = (currentIdx + 1) % genotypeList.size();
