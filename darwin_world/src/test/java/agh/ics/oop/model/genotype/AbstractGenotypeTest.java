@@ -18,9 +18,9 @@ class AbstractGenotypeTest {
     public void create() {
         int n = 100000;
         Genotype genotype = new PingPongGenotype(n);
-        List<MoveDirection> genotypeList = genotype.getGenotypeList();
+        List<Integer> genotypeList = genotype.getGenotypeList();
         assertEquals(n, genotypeList.size());
-        Set<MoveDirection> moves = new HashSet<>(genotypeList);
+        Set<Integer> moves = new HashSet<>(genotypeList);
         assertEquals(8, moves.size(), moves.toString());
     }
 
@@ -30,7 +30,7 @@ class AbstractGenotypeTest {
         int n = 10;
         String methodName = "mutate";
         AbstractGenotype genotype = new PingPongGenotype(n);
-        List<MoveDirection> genotypeList = new ArrayList<>(genotype.getGenotypeList());
+        List<Integer> genotypeList = new ArrayList<>(genotype.getGenotypeList());
         assertDoesNotThrow(() -> AbstractGenotype.class.getDeclaredMethod(methodName, int.class));
         Method mutate;
         try {
@@ -45,7 +45,7 @@ class AbstractGenotypeTest {
                  InvocationTargetException e) {
             throw new RuntimeException(e);
         }
-        List<MoveDirection> genotypeListAfterMutation = genotype.getGenotypeList();
+        List<Integer> genotypeListAfterMutation = genotype.getGenotypeList();
         System.out.println(genotypeList);
         System.out.println(genotypeListAfterMutation);
         int diff = 0;

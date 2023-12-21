@@ -1,4 +1,4 @@
-package agh.ics.oop.model.worldElements.Plants;
+package agh.ics.oop.model.worldElements.plants;
 
 public interface Plant {
     int getNutritious();

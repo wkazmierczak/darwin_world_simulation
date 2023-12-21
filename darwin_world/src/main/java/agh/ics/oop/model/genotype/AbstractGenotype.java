@@ -11,20 +11,20 @@ import java.util.stream.IntStream;
 
 public abstract class AbstractGenotype implements Genotype {
 
-    protected List<MoveDirection> genotypeList;
+    protected List<Integer> genotypeList;
 
     private static final String[] sites = {"left", "right"};
 
     protected AbstractGenotype(int length) {
-        genotypeList = IntStream.generate(this::getRandomFromLegalRange).limit(length).mapToObj(MoveDirection::valueOf).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toCollection(ArrayList::new));
+        genotypeList = IntStream.generate(this::getRandomFromLegalRange).limit(length).boxed().collect(Collectors.toCollection(ArrayList::new));
     }
 
     protected AbstractGenotype(Animal animal1, Animal animal2) {
         Animal stronger = animal1.getEnergyLevel() > animal2.getEnergyLevel() ? animal1 : animal2;
         Animal weaker = animal1.getEnergyLevel() <= animal2.getEnergyLevel() ? animal1 : animal2;
 
-        List<MoveDirection> strongerGenotypeList = stronger.getGenotype().getGenotypeList();
-        List<MoveDirection> weakerGenotypeList = weaker.getGenotype().getGenotypeList();
+        List<Integer> strongerGenotypeList = stronger.getGenotype().getGenotypeList();
+        List<Integer> weakerGenotypeList = weaker.getGenotype().getGenotypeList();
         int size = strongerGenotypeList.size();
 
         int strongerEnergy = stronger.getEnergyLevel();
@@ -47,10 +47,10 @@ public abstract class AbstractGenotype implements Genotype {
     }
 
     @Override
-    abstract public MoveDirection next();
+    abstract public int next();
 
     @Override
-    public List<MoveDirection> getGenotypeList() {
+    public List<Integer> getGenotypeList() {
         return genotypeList;
     }
 
@@ -74,9 +74,9 @@ public abstract class AbstractGenotype implements Genotype {
         List<Integer> indexesToMutate = indexes.subList(0, mutationNum);
 
         for (Integer idx : indexesToMutate) {
-            int prev = genotypeList.get(idx).ordinal();
+            int prev = genotypeList.get(idx);
             int mutated = getRandomFromLegalRange(prev);
-            genotypeList.set(idx, MoveDirection.valueOf(mutated).get());
+            genotypeList.set(idx, mutated);
         }
 
     }

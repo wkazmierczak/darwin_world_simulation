@@ -1,4 +1,4 @@
-package agh.ics.oop.model.worldElements.Plants;
+package agh.ics.oop.model.worldElements.plants;
 
 public class BasicPlant extends AbstractPlant implements Plant {
 

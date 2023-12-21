@@ -13,8 +13,8 @@ class PingPongGenotypeTest {
     public void next() {
         int n = 5;
         Genotype genotype = new PingPongGenotype(n);
-        List<MoveDirection> genotypeList = genotype.getGenotypeList();
-        for (MoveDirection direction : genotypeList) {
+        List<Integer> genotypeList = genotype.getGenotypeList();
+        for (var direction : genotypeList) {
             assertEquals(direction, genotype.next());
         }
         for (int i = genotypeList.size() - 2; i >= 0; i--) {

@@ -15,7 +15,7 @@ public class BasicGenotype extends AbstractGenotype {
     }
 
     @Override
-    public MoveDirection next() {
+    public int next() {
         var result = genotypeList.get(currentIdx);
         currentIdx = (currentIdx + 1) % genotypeList.size();
         return result;

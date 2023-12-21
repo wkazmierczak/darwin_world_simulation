@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface Genotype {
     Genotype createNewFrom(Animal animal1, Animal animal2);
-    MoveDirection next();
-    List<MoveDirection> getGenotypeList();
+    int next();
+    List<Integer> getGenotypeList();
 
 
 }

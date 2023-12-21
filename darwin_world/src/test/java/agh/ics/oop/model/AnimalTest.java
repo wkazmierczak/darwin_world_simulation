@@ -1,10 +1,10 @@
-//package agh.ics.oop.model;
-//
-//import agh.ics.oop.model.genotype.BasicGenotype;
-//import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.Test;
-//
-//public class AnimalTest {
+package agh.ics.oop.model;
+
+import agh.ics.oop.model.genotype.BasicGenotype;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+public class AnimalTest {
 //
 //    @Test
 //    public void orientationTest() {
@@ -107,4 +107,4 @@
 //                animal4.getPosition().follows(Animal.getLeftBottom()));
 //
 //    }
-//}
+}
