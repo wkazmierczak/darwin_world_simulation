@@ -1,8 +1,6 @@
-package agh.ics.oop.model.Maps;
+package agh.ics.oop.model.maps;
 
-import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.Boundary.Boundary;
-import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.PositionAlreadyOccupiedException;
 
 import java.util.Collection;

@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.Maps.PlanetMap;
+import agh.ics.oop.model.maps.PlanetMap;
 
 import agh.ics.oop.model.worldElements.WorldElement;
 

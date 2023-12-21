@@ -3,11 +3,11 @@ package agh.ics.oop.model.worldElements;
 
 import agh.ics.oop.model.*;
 
-import agh.ics.oop.model.Maps.Teleporter;
+import agh.ics.oop.model.maps.Teleporter;
 import agh.ics.oop.model.genotype.BasicGenotype;
 import agh.ics.oop.model.genotype.Genotype;
 import agh.ics.oop.model.stats.AnimalStats;
-import agh.ics.oop.model.worldElements.Plants.Plant;
+import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.ArrayList;
 import java.util.List;

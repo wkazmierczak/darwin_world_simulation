@@ -12,16 +12,28 @@ public enum MapDirection {
 
     public String toString(){
         return switch(this){
-            case NORTH -> "^";
-            case NORTHEAST -> "↗";
-            case EAST -> ">";
-            case SOUTHEAST -> "↘";
-            case SOUTH -> "v";
-            case SOUTHWEST -> "↙";
-            case WEST -> "<";
-            case NORTHWEST -> "↖";
+            case NORTH -> "N";
+            case NORTHEAST -> "NE";
+            case EAST -> "E";
+            case SOUTHEAST -> "SE";
+            case SOUTH -> "S";
+            case SOUTHWEST -> "SW";
+            case WEST -> "W";
+            case NORTHWEST -> "NW";
         };
     }
+//    public String toString(){
+//        return switch(this){
+//            case NORTH -> "^";
+//            case NORTHEAST -> "";
+//            case EAST -> ">";
+//            case SOUTHEAST -> "";
+//            case SOUTH -> "v";
+//            case SOUTHWEST -> "";
+//            case WEST -> "<";
+//            case NORTHWEST -> "";
+//        };
+//    }
     public MapDirection rotateNTimes (int n){
         int nxt = (this.ordinal() + n) % MapDirection.values().length;
         return MapDirection.values()[nxt];

@@ -4,7 +4,7 @@ import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
 
-import agh.ics.oop.model.Maps.PlanetMap;
+import agh.ics.oop.model.maps.PlanetMap;
 
 import agh.ics.oop.model.worldElements.WorldElement;
 import javafx.application.Platform;
