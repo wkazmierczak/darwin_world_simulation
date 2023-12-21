@@ -18,7 +18,7 @@ public class PingPongGenotype extends AbstractGenotype {
     }
 
     @Override
-    public MoveDirection next() {
+    public int next() {
         if (currentIdx == 0) {
             genMove = 1;
         }
@@ -26,7 +26,7 @@ public class PingPongGenotype extends AbstractGenotype {
             genMove = -1;
         }
 
-        MoveDirection result = genotypeList.get(currentIdx);
+        int result = genotypeList.get(currentIdx);
         currentIdx += genMove;
 
         return result;

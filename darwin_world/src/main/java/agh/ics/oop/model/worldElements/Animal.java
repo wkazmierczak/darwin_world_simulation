@@ -11,6 +11,7 @@ import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Animal implements WorldElement {
@@ -46,7 +47,6 @@ public class Animal implements WorldElement {
     }
 
 
-
     public Animal(Vector2d position) {
         this(position, new BasicGenotype(5));
     }
@@ -61,39 +61,38 @@ public class Animal implements WorldElement {
     }
 
     public void move(Teleporter teleport) {
-        MoveDirection direction = genotype.next();
+        int rotate = genotype.next();
         Vector2d prevPos = getPosition();
         MapDirection prevOrient = getOrientation();
 
-        orientation = orientation.rotateNTimes(direction.getIndex());
+        MapDirection nextOrientation = orientation.rotateNTimes(rotate);
 
-        Vector2d nextPosition = teleport.moveIntoDirection(prevPos, orientation.toUnitVector());
+        PositionDetails moveDetails = teleport.moveIntoDirection(prevPos, prevOrient, nextOrientation.toUnitVector());
+        Vector2d nextPosition = moveDetails.position();
+        nextOrientation = moveDetails.orientation();
 
-        if (teleport.plantAt(nextPosition).isPoisonous()){
-                if (new Random().nextInt(100) < 20) {
-                    List<Integer> otherRotations = new ArrayList<>();
-                    for (int i = 0; i < 8; i++) {
-                        if (i != direction.getIndex()) {
-                            otherRotations.add(i);
-                        }
-                    }
-                    orientation = prevOrient.rotateNTimes(otherRotations.get(new Random().nextInt(otherRotations.size())));
-                    nextPosition = teleport.moveIntoDirection(prevPos, orientation.toUnitVector());
-                }
+        if (teleport.plantAt(nextPosition).isPoisonous()) {
+            if (new Random().nextInt(100) < 20) {
+                nextOrientation = prevOrient.rotateNTimes(new Random().nextInt(1, 8));
+                moveDetails = teleport.moveIntoDirection(prevPos, prevOrient, nextOrientation.toUnitVector());
+                nextPosition = moveDetails.position();
+                nextOrientation = moveDetails.orientation();
+            }
         }
 
         this.position = nextPosition;
+        this.orientation = nextOrientation;
 
     }
 
     public void eat(Plant plant) {
-        energyLevel+=plant.getNutritious();
+        energyLevel += plant.getNutritious();
     }
 
-    public Animal reproduce(Animal other){
+    public Animal reproduce(Animal other) {
         int energySpendToReproduce = this.getStats().getEnergySpendToReproduce();
 
-        if (this.energyLevel<= energySpendToReproduce || other.energyLevel <= energySpendToReproduce){
+        if (this.energyLevel <= energySpendToReproduce || other.energyLevel <= energySpendToReproduce) {
             return null;
         }
 
@@ -106,7 +105,7 @@ public class Animal implements WorldElement {
 //        MoveDirection direction = genotype.next();
         move(teleport);
         Plant plant = teleport.plantAt(position);
-        if (plant != null){
+        if (plant != null) {
             eat(plant);
         }
 //        if (energyLevel <= 0){

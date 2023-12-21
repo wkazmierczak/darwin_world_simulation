@@ -4,6 +4,7 @@ import agh.ics.oop.model.*;
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.util.MapVisualizer;
 import agh.ics.oop.model.worldElements.Animal;
+import agh.ics.oop.model.worldElements.PositionDetails;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.*;
@@ -12,7 +13,6 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
 
     protected final Map<Vector2d, Set<Animal>> animals = new HashMap<>();
     protected final Map<Vector2d, Plant> plants = new HashMap<>();
-    protected final PlantsPositionGenerator plantsPositionGenerator;
     protected final Boundary boundary;
     protected final int everyDayPlantsCount;
     protected final int energyAfterConsumingPlant;
@@ -23,7 +23,6 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
         this.boundary = new Boundary(new Vector2d(0, 0), new Vector2d(width, height));
         this.everyDayPlantsCount = everyDayPlantsCount;
         this.energyAfterConsumingPlant = energyAfterConsumingPlant;
-        this.plantsPositionGenerator = new PlantsPositionGenerator(plants, boundary);
         growPlants(startingPlantsCount);
 
     }
@@ -106,10 +105,16 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
     }
 
     @Override
-    public Vector2d moveIntoDirection(Vector2d base, Vector2d step) {
+    public PositionDetails moveIntoDirection(Vector2d basePosition, MapDirection baseDirection, Vector2d step) {
         //TODO naprawić bieguny
-        var newPos = base.add(step);
-        return newPos.closeIn(boundary);
+        var position = basePosition.add(step);
+        var orientation = baseDirection;
+        position = position.closeInXTeleport(boundary);
+        if (!position.inBounds(boundary)) {
+            position = position.closeInY(boundary);
+            orientation = orientation.opposite();
+        }
+        return new PositionDetails(position, orientation);
     }
 
     @Override
@@ -153,16 +158,5 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
         return id;
     }
 
-//    protected List<Vector2d> getAllPositionsShuffled() {
-//
-//        List<Vector2d> positions = new ArrayList<>(boundary.getWidth() * boundary.getHeight());
-//        for (int i = getCurrentBounds().bottomLeft().getX(); i < getCurrentBounds().upperRight().getX(); i++) {
-//            for (int j = getCurrentBounds().bottomLeft().getY(); j < getCurrentBounds().upperRight().getY(); j++) {
-//                positions.add(new Vector2d(i, j));
-//            }
-//        }
-//        Collections.shuffle(positions);
-//        return positions;
-//    }
 
 }

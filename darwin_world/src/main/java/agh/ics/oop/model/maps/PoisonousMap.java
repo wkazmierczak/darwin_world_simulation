@@ -33,17 +33,18 @@ public class PoisonousMap extends AbstractPlanetMap {
         int yd = boundary.bottomLeft().getY();
         int yu = boundary.upperRight().getY();
         int poisonousAreaSide = (int) Math.sqrt((xr - xl) * (yu - yd) * poisonousAreaSurface);
-        Predicate<Vector2d> goodPlaceForPoisonedArea = (Vector2d bottomLeft) -> {
+        PlantsPositionGenerator plantsPositionGenerator = new PlantsPositionGenerator(plants, boundary);
+        Predicate<Vector2d> isGoodPlaceForPoisonedArea = (Vector2d bottomLeft) -> {
             Vector2d upperRight = bottomLeft.add(new Vector2d(poisonousAreaSide, poisonousAreaSide));
             return bottomLeft.inBounds(boundary) && upperRight.inBounds(boundary);
         };
-        return plantsPositionGenerator.getAllPositionsShuffled().filter(goodPlaceForPoisonedArea).findFirst().map(bottomLeft -> new Boundary(bottomLeft, bottomLeft.add(new Vector2d(poisonousAreaSide, poisonousAreaSide)))).orElseThrow(() -> {
-            throw new RuntimeException("Cannot find place for poisoned area");
-        });
+        return plantsPositionGenerator.getAllPositionsShuffled().filter(isGoodPlaceForPoisonedArea).findFirst().map(bottomLeft -> new Boundary(bottomLeft, bottomLeft.add(new Vector2d(poisonousAreaSide, poisonousAreaSide)))).orElseThrow(() -> new RuntimeException("Cannot find place for poisoned area"));
     }
 
     @Override
     public void growPlants(int count) {
+        PlantsPositionGenerator plantsPositionGenerator = new PlantsPositionGenerator(plants, boundary);
+
         List<Vector2d> positions = plantsPositionGenerator.getNFreePositions(count);
         for (var position : positions) {
             Plant newPlant = new BasicPlant(energyAfterConsumingPlant);

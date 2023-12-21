@@ -10,8 +10,8 @@ public enum MapDirection {
     WEST,
     NORTHWEST;
 
-    public String toString(){
-        return switch(this){
+    public String toString() {
+        return switch (this) {
             case NORTH -> "N";
             case NORTHEAST -> "NE";
             case EAST -> "E";
@@ -22,7 +22,8 @@ public enum MapDirection {
             case NORTHWEST -> "NW";
         };
     }
-//    public String toString(){
+
+    //    public String toString(){
 //        return switch(this){
 //            case NORTH -> "^";
 //            case NORTHEAST -> "";
@@ -34,19 +35,24 @@ public enum MapDirection {
 //            case NORTHWEST -> "";
 //        };
 //    }
-    public MapDirection rotateNTimes (int n){
+    public MapDirection opposite() {
+        return rotateNTimes(MapDirection.values().length / 2); //4
+    }
+
+    public MapDirection rotateNTimes(int n) {
         int nxt = (this.ordinal() + n) % MapDirection.values().length;
         return MapDirection.values()[nxt];
     }
 
-    public Vector2d toUnitVector(){
-        return switch(this) {
+    public Vector2d toUnitVector() {
+        return switch (this) {
             case NORTH -> new Vector2d(0, 1);
             case NORTHEAST -> new Vector2d(1, 1);
             case SOUTH -> new Vector2d(0, -1);
             case SOUTHEAST -> new Vector2d(1, -1);
             case EAST -> new Vector2d(1, 0);
-            case SOUTHWEST -> new Vector2d(-1, -1);
+            case SOUTHWEST ->
+                    new Vector2d(-1, -1);
             case WEST -> new Vector2d(-1, 0);
             case NORTHWEST -> new Vector2d(-1, 1);
         };

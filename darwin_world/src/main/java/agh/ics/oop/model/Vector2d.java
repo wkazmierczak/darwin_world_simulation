@@ -49,12 +49,23 @@ public class Vector2d {
         return (x0 - xl) % Math.abs(xr - xl) + xl;
     }
 
-    public Vector2d closeIn(Boundary boundary) {
+    public Vector2d closeInY(Boundary boundary) {
+        int newY = Math.abs(getY() - boundary.bottomLeft().getY()) < Math.abs(getY() - boundary.upperRight().getY()) ? Math.max(boundary.bottomLeft().getY(), getY()) : Math.min(getY(), boundary.upperRight().getY());
+        return new Vector2d(getX(), newY);
+    }
+
+    public Vector2d closeInTeleport(Boundary boundary) {
         int xl = boundary.bottomLeft().getX();
         int xr = boundary.upperRight().getY();
         int yd = boundary.bottomLeft().getY();
         int yu = boundary.upperRight().getY();
         return new Vector2d(returnCycled(xl, getX(), xr), returnCycled(yd, getY(), yu));
+    }
+
+    public Vector2d closeInXTeleport(Boundary boundary) {
+        int xl = boundary.bottomLeft().getX();
+        int xr = boundary.upperRight().getY();
+        return new Vector2d(returnCycled(xl, getX(), xr), getY());
     }
 
     public boolean inBounds(Boundary boundary) {
@@ -84,4 +95,5 @@ public class Vector2d {
     public int getY() {
         return y;
     }
+
 }
