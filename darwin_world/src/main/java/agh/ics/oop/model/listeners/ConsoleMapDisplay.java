@@ -1,10 +1,12 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.listeners;
 
 
+import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.maps.PlanetMap;
 import agh.ics.oop.model.worldElements.WorldElement;
 
-public class ConsoleMapDisplay implements MapChangeListener{
+public class ConsoleMapDisplay implements MapChangeListener {
 
     private int updateCnt = 0;
     @Override

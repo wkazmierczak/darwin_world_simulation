@@ -12,14 +12,18 @@ import java.util.stream.IntStream;
 public abstract class AbstractGenotype implements Genotype {
 
     protected List<Integer> genotypeList;
+    protected int currentIdx;
 
     private static final String[] sites = {"left", "right"};
 
     protected AbstractGenotype(int length) {
         genotypeList = IntStream.generate(this::getRandomFromLegalRange).limit(length).boxed().collect(Collectors.toCollection(ArrayList::new));
+        currentIdx = new Random().nextInt(sites.length);
     }
 
     protected AbstractGenotype(Animal animal1, Animal animal2) {
+        currentIdx = new Random().nextInt(sites.length);
+
         Animal stronger = animal1.getEnergyLevel() > animal2.getEnergyLevel() ? animal1 : animal2;
         Animal weaker = animal1.getEnergyLevel() <= animal2.getEnergyLevel() ? animal1 : animal2;
 

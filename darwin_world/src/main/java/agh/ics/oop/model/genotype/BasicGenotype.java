@@ -4,7 +4,6 @@ import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.MoveDirection;
 
 public class BasicGenotype extends AbstractGenotype {
-    private int currentIdx = 0;
 
     public BasicGenotype(int length) {
         super(length);

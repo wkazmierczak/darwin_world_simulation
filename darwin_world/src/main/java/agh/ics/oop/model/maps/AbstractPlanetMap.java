@@ -2,6 +2,7 @@ package agh.ics.oop.model.maps;
 
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.Boundary.Boundary;
+import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.util.MapVisualizer;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.worldElements.PositionDetails;

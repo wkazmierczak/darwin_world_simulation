@@ -34,7 +34,7 @@ public class Animal implements WorldElement {
 
     public Animal(Vector2d position, Genotype genotype, Animal parent1, Animal parent2) {
         this.position = position;
-        this.orientation = MapDirection.NORTH;
+        this.orientation = MapDirection.getRandom();
         this.energyLevel = 0;
         this.genotype = genotype;
         this.Stats = new AnimalStats(2, 2); //TODO for each sim different values
@@ -90,6 +90,7 @@ public class Animal implements WorldElement {
     }
 
     public Animal reproduce(Animal other) {
+        //TODO nie zmiejszamy energii potrzebnej na stworzenie nowego zwierzaka
         int energySpendToReproduce = this.getStats().getEnergySpendToReproduce();
 
         if (this.energyLevel <= energySpendToReproduce || other.energyLevel <= energySpendToReproduce) {

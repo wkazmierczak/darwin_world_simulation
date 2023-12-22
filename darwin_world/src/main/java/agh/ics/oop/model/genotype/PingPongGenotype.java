@@ -5,7 +5,6 @@ import agh.ics.oop.model.MoveDirection;
 
 public class PingPongGenotype extends AbstractGenotype {
 
-    private int currentIdx = 0;
 
     private int genMove = 1;
 
