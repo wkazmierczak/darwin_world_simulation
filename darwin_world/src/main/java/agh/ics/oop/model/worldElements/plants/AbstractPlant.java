@@ -6,4 +6,9 @@ abstract class AbstractPlant {
     protected AbstractPlant(int energyAfterConsuming) {
         this.energyAfterConsuming = energyAfterConsuming;
     }
+
+    @Override
+    public String toString() {
+        return "*";
+    }
 }
