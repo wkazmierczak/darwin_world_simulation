@@ -6,6 +6,7 @@ import agh.ics.oop.model.*;
 
 import agh.ics.oop.model.maps.PlanetMap;
 
+import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.worldElements.WorldElement;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -113,7 +114,7 @@ public class SimulationPresenter implements MapChangeListener {
 
 
     @Override
-    public void mapChanged(PlanetMap<WorldElement, Vector2d> worldMap, String message) {
+    public void mapChanged(PlanetMap<Animal, Vector2d> worldMap, String message) {// zmiana na animal
 
 
         Platform.runLater(() -> {
@@ -123,23 +124,23 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     public void onSimulationStartClicked(ActionEvent actionEvent) {
-
-
-        String[] input1 = textField.getText().split(" ");
-
-        List<MoveDirection> directions2 = OptionsParser.parse(input1);
-        List<Vector2d> positions2 = List.of(new Vector2d(2, 2), new Vector2d(-3,2));
-
-
-        Simulation simulation2 = new Simulation(directions2, positions2, map);
-        List<Simulation> sims = List.of(simulation2);
-        SimulationEngine engine = new SimulationEngine(sims);
-//        engine.runSync();
-        engine.runAsync();
-        engine.awaitSimulationEnd();
-
-
-//        simulation2.run();
+//
+//
+//        String[] input1 = textField.getText().split(" ");
+//
+//        List<MoveDirection> directions2 = OptionsParser.parse(input1);
+//        List<Vector2d> positions2 = List.of(new Vector2d(2, 2), new Vector2d(-3,2));
+//
+//
+//        Simulation simulation2 = new Simulation(directions2, positions2, map);
+//        List<Simulation> sims = List.of(simulation2);
+//        SimulationEngine engine = new SimulationEngine(sims);
+////        engine.runSync();
+//        engine.runAsync();
+//        engine.awaitSimulationEnd();
+//
+//
+////        simulation2.run();
     }
 
     private void clearGrid() {

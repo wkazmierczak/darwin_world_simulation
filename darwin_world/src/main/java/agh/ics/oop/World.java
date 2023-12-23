@@ -3,11 +3,14 @@ package agh.ics.oop;
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.maps.EquatorMap;
 import agh.ics.oop.model.maps.PlanetMap;
+
 import agh.ics.oop.model.maps.PoisonousMap;
+
 import javafx.application.Application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class World {
@@ -15,6 +18,11 @@ public class World {
         System.out.println("system wystartował");
         PlanetMap planetMap = new PoisonousMap(10, 10 );
         System.out.println(planetMap);
+
+        Simulation sim = new Simulation(10, planetMap);
+        sim.run();
+//        TODO symulacja jeszcze nie współgra z obserwatorami
+
 
 //        Application.launch(SimulationApp.class, args);
 

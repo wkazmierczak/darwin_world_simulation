@@ -16,7 +16,7 @@ public class PoisonousMap extends AbstractPlanetMap {
     private float poisonousAreaSurface = 0.2F;
     private final float poisonousAreaRatioToGrowNew = 0.5F;
 
-    protected PoisonousMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
+    public PoisonousMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
         super(width, height, startingPlantsCount, everyDayPlantsCount, energyAfterConsumingPlant);
         poisonsAreaBounds = getPoisonsAreaBounds();
         growPlants(startingPlantsCount);
@@ -58,4 +58,5 @@ public class PoisonousMap extends AbstractPlanetMap {
         }
 
     }
+
 }
