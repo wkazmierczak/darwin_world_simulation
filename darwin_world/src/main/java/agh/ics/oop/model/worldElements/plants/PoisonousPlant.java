@@ -14,4 +14,9 @@ public class PoisonousPlant extends AbstractPlant implements Plant {
     public boolean isPoisonous() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "x";
+    }
 }

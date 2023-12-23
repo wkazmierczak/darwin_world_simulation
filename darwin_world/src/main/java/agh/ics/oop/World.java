@@ -1,6 +1,9 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.maps.EquatorMap;
+import agh.ics.oop.model.maps.PlanetMap;
+import agh.ics.oop.model.maps.PoisonousMap;
 import javafx.application.Application;
 
 import java.util.ArrayList;
@@ -10,6 +13,9 @@ import java.util.Random;
 public class World {
     public static void main(String[] args){
         System.out.println("system wystartował");
+        PlanetMap planetMap = new PoisonousMap(10, 10 );
+        System.out.println(planetMap);
+
 //        Application.launch(SimulationApp.class, args);
 
 

@@ -17,15 +17,16 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
     protected final Boundary boundary;
     protected final int everyDayPlantsCount;
     protected final int energyAfterConsumingPlant;
+    protected final int startingPlantsCount;
     private final List<MapChangeListener> mapChangeListeners = new ArrayList<>();
     protected String id; //TODO zapytac co to
+
 
     protected AbstractPlanetMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
         this.boundary = new Boundary(new Vector2d(0, 0), new Vector2d(width, height));
         this.everyDayPlantsCount = everyDayPlantsCount;
         this.energyAfterConsumingPlant = energyAfterConsumingPlant;
-        growPlants(startingPlantsCount);
-
+        this.startingPlantsCount = startingPlantsCount;
     }
 
     //JUST FOR TESTS

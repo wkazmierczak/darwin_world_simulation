@@ -17,11 +17,14 @@ public class EquatorMap extends AbstractPlanetMap {
     protected EquatorMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
         super(width, height, startingPlantsCount, everyDayPlantsCount, energyAfterConsumingPlant);
         this.equatorBounds = getEquatorBounds();
+        growPlants(startingPlantsCount);
     }
 
-    protected EquatorMap(int width, int height) {
+    public EquatorMap(int width, int height) {
         super(width, height);
         this.equatorBounds = getEquatorBounds();
+        System.out.println(equatorBounds);
+        growPlants(startingPlantsCount);
     }
 
 
@@ -40,7 +43,10 @@ public class EquatorMap extends AbstractPlanetMap {
     public void growPlants(int count) {
         PlantsPositionGenerator plantsPositionGenerator = new PlantsPositionGenerator(plants, boundary);
         int onEquatorCount = (int) new Random().doubles(0, 1).limit(count).filter(i -> i < equatorRatioToGrowNew).count();
-        List<Vector2d> positions = Stream.concat(plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds).stream(), plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds).stream()).toList();
+//        List<Vector2d> positionsEq = plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds);
+//        List<Vector2d> positionsNotEq = plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds);
+        List<Vector2d> positions = Stream.concat(plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds).stream(), plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds).stream()).
+                toList();
         positions.forEach(p -> plants.put(p, new BasicPlant(energyAfterConsumingPlant)));
     }
 

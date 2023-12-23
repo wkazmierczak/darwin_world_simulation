@@ -19,12 +19,13 @@ public class PoisonousMap extends AbstractPlanetMap {
     protected PoisonousMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
         super(width, height, startingPlantsCount, everyDayPlantsCount, energyAfterConsumingPlant);
         poisonsAreaBounds = getPoisonsAreaBounds();
-
+        growPlants(startingPlantsCount);
     }
 
-    protected PoisonousMap(int width, int height) {
+    public PoisonousMap(int width, int height) {
         super(width, height);
         poisonsAreaBounds = getPoisonsAreaBounds();
+        growPlants(startingPlantsCount);
     }
 
     private Boundary getPoisonsAreaBounds() {
