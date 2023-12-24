@@ -14,7 +14,7 @@ public class EquatorMap extends AbstractPlanetMap {
     private final float equatorSurface = 0.2F;
     private final float equatorRatioToGrowNew = 0.8F;
 
-    protected EquatorMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
+    public EquatorMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
         super(width, height, startingPlantsCount, everyDayPlantsCount, energyAfterConsumingPlant);
         this.equatorBounds = getEquatorBounds();
         growPlants(startingPlantsCount);

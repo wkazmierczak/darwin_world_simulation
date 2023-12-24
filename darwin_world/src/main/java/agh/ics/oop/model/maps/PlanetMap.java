@@ -2,6 +2,7 @@ package agh.ics.oop.model.maps;
 
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.PositionAlreadyOccupiedException;
+import agh.ics.oop.model.worldElements.Animal;
 
 import java.util.Collection;
 import java.util.List;
@@ -40,4 +41,8 @@ public interface PlanetMap<T, P> extends Teleporter {
     Boundary getCurrentBounds();
 
     String getId();
+
+    int updateNumOfFreePositions();
+
+    int getStartingPlantsCount();
 }

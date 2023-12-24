@@ -1,17 +1,14 @@
 package agh.ics.oop.model.worldElements;
 
 
-import agh.ics.oop.model.*;
-
-import agh.ics.oop.model.maps.Teleporter;
+import agh.ics.oop.model.MapDirection;
+import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.genotype.BasicGenotype;
 import agh.ics.oop.model.genotype.Genotype;
+import agh.ics.oop.model.maps.Teleporter;
 import agh.ics.oop.model.stats.AnimalStats;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class Animal implements WorldElement {
@@ -47,9 +44,9 @@ public class Animal implements WorldElement {
     }
 
 
-    public Animal(Vector2d position) {
-        this(position, new BasicGenotype(5));
-    }
+//    public Animal(Vector2d position) {
+//        this(position, new BasicGenotype(5));
+//    }
 
     @Override
     public String toString() {
@@ -71,7 +68,7 @@ public class Animal implements WorldElement {
         Vector2d nextPosition = moveDetails.position();
         nextOrientation = moveDetails.orientation();
 
-        if (teleport.plantAt(nextPosition).isPoisonous()) {
+        if (teleport.plantAt(nextPosition)!= null && teleport.plantAt(nextPosition).isPoisonous()) {
             if (new Random().nextInt(100) < 20) {
                 nextOrientation = prevOrient.rotateNTimes(new Random().nextInt(1, 8));
                 moveDetails = teleport.moveIntoDirection(prevPos, prevOrient, nextOrientation.toUnitVector());
@@ -106,8 +103,10 @@ public class Animal implements WorldElement {
         move(teleport);
         Plant plant = teleport.plantAt(position);
         if (plant != null) {
-            eat(plant);
-        }
+//            eat(plant);
+        } // TODO dodanie logiki związanej z jedzeniem
+//        TODO rozmanażanie się zwierzaków
+
 //        if (energyLevel <= 0){
 //            this.getStats().getDayOfDeath() = //TODO get day of simulation;
 //        }

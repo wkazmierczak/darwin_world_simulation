@@ -5,33 +5,33 @@ import java.util.*;
 public class RandomPositionGenerator implements Iterable<Vector2d> {
     private final int maxWidth;
     private final int maxHeight;
-    private final int grassCount;
+    private final int elemsCount;
 
-    public RandomPositionGenerator(int maxWidth, int maxHeight, int grassCount){
+    public RandomPositionGenerator(int maxWidth, int maxHeight, int elemsCount){
         this.maxWidth = maxWidth;
         this.maxHeight = maxHeight;
-        this.grassCount = grassCount;
+        this.elemsCount = elemsCount;
 
     }
 
     @Override
     public Iterator<Vector2d> iterator() {
-        return new RandomPositionIterator(maxWidth, maxHeight, grassCount);
+        return new RandomPositionIterator(maxWidth, maxHeight, elemsCount);
     }
 
     private class RandomPositionIterator implements Iterator<Vector2d>{
 
         private final int maxWidth;
         private final int maxHeight;
-        private final int grassCount;
+        private final int elemsCount;
         private final Random rand = new Random();;
         private int generatedCount;
         private final List<Vector2d> positions;
 
-        public RandomPositionIterator(int maxWidth, int maxHeight, int grassCount) {
+        public RandomPositionIterator(int maxWidth, int maxHeight, int elemsCount) {
             this.maxWidth = maxWidth;
             this.maxHeight = maxHeight;
-            this.grassCount = grassCount;
+            this.elemsCount = elemsCount;
             this.generatedCount = 0;
 
             this.positions = new ArrayList<>();
@@ -51,7 +51,7 @@ public class RandomPositionGenerator implements Iterable<Vector2d> {
 
         @Override
         public boolean hasNext() {
-            return generatedCount < grassCount;
+            return generatedCount < elemsCount;
         }
 
         @Override
