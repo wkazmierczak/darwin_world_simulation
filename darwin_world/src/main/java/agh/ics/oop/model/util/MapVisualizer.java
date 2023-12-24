@@ -81,6 +81,10 @@ public class MapVisualizer {
         if (object != null) {
             return object.toString();
         }
+        object = this.map.animalsAt(currentPosition); //TODO na razie prowizoryczna wizualizacja zwierzaków
+        if (object != null) {
+            return object.toString();
+        }
 //        }
         return EMPTY_CELL;
     }

@@ -1,6 +1,9 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.genotype.GenotypeType;
+import agh.ics.oop.model.maps.EquatorMap;
+import agh.ics.oop.model.maps.MapType;
 import agh.ics.oop.model.maps.PlanetMap;
 import agh.ics.oop.model.stats.AnimalStats;
 import agh.ics.oop.model.stats.SimulationStats;
@@ -22,48 +25,46 @@ public class Simulation implements Runnable {
     private int dayOfSimulation;
     private SimulationStats stats;
 
-    public Simulation(int initialNumOfAnimals, PlanetMap<Animal, Vector2d> worldMap) {
+//    TODO dużo argumentów więc pewnie jakiś refactor
+    public Simulation(int width, int height, int initialNumOfAnimals, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant, int genotypeLength, GenotypeType genotypeType, MapType mapType) {
         this.animals = new ArrayList<>();
 
-        this.stats = new SimulationStats(initialNumOfAnimals, worldMap.getStartingPlantsCount());
+        this.worldMap = mapType.createPlanetMap(width, height, startingPlantsCount, everyDayPlantsCount,energyAfterConsumingPlant);
 
-        this.worldMap = worldMap;
-        List<Vector2d> tab1 = new ArrayList<>(List.of(new Vector2d(1, 2), new Vector2d(3, 3)));
+        this.stats = new SimulationStats(initialNumOfAnimals, startingPlantsCount);
 
-        for (Vector2d pos : tab1) {
-//        for (Vector2d pos : generateRandomVector2ds(initialNumOfAnimals)) {
-                Animal animal = new Animal(pos, new BasicGenotype(5));
-                try {
-                    worldMap.place(animal);
-                    this.animals.add(animal);
-                } catch (
-                        PositionAlreadyOccupiedException ignored) {
-                }
+//        List<Vector2d> tab1 = new ArrayList<>(List.of(new Vector2d(1, 2), new Vector2d(3, 3)));
+
+        RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(width, height, initialNumOfAnimals);
+        for(Vector2d animalPosition : randomPositionGenerator) {
+            Animal newAnimal = new Animal(animalPosition, genotypeType.createGenotype(genotypeLength));
+            animals.add(newAnimal);
+            try {
+                worldMap.place(newAnimal);
+            } catch (PositionAlreadyOccupiedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println(worldMap);
         }
+
+
     }
 
-    public List<Vector2d> generateRandomVector2ds(int n) {
-        Random random = new Random();
-
-        return Stream.generate(() ->
-                        new Vector2d(random.nextInt(worldMap.getCurrentBounds().getWidth()), random.nextInt(random.nextInt(worldMap.getCurrentBounds().getHeight()))))
-                .distinct()
-                .limit(n)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public void run() {
-        int numOfAnimals = animals.size();
-        int i = 0;
-        while (i<10){ // TODO number only for test
-            worldMap.move(animals.get(i % numOfAnimals));
+        int day = 0;
+        while (day<10){ // TODO number only for test
+            for (Animal animal: animals) {
+                worldMap.move(animal);
+                System.out.println(worldMap); // TODO prowizoryczne wyświetlanie mapy do poprawy to string z animal i wyświetlanie roślin, zwierzaki się nie teleportują, tylko znikają (mogłem użyć złej funkcji place)
 //            try {
 //                Thread.sleep(500);
 //            } catch (InterruptedException e) {
 //                throw new RuntimeException(e);
 //            }
-            i++;
+            }
+            day++;
 
 //            TODO usuwanie ciał
 //            TODO nextDay() z Animal

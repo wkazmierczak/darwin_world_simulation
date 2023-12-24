@@ -1,7 +1,9 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.genotype.GenotypeType;
 import agh.ics.oop.model.maps.EquatorMap;
+import agh.ics.oop.model.maps.MapType;
 import agh.ics.oop.model.maps.PlanetMap;
 
 import agh.ics.oop.model.maps.PoisonousMap;
@@ -19,7 +21,7 @@ public class World {
         PlanetMap planetMap = new PoisonousMap(10, 10 );
         System.out.println(planetMap);
 
-        Simulation sim = new Simulation(10, planetMap);
+        Simulation sim = new Simulation(10, 10, 3, 1, 3, 2 , 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP);
         sim.run();
 //        TODO symulacja jeszcze nie współgra z obserwatorami
 
