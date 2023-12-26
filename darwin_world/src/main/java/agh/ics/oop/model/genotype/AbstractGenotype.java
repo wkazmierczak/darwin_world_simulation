@@ -1,11 +1,11 @@
 package agh.ics.oop.model.genotype;
 
 import agh.ics.oop.model.worldElements.Animal;
-import agh.ics.oop.model.MoveDirection;
 
+import java.util.ArrayList;
 import java.util.Collections;
-
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

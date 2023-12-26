@@ -1,7 +1,8 @@
 package agh.ics.oop.model.maps;
 
-import agh.ics.oop.model.*;
 import agh.ics.oop.model.Boundary.Boundary;
+import agh.ics.oop.model.MapDirection;
+import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.util.MapVisualizer;
 import agh.ics.oop.model.worldElements.Animal;
@@ -9,6 +10,7 @@ import agh.ics.oop.model.worldElements.PositionDetails;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, Teleporter {
 
@@ -44,7 +46,7 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
 
     public void mapChanged(String message) {
         for (MapChangeListener listener : mapChangeListeners) {
-//            listener.mapChanged(this, message); // ! zly typ dla mapchanged
+            listener.mapChanged(this, message); // ! zly typ dla mapchanged
         }
     }
 
@@ -160,5 +162,15 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
         return id;
     }
 
+    @Override
+    public int updateNumOfFreePositions(){
+        return (int) (boundary.getWidth() * boundary.getHeight() - Stream.concat(plants.keySet().stream(), animals.keySet().stream())
+                        .distinct()
+                        .count());
+    }
 
+    @Override
+    public int getStartingPlantsCount() {
+        return startingPlantsCount;
+    }
 }

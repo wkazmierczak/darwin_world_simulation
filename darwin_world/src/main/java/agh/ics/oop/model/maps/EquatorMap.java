@@ -4,7 +4,8 @@ import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.worldElements.plants.BasicPlant;
 
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Stream;
 
 public class EquatorMap extends AbstractPlanetMap {
@@ -14,7 +15,7 @@ public class EquatorMap extends AbstractPlanetMap {
     private final float equatorSurface = 0.2F;
     private final float equatorRatioToGrowNew = 0.8F;
 
-    protected EquatorMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
+    public EquatorMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
         super(width, height, startingPlantsCount, everyDayPlantsCount, energyAfterConsumingPlant);
         this.equatorBounds = getEquatorBounds();
         growPlants(startingPlantsCount);

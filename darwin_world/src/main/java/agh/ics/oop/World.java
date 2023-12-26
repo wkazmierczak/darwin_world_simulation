@@ -1,20 +1,41 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.genotype.GenotypeType;
+import agh.ics.oop.model.listeners.SimulationCSVSaver;
+import agh.ics.oop.model.listeners.SimulationChangeListener;
 import agh.ics.oop.model.maps.EquatorMap;
+import agh.ics.oop.model.maps.MapType;
 import agh.ics.oop.model.maps.PlanetMap;
+
 import agh.ics.oop.model.maps.PoisonousMap;
+
+import agh.ics.oop.model.stats.SimulationStats;
 import javafx.application.Application;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.lang.reflect.Method;
+import java.util.*;
 
 public class World {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         System.out.println("system wystartował");
-        PlanetMap planetMap = new PoisonousMap(10, 10 );
+        PlanetMap planetMap = new PoisonousMap(10, 10);
         System.out.println(planetMap);
+
+        Simulation sim = new Simulation(10, 10, 3, 1, 3, 2, 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP);
+        SimulationStats stats = sim.getStats();
+        Map<String, Method> methods = new HashMap<>();
+        try {
+            methods.put("dayOfSimulation", SimulationStats.class.getDeclaredMethod("getDayOfSimulation"));
+            methods.put("plants", SimulationStats.class.getDeclaredMethod("getNumOfPlants"));
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        SimulationChangeListener listener = new SimulationCSVSaver("C:\\Users\\piotr\\Programowanie\\NaukaJava\\PO_2023_PON1640_KAZMIERCZAK\\darwin_world\\src\\main\\java\\agh\\ics\\oop\\model\\util\\simulation.csv", methods);
+        sim.addSimulationChangeListener(listener);
+        sim.run();
+//        TODO symulacja jeszcze nie współgra z obserwatorami
+
 
 //        Application.launch(SimulationApp.class, args);
 
@@ -83,19 +104,24 @@ public class World {
 
     }
 
-    public static void run(MoveDirection[] directions){
+    public static void run(MoveDirection[] directions) {
 
         System.out.println("Start");
 
-        for (MoveDirection argument: directions){
+        for (MoveDirection argument : directions) {
 
 
             switch (argument) {
-                case FORWARD -> System.out.println("Zwierzak idzie do przodu");
-                case BACKWARD -> System.out.println("Zwierzak idzie do tyłu");
-                case RIGHT -> System.out.println("Zwierzak skręca w prawo");
-                case LEFT -> System.out.println("Zwierzak skręca w lewo");
-            };
+                case FORWARD ->
+                        System.out.println("Zwierzak idzie do przodu");
+                case BACKWARD ->
+                        System.out.println("Zwierzak idzie do tyłu");
+                case RIGHT ->
+                        System.out.println("Zwierzak skręca w prawo");
+                case LEFT ->
+                        System.out.println("Zwierzak skręca w lewo");
+            }
+            ;
 
         }
 

@@ -40,4 +40,8 @@ public interface PlanetMap<T, P> extends Teleporter {
     Boundary getCurrentBounds();
 
     String getId();
+
+    int updateNumOfFreePositions();
+
+    int getStartingPlantsCount();
 }

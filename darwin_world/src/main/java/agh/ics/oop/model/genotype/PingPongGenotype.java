@@ -1,7 +1,6 @@
 package agh.ics.oop.model.genotype;
 
 import agh.ics.oop.model.worldElements.Animal;
-import agh.ics.oop.model.MoveDirection;
 
 public class PingPongGenotype extends AbstractGenotype {
 
