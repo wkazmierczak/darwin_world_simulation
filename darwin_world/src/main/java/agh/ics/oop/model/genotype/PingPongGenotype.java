@@ -1,5 +1,6 @@
 package agh.ics.oop.model.genotype;
 
+import agh.ics.oop.model.util.MyRange;
 import agh.ics.oop.model.worldElements.Animal;
 
 public class PingPongGenotype extends AbstractGenotype {
@@ -11,8 +12,8 @@ public class PingPongGenotype extends AbstractGenotype {
         super(length);
     }
 
-    public PingPongGenotype(Animal stronger, Animal weaker) {
-        super(stronger, weaker);
+    public PingPongGenotype(Animal stronger, Animal weaker, MyRange mutations) {
+        super(stronger, weaker, mutations);
     }
 
     @Override
@@ -31,8 +32,8 @@ public class PingPongGenotype extends AbstractGenotype {
     }
 
     @Override
-    public PingPongGenotype createNewFrom(Animal animal1, Animal animal2) {
-        return new PingPongGenotype(animal1, animal2);
+    public PingPongGenotype createNewFrom(Animal animal1, Animal animal2, MyRange mutations) {
+        return new PingPongGenotype(animal1, animal2, mutations);
     }
 
 }

@@ -1,6 +1,8 @@
 package agh.ics.oop.model.genotype;
 
+import agh.ics.oop.model.util.MyRange;
 import agh.ics.oop.model.worldElements.Animal;
+import org.w3c.dom.ranges.Range;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +23,7 @@ public abstract class AbstractGenotype implements Genotype {
         currentIdx = new Random().nextInt(sites.length);
     }
 
-    protected AbstractGenotype(Animal animal1, Animal animal2) {
+    protected AbstractGenotype(Animal animal1, Animal animal2, MyRange mutations) {
         currentIdx = new Random().nextInt(sites.length);
 
         Animal stronger = animal1.getEnergyLevel() > animal2.getEnergyLevel() ? animal1 : animal2;
@@ -46,7 +48,7 @@ public abstract class AbstractGenotype implements Genotype {
             genotypeList.addAll(strongerGenotypeList.subList(splitPoint, size));
         }
 
-        int numberOfMutations = new Random().nextInt(size);
+        int numberOfMutations = new Random().nextInt(mutations.low(), mutations.high() + 1);
         mutate(numberOfMutations);
     }
 
