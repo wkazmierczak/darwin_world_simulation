@@ -1,6 +1,6 @@
 package agh.ics.oop.model.listeners;
 
-import agh.ics.oop.Simulation;
+import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.model.stats.SimulationStats;
 
 import java.io.File;
@@ -19,15 +19,15 @@ public class SimulationCSVSaver implements SimulationChangeListener {
     private final Map<String, Method> methods;
 
     public SimulationCSVSaver(String destinationFile, Map<String, Method> methods) {
-        this.destinationFile = new File(destinationFile);
+        String destinationFilePath = new File("").getAbsolutePath().concat("\\src\\main\\java\\agh\\ics\\oop\\model\\logs\\") + destinationFile;
+        this.destinationFile = new File(destinationFilePath);
         this.methods = methods;
         printHeader();
     }
 
     private void printHeader() {
         try (PrintWriter fw = new PrintWriter(destinationFile)) {
-            String toprint = String.join(",", methods.keySet());
-            fw.println(toprint);
+            fw.println(String.join(",", methods.keySet()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -36,7 +36,7 @@ public class SimulationCSVSaver implements SimulationChangeListener {
     @Override
     public void simulationChanged(Simulation
                                           simulation) {
-        SimulationStats stats = simulation.getStats();
+        SimulationStats stats = simulation.getStatsController();
         try (FileWriter fw = new FileWriter(destinationFile, true)) {
             List<String> values = methods.values().stream()
                     .map(method -> {
