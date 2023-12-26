@@ -4,11 +4,8 @@ import agh.ics.oop.model.worldElements.Animal;
 
 import java.util.*;
 
+
 public class AnimalStats {
-
-    private final int reproduceEnergyMin;
-
-    private final int energySpendToReproduce;
 
     private int age = 0;
 
@@ -16,27 +13,20 @@ public class AnimalStats {
 
     private int descendants = 0;
 
-//    TODO linked-list
-    private final List<Animal> children = new ArrayList<>();
+    private final List<Animal> children = new LinkedList<>();
 
     private Integer dayOfDeath = null;
 
 
-    public AnimalStats(int reproduceEnergyMin, int energySpendToReproduce){
-        this.reproduceEnergyMin = reproduceEnergyMin;
-        this.energySpendToReproduce = energySpendToReproduce;
-
-    }
-
-    public void incrementAge(){
+    public void incrementAge() {
         age++;
     }
 
-    public void incrementPlantsEaten(){
+    public void incrementPlantsEaten() {
         plantsEaten++;
     }
 
-    public void addChildren(Animal child){
+    public void addChildren(Animal child) {
         children.add(child);
         updateDescendants(child);
     }
@@ -50,26 +40,25 @@ public class AnimalStats {
 
         while (!queue.isEmpty()) {
             Animal currAnimal = queue.remove();
-            if ((currAnimal.getParent1() != null) && (!visited.contains(currAnimal.getParent1()))) {
-                currAnimal.getParent1().getStats().incrementDescendants();
-                queue.add(currAnimal.getParent1());
-            }
-            if ((currAnimal.getParent2() != null) && (!visited.contains(currAnimal.getParent2()))) {
-                currAnimal.getParent2().getStats().incrementDescendants();
-                queue.add(currAnimal.getParent1());
+            for (var parent : currAnimal.getParents()) {
+                if (parent != null && !visited.contains(parent)) {
+                    parent.getStats().incrementDescendants();
+                    queue.add(parent);
+                }
             }
         }
     }
 
-    private void incrementDescendants(){
+
+    private void incrementDescendants() {
         this.descendants++;
     }
 
-    public void setDayOfDeath(int dayOfSimulation){
+    public void setDayOfDeath(int dayOfSimulation) {
         this.dayOfDeath = dayOfSimulation;
     }
 
-    public int getChildrenCount(){
+    public int getChildrenCount() {
         return children.size();
     }
 
@@ -77,17 +66,11 @@ public class AnimalStats {
         return age;
     }
 
-    public int getEnergySpendToReproduce() {
-        return energySpendToReproduce;
-    }
 
     public int getPlantsEaten() {
         return plantsEaten;
     }
 
-    public int getReproduceEnergyMin() {
-        return reproduceEnergyMin;
-    }
 
     public Integer getDayOfDeath() {
         return dayOfDeath;
@@ -97,7 +80,7 @@ public class AnimalStats {
         return children;
     }
 
-    public int getDescendantsCount(){
+    public int getDescendantsCount() {
         return descendants;
     }
 

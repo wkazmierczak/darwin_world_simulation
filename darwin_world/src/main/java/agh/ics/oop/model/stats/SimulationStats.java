@@ -27,6 +27,9 @@ public class SimulationStats {
         this.numOfPlants = initialNumOfPlants;
     }
 
+    public void nextDay() {
+        dayOfSimulation++;
+    }
     public void incrementNumOfAnimals() {
         numOfAnimals++;
     }
