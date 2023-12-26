@@ -4,8 +4,10 @@ import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.MapDirection;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.listeners.MapChangeListener;
+import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.util.MapVisualizer;
 import agh.ics.oop.model.worldElements.Animal;
+import agh.ics.oop.model.worldElements.AnimalComparator;
 import agh.ics.oop.model.worldElements.PositionDetails;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
@@ -14,26 +16,22 @@ import java.util.stream.Stream;
 
 public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, Teleporter {
 
-    protected final Map<Vector2d, Set<Animal>> animals = new HashMap<>();
+    protected final Map<Vector2d, SortedSet<Animal>> animals = new HashMap<>();
     protected final Map<Vector2d, Plant> plants = new HashMap<>();
     protected final Boundary boundary;
-    protected final int everyDayPlantsCount;
-    protected final int energyAfterConsumingPlant;
-    protected final int startingPlantsCount;
+    protected final WorldSetupData setupData;
     private final List<MapChangeListener> mapChangeListeners = new ArrayList<>();
     protected String id; //TODO zapytac co to
 
 
-    protected AbstractPlanetMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
-        this.boundary = new Boundary(new Vector2d(0, 0), new Vector2d(width, height));
-        this.everyDayPlantsCount = everyDayPlantsCount;
-        this.energyAfterConsumingPlant = energyAfterConsumingPlant;
-        this.startingPlantsCount = startingPlantsCount;
+    protected AbstractPlanetMap(WorldSetupData setupData) {
+        this.setupData = setupData;
+        this.boundary = new Boundary(new Vector2d(0, 0), new Vector2d(getSetupData().width(), getSetupData().height()));
     }
 
     //JUST FOR TESTS
     protected AbstractPlanetMap(int width, int height) {
-        this(width, height, 10, 3, 2);
+        this(new WorldSetupData(width, height, 10, 3, 2));
     }
 
     public void addListener(MapChangeListener listener) {
@@ -54,7 +52,9 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
         if (animals.containsKey(pos))
             animals.get(pos).add(animal);
         else {
-            animals.put(pos, new HashSet<>(List.of(animal)));
+            SortedSet<Animal> animalsOnPos = new TreeSet<>(new AnimalComparator());
+            animalsOnPos.add(animal);
+            animals.put(pos, animalsOnPos);
         }
         mapChanged(animal + " placed at " + pos);
     }
@@ -88,20 +88,12 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
         }
     }
 
-//    @Override
-//    public boolean isOccupied(Vector2d position) {
-//        return animals.containsKey(position);
-//    }
 
-//    @Override
-//    public WorldElement objectAt(Vector2d position) {
-//        return animals.get(position);
-//    }
+    public void growPlants() {
+        growPlants(getPlantsPerDay());
+    }
 
-//    @Override
-//    public boolean canMoveTo(Vector2d position) {
-//        return !isOccupied(position);
-//    }
+    abstract void growPlants(int count);
 
     @Override
     public Plant plantAt(Vector2d pos) {
@@ -124,11 +116,13 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
     @Override
     public void removeDead(List<Animal> animals) {
         animals.stream().filter(Animal::isDead).forEach(this::removeAnimal);
-//        toDelete.stream().map(Animal::getPosition).distinct().forEach(pos -> toDelete.forEach(animal -> removeAnimal(pos, animal)));
     }
 
     protected void removeAnimal(Vector2d pos, Animal animal) {
         animals.get(pos).remove(animal);
+        if (animals.get(pos).isEmpty()) {
+            animals.remove(pos);
+        }
     }
 
     protected void removeAnimal(Animal animal) {
@@ -136,14 +130,23 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
         animals.get(pos).remove(animal);
     }
 
+    protected void handleWhoEats(Vector2d pos, Plant plant) {
+        animals.get(pos).first().eat(plant);
+    }
+
+    @Override
+    public void letAnimalsEat() {
+        plants.keySet().stream().filter(animals::containsKey).forEach(pos -> handleWhoEats(pos, plants.get(pos)));
+    }
+
     protected void removePlant(Vector2d pos) {
         animals.remove(pos);
     }
 
-//    @Override
-//    public Collection<SetWorldElement> getElements() {
-//        return animals.values();
-//    }
+    public WorldSetupData getSetupData() {
+        return setupData;
+    }
+
 
     @Override
     public String toString() {
@@ -163,14 +166,17 @@ public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, 
     }
 
     @Override
-    public int updateNumOfFreePositions(){
+    public int updateNumOfFreePositions() {
         return (int) (boundary.getWidth() * boundary.getHeight() - Stream.concat(plants.keySet().stream(), animals.keySet().stream())
-                        .distinct()
-                        .count());
+                .distinct()
+                .count());
     }
 
-    @Override
     public int getStartingPlantsCount() {
-        return startingPlantsCount;
+        return setupData.startingPlantsCount();
+    }
+
+    public int getPlantsPerDay() {
+        return setupData.getPlantsPerDay();
     }
 }

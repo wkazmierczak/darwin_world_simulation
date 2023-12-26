@@ -10,10 +10,13 @@ import agh.ics.oop.model.maps.PlanetMap;
 
 import agh.ics.oop.model.maps.PoisonousMap;
 
+import agh.ics.oop.model.setupData.AnimalSetupData;
 import agh.ics.oop.model.stats.SimulationStats;
-import agh.ics.oop.presenter.SimulationStartupData;
+import agh.ics.oop.model.setupData.SimulationSetupData;
+import agh.ics.oop.model.util.MyRange;
+import agh.ics.oop.model.worldElements.Animal;
+import agh.ics.oop.model.worldElements.AnimalComparator;
 
-import java.io.File;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -21,10 +24,8 @@ public class World {
     public static void main(String[] args) {
         System.out.println("system wystartował");
         PlanetMap planetMap = new PoisonousMap(10, 10);
-        System.out.println(planetMap);
-
-        Simulation sim = new Simulation(new SimulationStartupData(10, 10, 3, 1, 3, 2, 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
-        SimulationStats stats = sim.getStats();
+//        System.out.println(planetMap);
+        Simulation sim = new Simulation(new SimulationSetupData(10, 10, 3, 1, 3, 2, 5, 1, 1, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
         Map<String, Method> methods = new HashMap<>();
         try {
             methods.put("dayOfSimulation", SimulationStats.class.getDeclaredMethod("getDayOfSimulation"));
@@ -32,9 +33,7 @@ public class World {
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
-        String path = new File("").getAbsolutePath().concat("\\src\\main\\java\\agh\\ics\\oop\\model\\util\\simulation2.csv");
-        System.out.println(path);
-        SimulationChangeListener listener = new SimulationCSVSaver(path, methods);
+        SimulationChangeListener listener = new SimulationCSVSaver("simulation3.csv", methods);
         sim.addSimulationChangeListener(listener);
         sim.run();
 //        TODO symulacja jeszcze nie współgra z obserwatorami

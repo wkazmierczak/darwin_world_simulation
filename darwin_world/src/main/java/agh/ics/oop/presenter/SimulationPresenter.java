@@ -1,7 +1,5 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.OptionsParser;
-import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
 
 import agh.ics.oop.model.listeners.MapChangeListener;
@@ -19,8 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-
-import java.util.List;
 
 public class SimulationPresenter implements MapChangeListener {
     private static final double CELL_WIDTH = 30 ;

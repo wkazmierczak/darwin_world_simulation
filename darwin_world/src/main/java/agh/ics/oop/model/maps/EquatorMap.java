@@ -2,6 +2,7 @@ package agh.ics.oop.model.maps;
 
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.worldElements.plants.BasicPlant;
 
 import java.util.List;
@@ -15,17 +16,16 @@ public class EquatorMap extends AbstractPlanetMap {
     private final float equatorSurface = 0.2F;
     private final float equatorRatioToGrowNew = 0.8F;
 
-    public EquatorMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
-        super(width, height, startingPlantsCount, everyDayPlantsCount, energyAfterConsumingPlant);
+    public EquatorMap(WorldSetupData data) {
+        super(data);
         this.equatorBounds = getEquatorBounds();
-        growPlants(startingPlantsCount);
+        growPlants(getStartingPlantsCount());
     }
 
     public EquatorMap(int width, int height) {
         super(width, height);
         this.equatorBounds = getEquatorBounds();
-        System.out.println(equatorBounds);
-        growPlants(startingPlantsCount);
+        growPlants(getStartingPlantsCount());
     }
 
 
@@ -44,11 +44,9 @@ public class EquatorMap extends AbstractPlanetMap {
     public void growPlants(int count) {
         PlantsPositionGenerator plantsPositionGenerator = new PlantsPositionGenerator(plants, boundary);
         int onEquatorCount = (int) new Random().doubles(0, 1).limit(count).filter(i -> i < equatorRatioToGrowNew).count();
-//        List<Vector2d> positionsEq = plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds);
-//        List<Vector2d> positionsNotEq = plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds);
         List<Vector2d> positions = Stream.concat(plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds).stream(), plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds).stream()).
                 toList();
-        positions.forEach(p -> plants.put(p, new BasicPlant(energyAfterConsumingPlant)));
+        positions.forEach(p -> plants.put(p, new BasicPlant(getSetupData().energyAfterConsumingPlant())));
     }
 
 }

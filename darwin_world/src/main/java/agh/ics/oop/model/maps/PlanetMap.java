@@ -32,7 +32,9 @@ public interface PlanetMap<T, P> extends Teleporter {
 
     void removeDead(List<T> animals);
 
-    void growPlants(int count);
+    void growPlants();
+
+    void letAnimalsEat();
 
 
 //    Collection<T> getElements();
