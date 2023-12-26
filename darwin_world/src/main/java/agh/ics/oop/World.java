@@ -36,6 +36,7 @@ public class World {
         SimulationChangeListener listener = new SimulationCSVSaver("simulation3.csv", methods);
         sim.addSimulationChangeListener(listener);
         sim.run();
+
 //        TODO symulacja jeszcze nie współgra z obserwatorami
 
 

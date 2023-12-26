@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Simulation implements Runnable {
-    private final PlanetMap<Animal, Vector2d> worldMap; //TODO WorldElement ?
+    private final PlanetMap worldMap; //TODO WorldElement ?
     private final List<Animal> animals;
     private final SimulationStats statsController;
     private final SimulationSetupData simulationSetupData;
@@ -110,7 +110,7 @@ public class Simulation implements Runnable {
         return statsController.getDayOfSimulation();
     }
 
-    public PlanetMap<Animal, Vector2d> getWorldMap() {
+    public PlanetMap getWorldMap() {
         return worldMap;
     }
 

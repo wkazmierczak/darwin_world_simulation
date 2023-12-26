@@ -9,12 +9,13 @@ import agh.ics.oop.model.util.MapVisualizer;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.worldElements.AnimalComparator;
 import agh.ics.oop.model.worldElements.PositionDetails;
+import agh.ics.oop.model.worldElements.WorldElement;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.*;
 import java.util.stream.Stream;
 
-public abstract class AbstractPlanetMap implements PlanetMap<Animal, Vector2d>, Teleporter {
+public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     protected final Map<Vector2d, SortedSet<Animal>> animals = new HashMap<>();
     protected final Map<Vector2d, Plant> plants = new HashMap<>();

@@ -54,7 +54,7 @@ public class SimulationStats {
         return numOfPlants;
     }
 
-    public int getNumOfFreePositions(PlanetMap<WorldElement, Vector2d> map) {
+    public int getNumOfFreePositions(PlanetMap map) {
         return map.updateNumOfFreePositions();
     }
 
