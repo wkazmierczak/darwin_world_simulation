@@ -1,18 +1,19 @@
 package agh.ics.oop;
 
+import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.genotype.GenotypeType;
 import agh.ics.oop.model.listeners.SimulationCSVSaver;
 import agh.ics.oop.model.listeners.SimulationChangeListener;
-import agh.ics.oop.model.maps.EquatorMap;
 import agh.ics.oop.model.maps.MapType;
 import agh.ics.oop.model.maps.PlanetMap;
 
 import agh.ics.oop.model.maps.PoisonousMap;
 
 import agh.ics.oop.model.stats.SimulationStats;
-import javafx.application.Application;
+import agh.ics.oop.presenter.SimulationStartupData;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -22,7 +23,7 @@ public class World {
         PlanetMap planetMap = new PoisonousMap(10, 10);
         System.out.println(planetMap);
 
-        Simulation sim = new Simulation(10, 10, 3, 1, 3, 2, 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP);
+        Simulation sim = new Simulation(new SimulationStartupData(10, 10, 3, 1, 3, 2, 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
         SimulationStats stats = sim.getStats();
         Map<String, Method> methods = new HashMap<>();
         try {
@@ -31,7 +32,9 @@ public class World {
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
-        SimulationChangeListener listener = new SimulationCSVSaver("C:\\Users\\piotr\\Programowanie\\NaukaJava\\PO_2023_PON1640_KAZMIERCZAK\\darwin_world\\src\\main\\java\\agh\\ics\\oop\\model\\util\\simulation.csv", methods);
+        String path = new File("").getAbsolutePath().concat("\\src\\main\\java\\agh\\ics\\oop\\model\\util\\simulation2.csv");
+        System.out.println(path);
+        SimulationChangeListener listener = new SimulationCSVSaver(path, methods);
         sim.addSimulationChangeListener(listener);
         sim.run();
 //        TODO symulacja jeszcze nie współgra z obserwatorami
