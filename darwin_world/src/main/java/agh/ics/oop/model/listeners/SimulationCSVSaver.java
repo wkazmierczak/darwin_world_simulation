@@ -1,7 +1,7 @@
 package agh.ics.oop.model.listeners;
 
 import agh.ics.oop.Simulation.Simulation;
-import agh.ics.oop.model.stats.SimulationStats;
+import agh.ics.oop.model.stats.SimulationStatsController;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -36,7 +36,7 @@ public class SimulationCSVSaver implements SimulationChangeListener {
     @Override
     public void simulationChanged(Simulation
                                           simulation) {
-        SimulationStats stats = simulation.getStatsController();
+        SimulationStatsController stats = simulation.getStatsController();
         try (FileWriter fw = new FileWriter(destinationFile, true)) {
             List<String> values = methods.values().stream()
                     .map(method -> {
