@@ -9,15 +9,16 @@ import agh.ics.oop.model.util.MapVisualizer;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.worldElements.AnimalComparator;
 import agh.ics.oop.model.worldElements.PositionDetails;
-import agh.ics.oop.model.worldElements.WorldElement;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.*;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+
 public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
-    protected final Map<Vector2d, SortedSet<Animal>> animals = new HashMap<>();
+    protected final Map<Vector2d, SortedSet<Animal>> animalsPos = new HashMap<>();
     protected final Map<Vector2d, Plant> plants = new HashMap<>();
     protected final Boundary boundary;
     protected final WorldSetupData setupData;
@@ -50,12 +51,12 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     }
 
     public void place(Vector2d pos, Animal animal) {
-        if (animals.containsKey(pos))
-            animals.get(pos).add(animal);
+        if (animalsPos.containsKey(pos))
+            animalsPos.get(pos).add(animal);
         else {
             SortedSet<Animal> animalsOnPos = new TreeSet<>(new AnimalComparator());
             animalsOnPos.add(animal);
-            animals.put(pos, animalsOnPos);
+            animalsPos.put(pos, animalsOnPos);
         }
         mapChanged(animal + " placed at " + pos);
     }
@@ -69,7 +70,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     @Override
     public Collection<Animal> animalsAt(Vector2d position) {
-        return animals.get(position);
+        return animalsPos.get(position);
     }
 
     @Override
@@ -87,6 +88,11 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
         } else {
             mapChanged(animal.getPosition() + " rotated from " + animalToString + " to " + animal);
         }
+    }
+
+    @Override
+    public void nextDay(List<Animal> animals) {
+        animals.forEach(Animal::nextDay);
     }
 
 
@@ -115,33 +121,42 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     }
 
     @Override
-    public void removeDead(List<Animal> animals) {
-        animals.stream().filter(Animal::isDead).forEach(this::removeAnimal);
+    public List<Animal> removeDead(List<Animal> animals, int day) {
+        List<Animal> removed = animals.stream().filter(Animal::isDead).toList();
+        removed.forEach(a -> a.getStats().setDayOfDeath(day));
+        removed.forEach(this::removeAnimal);
+        return removed;
     }
 
-    protected void removeAnimal(Vector2d pos, Animal animal) {
-        animals.get(pos).remove(animal);
-        if (animals.get(pos).isEmpty()) {
-            animals.remove(pos);
+    private void removeAnimal(Vector2d pos, Animal animal) {
+        animalsPos.get(pos).remove(animal);
+        if (animalsPos.get(pos).isEmpty()) {
+            animalsPos.remove(pos);
         }
     }
 
     protected void removeAnimal(Animal animal) {
         Vector2d pos = animal.getPosition();
-        animals.get(pos).remove(animal);
+        animalsPos.get(pos).remove(animal);
     }
 
     protected void handleWhoEats(Vector2d pos, Plant plant) {
-        animals.get(pos).first().eat(plant);
+        animalsPos.get(pos).first().eat(plant);
+        removePlant(pos);
     }
 
     @Override
     public void letAnimalsEat() {
-        plants.keySet().stream().filter(animals::containsKey).forEach(pos -> handleWhoEats(pos, plants.get(pos)));
+        List<Vector2d> positionWithPlantsAndAnimals = plants.keySet().stream().filter(pos -> animalsPos.containsKey(pos) && !animalsPos.get(pos).isEmpty()).toList();
+        positionWithPlantsAndAnimals.forEach(pos -> handleWhoEats(pos, plants.get(pos)));
     }
 
     protected void removePlant(Vector2d pos) {
-        animals.remove(pos);
+        plants.remove(pos);
+    }
+
+    public int getPlantsCount() {
+        return plants.size();
     }
 
     public WorldSetupData getSetupData() {
@@ -167,8 +182,8 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     }
 
     @Override
-    public int updateNumOfFreePositions() {
-        return (int) (boundary.getWidth() * boundary.getHeight() - Stream.concat(plants.keySet().stream(), animals.keySet().stream())
+    public int getFreePositionsCount() {
+        return (int) (boundary.getWidth() * boundary.getHeight() - Stream.concat(plants.keySet().stream(), animalsPos.keySet().stream())
                 .distinct()
                 .count());
     }

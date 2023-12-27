@@ -8,7 +8,7 @@ import agh.ics.oop.model.maps.MapType;
 import agh.ics.oop.model.maps.PlanetMap;
 import agh.ics.oop.model.setupData.SimulationSetupData;
 import agh.ics.oop.model.setupData.WorldSetupData;
-import agh.ics.oop.model.stats.SimulationStats;
+import agh.ics.oop.model.stats.SimulationStatsController;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.setupData.AnimalSetupData;
 
@@ -19,11 +19,10 @@ import java.util.List;
 public class Simulation implements Runnable {
     private final PlanetMap worldMap; //TODO WorldElement ?
     private final List<Animal> animals;
-    private final SimulationStats statsController;
+    private final SimulationStatsController statsController;
     private final SimulationSetupData simulationSetupData;
     private final List<SimulationChangeListener> listeners = new LinkedList<>();
 
-    //    TODO dużo argumentów więc pewnie jakiś refactor
     public Simulation(SimulationSetupData setupData) {
         this.simulationSetupData = setupData;
         int width = setupData.width();
@@ -35,7 +34,8 @@ public class Simulation implements Runnable {
 
         this.worldMap = mapType.createPlanetMap(new WorldSetupData(setupData));
 
-        this.statsController = new SimulationStats(setupData.initialNumOfAnimals(), setupData.startingPlantsCount());
+//        this.statsController = new SimulationStatsController(setupData.initialNumOfAnimals(), setupData.startingPlantsCount());
+        this.statsController = new SimulationStatsController(this);
 
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(width, height, initialNumOfAnimals);
         AnimalSetupData animalSetupData = new AnimalSetupData(setupData);
@@ -49,16 +49,12 @@ public class Simulation implements Runnable {
                 throw new RuntimeException(e);
             }
         }
-
-
     }
-
-
     @Override
     public void run() {
         while (statsController.getDayOfSimulation() < 10) { // TODO number only for test
             nextDay();
-            worldMap.removeDead(animals);
+            removeDead();
             moveAnimals();
             worldMap.letAnimalsEat();
 //            worldMap.letAnimalsReproduce();
@@ -72,12 +68,13 @@ public class Simulation implements Runnable {
 
     private void nextDay() {
         statsController.nextDay();
-//            TODO nextDay() z Animal
-        //
+        worldMap.nextDay(animals);
     }
 
     private void removeDead() {
-        worldMap.removeDead(animals);
+        List<Animal> removedDead = worldMap.removeDead(animals, getDayOfSimulation());
+        removedDead.forEach(getStatsController()::newDeath);
+        animals.removeAll(removedDead);
     }
 
     private void moveAnimals() {
@@ -101,7 +98,7 @@ public class Simulation implements Runnable {
     }
 
 
-    public SimulationStats getStatsController() {
+    public SimulationStatsController getStatsController() {
         return statsController;
     }
 

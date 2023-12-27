@@ -8,15 +8,11 @@ import java.util.*;
 public class AnimalStats {
 
     private int age = 0;
-
     private int plantsEaten = 0;
-
     private int descendants = 0;
 
     private final List<Animal> children = new LinkedList<>();
-
     private Integer dayOfDeath = null;
-
 
     public void incrementAge() {
         age++;

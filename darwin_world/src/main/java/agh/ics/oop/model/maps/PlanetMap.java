@@ -8,7 +8,6 @@ import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * The interface responsible for interacting with the map of the world.
@@ -33,11 +32,17 @@ public interface PlanetMap extends Teleporter {
     void move(Animal object);
 
     Collection<Animal> animalsAt(Vector2d position);
+
+
+    List<Animal> removeDead(List<Animal> animals, int day);
+
+    void nextDay(List<Animal> animals);
+
     Plant plantAt(Vector2d position);
 
-    void removeDead(List<Animal> animals);
-
     void growPlants();
+
+    int getPlantsCount();
 
     void letAnimalsEat();
 
@@ -48,7 +53,8 @@ public interface PlanetMap extends Teleporter {
 
     String getId();
 
-    int updateNumOfFreePositions();
+    int getFreePositionsCount();
 
     int getStartingPlantsCount();
+
 }

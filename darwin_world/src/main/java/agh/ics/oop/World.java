@@ -10,12 +10,9 @@ import agh.ics.oop.model.maps.PlanetMap;
 
 import agh.ics.oop.model.maps.PoisonousMap;
 
-import agh.ics.oop.model.setupData.AnimalSetupData;
-import agh.ics.oop.model.stats.SimulationStats;
+import agh.ics.oop.model.stats.SimulationStatsController;
 import agh.ics.oop.model.setupData.SimulationSetupData;
 import agh.ics.oop.model.util.MyRange;
-import agh.ics.oop.model.worldElements.Animal;
-import agh.ics.oop.model.worldElements.AnimalComparator;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -28,8 +25,8 @@ public class World {
         Simulation sim = new Simulation(new SimulationSetupData(10, 10, 3, 1, 3, 2, 5, 1, 1, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
         Map<String, Method> methods = new HashMap<>();
         try {
-            methods.put("dayOfSimulation", SimulationStats.class.getDeclaredMethod("getDayOfSimulation"));
-            methods.put("plants", SimulationStats.class.getDeclaredMethod("getNumOfPlants"));
+            methods.put("dayOfSimulation", SimulationStatsController.class.getDeclaredMethod("getDayOfSimulation"));
+            methods.put("plants", SimulationStatsController.class.getDeclaredMethod("getNumOfPlants"));
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
