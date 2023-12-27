@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.Simulation;
+import agh.ics.oop.Simulation.Simulation;
 
 import java.util.ArrayList;
 import java.util.List;

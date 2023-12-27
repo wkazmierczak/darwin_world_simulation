@@ -3,50 +3,52 @@ package agh.ics.oop.model.worldElements;
 
 import agh.ics.oop.model.MapDirection;
 import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.genotype.BasicGenotype;
 import agh.ics.oop.model.genotype.Genotype;
 import agh.ics.oop.model.maps.Teleporter;
+import agh.ics.oop.model.setupData.AnimalSetupData;
 import agh.ics.oop.model.stats.AnimalStats;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Animal implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
-
     private int energyLevel;
-
     private final Genotype genotype;
 
-    private AnimalStats Stats;
-
-    private Animal parent1;
-
-    private Animal parent2;
+    private AnimalStats stats;
+    private AnimalSetupData setupData;
+    List<Animal> parents = new ArrayList<>();
 
 
     private final static Vector2d LEFT_BOTTOM = new Vector2d(0, 0);
     private final static Vector2d RIGHT_TOP = new Vector2d(4, 4);
 
-    public Animal(Vector2d position, Genotype genotype, Animal parent1, Animal parent2) {
+
+    //animal born on initialization
+    public Animal(Vector2d position, AnimalSetupData setupData) {
+        this.setupData = setupData;
         this.position = position;
-        this.orientation = MapDirection.NORTH;
-        this.energyLevel = 0;
-        this.genotype = genotype;
-        this.Stats = new AnimalStats(2, 2); //TODO for each sim different values
-        this.parent1 = parent1;
-        this.parent2 = parent2;
+        this.orientation = MapDirection.getRandom();
+        this.energyLevel = setupData.initialAnimalEnergy();
+        this.genotype = setupData.genotypeType().createGenotype(setupData.genotypeLength());
+        this.stats = new AnimalStats();
+        this.parents = new ArrayList<>();
     }
 
-    public Animal(Vector2d position, Genotype genotype) {
-        this(position, genotype, null, null);
+    public Animal(int initialEnergy, Genotype genotypeFromParents, Animal parent1, Animal parent2) {
+        this.position = parent1.getPosition();
+        this.orientation = MapDirection.getRandom();
+        this.energyLevel = initialEnergy;
+        this.genotype = genotypeFromParents;
+        this.stats = new AnimalStats(); //TODO for each sim different values
+        this.parents = List.of(parent1, parent2);
+//        this.parent1 = parent1;
+//        this.parent2 = parent2;
     }
-
-
-//    public Animal(Vector2d position) {
-//        this(position, new BasicGenotype(5));
-//    }
 
     @Override
     public String toString() {
@@ -68,7 +70,7 @@ public class Animal implements WorldElement {
         Vector2d nextPosition = moveDetails.position();
         nextOrientation = moveDetails.orientation();
 
-        if (teleport.plantAt(nextPosition)!= null && teleport.plantAt(nextPosition).isPoisonous()) {
+        if (teleport.plantAt(nextPosition) != null && teleport.plantAt(nextPosition).isPoisonous()) {
             if (new Random().nextInt(100) < 20) {
                 nextOrientation = prevOrient.rotateNTimes(new Random().nextInt(1, 8));
                 moveDetails = teleport.moveIntoDirection(prevPos, prevOrient, nextOrientation.toUnitVector());
@@ -87,33 +89,41 @@ public class Animal implements WorldElement {
     }
 
     public Animal reproduce(Animal other) {
-        int energySpendToReproduce = this.getStats().getEnergySpendToReproduce();
+        int energySpendToReproduce = setupData.energySpendToReproduce();
 
         if (this.energyLevel <= energySpendToReproduce || other.energyLevel <= energySpendToReproduce) {
             return null;
         }
+        this.energyLevel -= energySpendToReproduce;
+        other.energyLevel -= energySpendToReproduce;
 
-        return new Animal(this.getPosition(), genotype.createNewFrom(this, other), this, other);
+        return new Animal(energySpendToReproduce * 2, genotype.createNewFrom(this, other, setupData.mutationsRange()), this, other);
     }
 
 
-    public void nextDay(Teleporter teleport) {
-        energyLevel--;
-//        MoveDirection direction = genotype.next();
-        move(teleport);
-        Plant plant = teleport.plantAt(position);
-        if (plant != null) {
-//            eat(plant);
-        } // TODO dodanie logiki związanej z jedzeniem
-//        TODO rozmanażanie się zwierzaków
+//    public void nextDay(Teleporter teleport) {
+//        energyLevel--;
+////        MoveDirection direction = genotype.next();
+//        move(teleport);
+//        Plant plant = teleport.plantAt(position);
+//        if (plant != null) {
+////            eat(plant);
+//        } // TODO dodanie logiki związanej z jedzeniem
+////        TODO rozmanażanie się zwierzaków
+//
+////        if (energyLevel <= 0){
+////            this.getStats().getDayOfDeath() = //TODO get day of simulation;
+////        }
+//    }
 
-//        if (energyLevel <= 0){
-//            this.getStats().getDayOfDeath() = //TODO get day of simulation;
-//        }
+    public void nextDay() {
+        energyLevel--;
+        stats.incrementAge();
     }
 
     public boolean isDead() {
-        return this.getStats().getDayOfDeath() != null;
+        return energyLevel <= 0;
+//        return this.getStats().getDayOfDeath() != null;
     }
 
     public MapDirection getOrientation() {
@@ -132,6 +142,14 @@ public class Animal implements WorldElement {
         return RIGHT_TOP;
     }
 
+    public AnimalSetupData getSetupData() {
+        return setupData;
+    }
+
+    public List<Animal> getParents() {
+        return parents;
+    }
+
     public Genotype getGenotype() {
         return genotype;
     }
@@ -141,14 +159,15 @@ public class Animal implements WorldElement {
     }
 
     public AnimalStats getStats() {
-        return Stats;
+        return stats;
     }
 
-    public Animal getParent1() {
-        return parent1;
-    }
+//    public Animal getParent1() {
+//        return parent1;
+//    }
+//
+//    public Animal getParent2() {
+//        return parent2;
+//    }
 
-    public Animal getParent2() {
-        return parent2;
-    }
 }

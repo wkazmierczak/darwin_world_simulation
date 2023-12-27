@@ -1,17 +1,16 @@
 package agh.ics.oop.model.genotype;
 
+import agh.ics.oop.model.util.MyRange;
 import agh.ics.oop.model.worldElements.Animal;
-import agh.ics.oop.model.MoveDirection;
 
 public class BasicGenotype extends AbstractGenotype {
-    private int currentIdx = 0;
 
     public BasicGenotype(int length) {
         super(length);
     }
 
-    public BasicGenotype(Animal stronger, Animal weaker) {
-        super(stronger, weaker);
+    public BasicGenotype(Animal stronger, Animal weaker, MyRange mutationsRange) {
+        super(stronger, weaker, mutationsRange);
     }
 
     @Override
@@ -22,7 +21,7 @@ public class BasicGenotype extends AbstractGenotype {
     }
 
     @Override
-    public BasicGenotype createNewFrom(Animal animal1, Animal animal2) {
-        return new BasicGenotype(animal1, animal2);
+    public BasicGenotype createNewFrom(Animal animal1, Animal animal2, MyRange mutationsRange) {
+        return new BasicGenotype(animal1, animal2, mutationsRange);
     }
 }

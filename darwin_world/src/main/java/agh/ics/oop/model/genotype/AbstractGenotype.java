@@ -1,25 +1,31 @@
 package agh.ics.oop.model.genotype;
 
+import agh.ics.oop.model.util.MyRange;
 import agh.ics.oop.model.worldElements.Animal;
-import agh.ics.oop.model.MoveDirection;
+import org.w3c.dom.ranges.Range;
 
+import java.util.ArrayList;
 import java.util.Collections;
-
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public abstract class AbstractGenotype implements Genotype {
 
     protected List<Integer> genotypeList;
+    protected int currentIdx;
 
     private static final String[] sites = {"left", "right"};
 
     protected AbstractGenotype(int length) {
         genotypeList = IntStream.generate(this::getRandomFromLegalRange).limit(length).boxed().collect(Collectors.toCollection(ArrayList::new));
+        currentIdx = new Random().nextInt(sites.length);
     }
 
-    protected AbstractGenotype(Animal animal1, Animal animal2) {
+    protected AbstractGenotype(Animal animal1, Animal animal2, MyRange mutations) {
+        currentIdx = new Random().nextInt(sites.length);
+
         Animal stronger = animal1.getEnergyLevel() > animal2.getEnergyLevel() ? animal1 : animal2;
         Animal weaker = animal1.getEnergyLevel() <= animal2.getEnergyLevel() ? animal1 : animal2;
 
@@ -42,7 +48,7 @@ public abstract class AbstractGenotype implements Genotype {
             genotypeList.addAll(strongerGenotypeList.subList(splitPoint, size));
         }
 
-        int numberOfMutations = new Random().nextInt(size);
+        int numberOfMutations = new Random().nextInt(mutations.low(), mutations.high() + 1);
         mutate(numberOfMutations);
     }
 

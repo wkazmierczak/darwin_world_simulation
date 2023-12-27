@@ -1,9 +1,8 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.OptionsParser;
-import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
 
+import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.maps.PlanetMap;
 
 import agh.ics.oop.model.worldElements.Animal;
@@ -19,12 +18,10 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
-import java.util.List;
-
 public class SimulationPresenter implements MapChangeListener {
     private static final double CELL_WIDTH = 30 ;
     private static final double CELL_HEIGHT = 30;
-    private static PlanetMap<WorldElement, Vector2d> map;
+    private static PlanetMap map;
 
     @FXML
     public Button startButton;
@@ -38,7 +35,7 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private TextField textField;
 
-    public void setWorldMap(PlanetMap<WorldElement, Vector2d> map) {
+    public void setWorldMap(PlanetMap map) {
         this.map = map;
     }
 
@@ -114,7 +111,7 @@ public class SimulationPresenter implements MapChangeListener {
 
 
     @Override
-    public void mapChanged(PlanetMap<Animal, Vector2d> worldMap, String message) {// zmiana na animal
+    public void mapChanged(PlanetMap worldMap, String message) {// zmiana na animal
 
 
         Platform.runLater(() -> {

@@ -2,7 +2,9 @@ package agh.ics.oop.model.maps;
 
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.PositionAlreadyOccupiedException;
+import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.worldElements.Animal;
+import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  *
  * @author apohllo, idzik
  */
-public interface PlanetMap<T, P> extends Teleporter {
+public interface PlanetMap extends Teleporter {
 
     /**
      * Place a animal on the map.
@@ -21,19 +23,28 @@ public interface PlanetMap<T, P> extends Teleporter {
      * @param object The animal to place on the map.
      * @return True if the animal was placed. The animal cannot be placed if the move is not valid.
      */
-    void place(T object) throws PositionAlreadyOccupiedException;
+    void place(Animal object) throws PositionAlreadyOccupiedException;
 
     /**
      * Moves an animal (if it is present on the map) according to specified direction.
      * If the move is not possible, this method has no effect.
      */
-    void move(T object);
+    void move(Animal object);
 
-    Collection<T> animalsAt(P position);
+    Collection<Animal> animalsAt(Vector2d position);
 
-    void removeDead(List<T> animals);
 
-    void growPlants(int count);
+    List<Animal> removeDead(List<Animal> animals, int day);
+
+    void nextDay(List<Animal> animals);
+
+    Plant plantAt(Vector2d position);
+
+    void growPlants();
+
+    int getPlantsCount();
+
+    void letAnimalsEat();
 
 
 //    Collection<T> getElements();
@@ -42,7 +53,8 @@ public interface PlanetMap<T, P> extends Teleporter {
 
     String getId();
 
-    int updateNumOfFreePositions();
+    int getFreePositionsCount();
 
     int getStartingPlantsCount();
+
 }

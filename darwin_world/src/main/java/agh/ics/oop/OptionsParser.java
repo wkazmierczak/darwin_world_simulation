@@ -11,8 +11,7 @@ import java.util.List;
 
 public class OptionsParser {
     public static List<MoveDirection> parse(String[] args) {
-        List<MoveDirection> directions = new LinkedList<>(); //wybrałem LinkedList, gdyż dodawanie nowych elementów
-        // jest szybciej w niej realizowane niż w ArrayList, a głównie z dodawania będziemy korzystać
+        List<MoveDirection> directions = new LinkedList<>();
 
         for (String arg: args) {
             MoveDirection direction = switch (arg) {

@@ -2,6 +2,7 @@ package agh.ics.oop.model.maps;
 
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.worldElements.plants.BasicPlant;
 import agh.ics.oop.model.worldElements.plants.Plant;
 import agh.ics.oop.model.worldElements.plants.PoisonousPlant;
@@ -16,16 +17,16 @@ public class PoisonousMap extends AbstractPlanetMap {
     private float poisonousAreaSurface = 0.2F;
     private final float poisonousAreaRatioToGrowNew = 0.5F;
 
-    public PoisonousMap(int width, int height, int startingPlantsCount, int everyDayPlantsCount, int energyAfterConsumingPlant) {
-        super(width, height, startingPlantsCount, everyDayPlantsCount, energyAfterConsumingPlant);
+    public PoisonousMap(WorldSetupData setupData) {
+        super(setupData);
         poisonsAreaBounds = getPoisonsAreaBounds();
-        growPlants(startingPlantsCount);
+        growPlants(getStartingPlantsCount());
     }
 
     public PoisonousMap(int width, int height) {
         super(width, height);
         poisonsAreaBounds = getPoisonsAreaBounds();
-        growPlants(startingPlantsCount);
+        growPlants(getStartingPlantsCount());
     }
 
     private Boundary getPoisonsAreaBounds() {
@@ -48,10 +49,10 @@ public class PoisonousMap extends AbstractPlanetMap {
 
         List<Vector2d> positions = plantsPositionGenerator.getNFreePositions(count);
         for (var position : positions) {
-            Plant newPlant = new BasicPlant(energyAfterConsumingPlant);
+            Plant newPlant = new BasicPlant(getSetupData().energyAfterConsumingPlant());
             if (position.inBounds(poisonsAreaBounds)) {
                 if (new Random().nextDouble(0, 1) < poisonousAreaRatioToGrowNew) {
-                    newPlant = new PoisonousPlant(energyAfterConsumingPlant);
+                    newPlant = new PoisonousPlant(getSetupData().energyAfterConsumingPlant());
                 }
             }
             plants.put(position, newPlant);
