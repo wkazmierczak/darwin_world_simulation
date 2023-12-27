@@ -16,9 +16,7 @@ import java.util.Random;
 public class Animal implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
-
     private int energyLevel;
-
     private final Genotype genotype;
 
     private AnimalStats stats;
@@ -118,8 +116,14 @@ public class Animal implements WorldElement {
 ////        }
 //    }
 
+    public void nextDay() {
+        energyLevel--;
+        stats.incrementAge();
+    }
+
     public boolean isDead() {
-        return this.getStats().getDayOfDeath() != null;
+        return energyLevel <= 0;
+//        return this.getStats().getDayOfDeath() != null;
     }
 
     public MapDirection getOrientation() {
