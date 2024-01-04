@@ -26,7 +26,7 @@ public class World {
 //        MapChangeListener mapListener = new ConsoleMapDisplay();
 //        planetMap.addListener(mapListener);
 //        System.out.println(planetMap);
-        Simulation sim = new Simulation(new SimulationSetupData(10, 10, 25, 1, 3, 9, 10, 1, 1, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
+        Simulation sim = new Simulation(new SimulationSetupData(10, 10, 25, 1, 3, 9, 10, 2, 2, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
         Map<String, Method> methods = new HashMap<>();
         try {
             methods.put("dayOfSimulation", SimulationStatsController.class.getDeclaredMethod("getDayOfSimulation"));

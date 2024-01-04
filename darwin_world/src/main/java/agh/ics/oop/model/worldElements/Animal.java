@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Animal extends AnimalComparator implements WorldElement {
+public class Animal implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
     private int energyLevel;
@@ -102,7 +102,7 @@ public class Animal extends AnimalComparator implements WorldElement {
         this.energyLevel -= energySpendToReproduce;
         other.energyLevel -= energySpendToReproduce;
 
-        return new Animal(4, genotype.createNewFrom(this, other, setupData.mutationsRange()), this, other);
+        return new Animal(energySpendToReproduce*2, genotype.createNewFrom(this, other, setupData.mutationsRange()), this, other);
     }
 
 
@@ -183,8 +183,8 @@ public class Animal extends AnimalComparator implements WorldElement {
         listeners.remove(listener);
     }
 
-    public void notifyAnimalTracker(Animal animal) {
-        listeners.forEach(listener -> listener.animalInfoChanged(animal));
+    public void notifyAnimalTracker() {
+        listeners.forEach(listener -> listener.animalInfoChanged(this));
     }
 
 }

@@ -65,14 +65,14 @@ public class Simulation implements Runnable {
             removeDead();
             moveAnimals();
             worldMap.letAnimalsEat();
-            System.out.println(animals);
+//            System.out.println(animals);
             List<Animal> newborns = worldMap.letAnimalsReproduce();
             if (flag == 1 && !newborns.isEmpty()){ // TODO to remove only for tests, listener ustawiony na pierwsze narodzone dziecko
                 flag = 0;
                 setAnimalToTrack(newborns.get(0));
             }
             animals.addAll(newborns);
-            System.out.println(animals);
+//            System.out.println(animals);
             worldMap.growPlants();
 
             notifySimulationChanged(this);
@@ -90,7 +90,7 @@ public class Simulation implements Runnable {
     private void removeDead() {
         List<Animal> removedDead = worldMap.removeDead(animals, getDayOfSimulation());
         if (removedDead.contains(animalToTrack)){
-            animalToTrack.notifyAnimalTracker(animalToTrack);
+            animalToTrack.notifyAnimalTracker();
         }
         removedDead.forEach(getStatsController()::newDeath);
         animals.removeAll(removedDead);
@@ -100,7 +100,7 @@ public class Simulation implements Runnable {
         for (Animal animal : animals) {
             worldMap.move(animal);
             if (animal == animalToTrack){
-                animalToTrack.notifyAnimalTracker(animalToTrack);
+                animalToTrack.notifyAnimalTracker();
             }
 //                System.out.println(worldMap); // TODO prowizoryczne wyświetlanie mapy do poprawy to string z animal i wyświetlanie roślin, zwierzaki się nie teleportują, tylko znikają (mogłem użyć złej funkcji place)
 //            try {

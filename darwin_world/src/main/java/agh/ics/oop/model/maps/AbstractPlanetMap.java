@@ -155,7 +155,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     protected Animal handleWhoReproduces(Vector2d pos){
         List<Animal> parents = animalsPos.get(pos).stream().limit(2).toList();
         Animal child = parents.get(0).reproduce(parents.get(1));
-//        System.out.println(child + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(child + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         if (child!=null){
 
@@ -175,10 +175,11 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
                 .map(Map.Entry::getKey)
                 .toList();
 
-        List<Animal> newborns = new ArrayList<>();
-        positionWithMoreThanOneAnimal.forEach(position -> newborns.add(handleWhoReproduces(position)));
+        return positionWithMoreThanOneAnimal.stream()
+                .map(this::handleWhoReproduces)
+                .filter(Objects::nonNull)
+                .toList();
 
-        return newborns.stream().filter(Objects::nonNull).toList();
     }
 
     protected void removePlant(Vector2d pos) {
