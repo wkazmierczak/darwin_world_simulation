@@ -12,6 +12,7 @@ import agh.ics.oop.model.worldElements.PositionDetails;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -58,7 +59,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
             animalsOnPos.add(animal);
             animalsPos.put(pos, animalsOnPos);
         }
-        mapChanged(animal + " placed at " + pos);
+//        mapChanged(animal + " placed at " + pos);
     }
 
     @Override
@@ -74,8 +75,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     }
 
     @Override
-    public void move(Animal elem) {
-        Animal animal = (Animal) elem;
+    public void move(Animal animal) {
         String animalToString = animal.toString();
 
         Vector2d prevPos = animal.getPosition();
@@ -129,10 +129,11 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     }
 
     private void removeAnimal(Vector2d pos, Animal animal) {
+
+//        if (animalsPos.get(pos).isEmpty()) {
+//            animalsPos.remove(pos);
+//        }
         animalsPos.get(pos).remove(animal);
-        if (animalsPos.get(pos).isEmpty()) {
-            animalsPos.remove(pos);
-        }
     }
 
     protected void removeAnimal(Animal animal) {
@@ -142,6 +143,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     protected void handleWhoEats(Vector2d pos, Plant plant) {
         animalsPos.get(pos).first().eat(plant);
+        animalsPos.get(pos).first().getStats().incrementPlantsEaten();
         removePlant(pos);
     }
 
@@ -149,6 +151,35 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     public void letAnimalsEat() {
         List<Vector2d> positionWithPlantsAndAnimals = plants.keySet().stream().filter(pos -> animalsPos.containsKey(pos) && !animalsPos.get(pos).isEmpty()).toList();
         positionWithPlantsAndAnimals.forEach(pos -> handleWhoEats(pos, plants.get(pos)));
+    }
+    protected Animal handleWhoReproduces(Vector2d pos){
+        List<Animal> parents = animalsPos.get(pos).stream().limit(2).toList();
+        Animal child = parents.get(0).reproduce(parents.get(1));
+        System.out.println(child + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+        if (child!=null){
+
+            parents.get(0).getStats().addChildren(child);
+            parents.get(1).getStats().addChildren(child);
+            place(pos, child);
+            mapChanged("New child on " + pos.toString());
+        }
+        return child;
+
+    }
+
+    public List<Animal> letAnimalsReproduce(){
+        List<Vector2d> positionWithMoreThanOneAnimal = animalsPos.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().size() > 1)
+                .map(Map.Entry::getKey)
+                .toList();
+
+        return positionWithMoreThanOneAnimal.stream()
+                .map(this::handleWhoReproduces)
+                .filter(Objects::nonNull)
+                .toList();
+
     }
 
     protected void removePlant(Vector2d pos) {

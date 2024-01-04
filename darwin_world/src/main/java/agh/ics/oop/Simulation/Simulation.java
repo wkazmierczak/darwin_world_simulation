@@ -3,7 +3,7 @@ package agh.ics.oop.Simulation;
 import agh.ics.oop.model.PositionAlreadyOccupiedException;
 import agh.ics.oop.model.RandomPositionGenerator;
 import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.listeners.SimulationChangeListener;
+import agh.ics.oop.model.listeners.*;
 import agh.ics.oop.model.maps.MapType;
 import agh.ics.oop.model.maps.PlanetMap;
 import agh.ics.oop.model.setupData.SimulationSetupData;
@@ -11,10 +11,12 @@ import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.stats.SimulationStatsController;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.setupData.AnimalSetupData;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Simulation implements Runnable {
     private final PlanetMap worldMap; //TODO WorldElement ?
@@ -22,6 +24,7 @@ public class Simulation implements Runnable {
     private final SimulationStatsController statsController;
     private final SimulationSetupData simulationSetupData;
     private final List<SimulationChangeListener> listeners = new LinkedList<>();
+    private Animal animalToTrack = null;
 
     public Simulation(SimulationSetupData setupData) {
         this.simulationSetupData = setupData;
@@ -33,6 +36,9 @@ public class Simulation implements Runnable {
         this.animals = new ArrayList<>();
 
         this.worldMap = mapType.createPlanetMap(new WorldSetupData(setupData));
+        MapChangeListener mapChangeListener = new ConsoleMapDisplay();
+        worldMap.addListener(mapChangeListener);
+
 
 //        this.statsController = new SimulationStatsController(setupData.initialNumOfAnimals(), setupData.startingPlantsCount());
         this.statsController = new SimulationStatsController(this);
@@ -49,18 +55,28 @@ public class Simulation implements Runnable {
                 throw new RuntimeException(e);
             }
         }
+//        setAnimalToTrack(animals.get(0));
     }
     @Override
     public void run() {
+        int flag = 1;
         while (statsController.getDayOfSimulation() < 10) { // TODO number only for test
             nextDay();
             removeDead();
             moveAnimals();
             worldMap.letAnimalsEat();
-//            worldMap.letAnimalsReproduce();
+//            System.out.println(animals);
+            List<Animal> newborns = worldMap.letAnimalsReproduce();
+            if (flag == 1 && !newborns.isEmpty()){ // TODO to remove only for tests, listener ustawiony na pierwsze narodzone dziecko
+                flag = 0;
+                setAnimalToTrack(newborns.get(0));
+            }
+            animals.addAll(newborns);
+//            System.out.println(animals);
             worldMap.growPlants();
 
             notifySimulationChanged(this);
+            System.out.println(statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
         }
 
@@ -73,6 +89,9 @@ public class Simulation implements Runnable {
 
     private void removeDead() {
         List<Animal> removedDead = worldMap.removeDead(animals, getDayOfSimulation());
+        if (removedDead.contains(animalToTrack)){
+            animalToTrack.notifyAnimalTracker();
+        }
         removedDead.forEach(getStatsController()::newDeath);
         animals.removeAll(removedDead);
     }
@@ -80,6 +99,9 @@ public class Simulation implements Runnable {
     private void moveAnimals() {
         for (Animal animal : animals) {
             worldMap.move(animal);
+            if (animal == animalToTrack){
+                animalToTrack.notifyAnimalTracker();
+            }
 //                System.out.println(worldMap); // TODO prowizoryczne wyświetlanie mapy do poprawy to string z animal i wyświetlanie roślin, zwierzaki się nie teleportują, tylko znikają (mogłem użyć złej funkcji place)
 //            try {
 //                Thread.sleep(500);
@@ -126,6 +148,12 @@ public class Simulation implements Runnable {
 
     public void notifySimulationChanged(Simulation simulation) {
         listeners.forEach(listener -> listener.simulationChanged(simulation));
+    }
+
+    public void setAnimalToTrack(Animal animal){
+        animalToTrack = animal;
+        AnimalChangeListener animalChangeListener = new AnimalTracker();
+        animalToTrack.addAnimalTracker(animalChangeListener);
     }
 
 }

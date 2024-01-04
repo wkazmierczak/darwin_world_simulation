@@ -3,6 +3,8 @@ package agh.ics.oop.model.util;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.maps.PlanetMap;
 
+import java.util.Objects;
+
 
 /**
  * The map visualizer converts the {@link PlanetMap} map into a string
@@ -77,14 +79,15 @@ public class MapVisualizer {
 
     private String drawObject(Vector2d currentPosition) {
 //        if (this.map.isOccupied(currentPosition)) {
-        Object object = this.map.plantAt(currentPosition);
+        Object object = this.map.animalsAt(currentPosition); //TODO na razie prowizoryczna wizualizacja zwierzaków
+        if (object != null && !Objects.equals(object.toString(), "[]")) {
+            return object.toString();
+        }
+        object = this.map.plantAt(currentPosition);
         if (object != null) {
             return object.toString();
         }
-        object = this.map.animalsAt(currentPosition); //TODO na razie prowizoryczna wizualizacja zwierzaków
-        if (object != null) {
-            return object.toString();
-        }
+
 //        }
         return EMPTY_CELL;
     }

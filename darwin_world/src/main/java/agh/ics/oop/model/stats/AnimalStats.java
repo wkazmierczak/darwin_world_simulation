@@ -24,7 +24,7 @@ public class AnimalStats {
 
     public void addChildren(Animal child) {
         children.add(child);
-        updateDescendants(child);
+        updateDescendants(child); //TODO niepotrzebnie dwa razy chyba
     }
 
     private void updateDescendants(Animal animal) {
