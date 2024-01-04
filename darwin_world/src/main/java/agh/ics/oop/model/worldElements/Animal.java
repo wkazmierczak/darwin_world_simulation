@@ -1,19 +1,24 @@
 package agh.ics.oop.model.worldElements;
 
 
+import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.model.MapDirection;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.genotype.Genotype;
+import agh.ics.oop.model.listeners.AnimalChangeListener;
+import agh.ics.oop.model.listeners.AnimalTracker;
+import agh.ics.oop.model.listeners.SimulationChangeListener;
 import agh.ics.oop.model.maps.Teleporter;
 import agh.ics.oop.model.setupData.AnimalSetupData;
 import agh.ics.oop.model.stats.AnimalStats;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Animal implements WorldElement {
+public class Animal extends AnimalComparator implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
     private int energyLevel;
@@ -22,6 +27,7 @@ public class Animal implements WorldElement {
     private AnimalStats stats;
     private AnimalSetupData setupData;
     List<Animal> parents = new ArrayList<>();
+    private final List<AnimalChangeListener> listeners = new LinkedList<>();
 
 
     private final static Vector2d LEFT_BOTTOM = new Vector2d(0, 0);
@@ -81,7 +87,6 @@ public class Animal implements WorldElement {
 
         this.position = nextPosition;
         this.orientation = nextOrientation;
-
     }
 
     public void eat(Plant plant) {
@@ -97,7 +102,7 @@ public class Animal implements WorldElement {
         this.energyLevel -= energySpendToReproduce;
         other.energyLevel -= energySpendToReproduce;
 
-        return new Animal(energySpendToReproduce * 2, genotype.createNewFrom(this, other, setupData.mutationsRange()), this, other);
+        return new Animal(4, genotype.createNewFrom(this, other, setupData.mutationsRange()), this, other);
     }
 
 
@@ -169,5 +174,17 @@ public class Animal implements WorldElement {
 //    public Animal getParent2() {
 //        return parent2;
 //    }
+    public void addAnimalTracker(AnimalChangeListener listener) {
+    listeners.add(listener);
+}
+
+
+    public void removeAnimalTracker(AnimalChangeListener listener) {
+        listeners.remove(listener);
+    }
+
+    public void notifyAnimalTracker(Animal animal) {
+        listeners.forEach(listener -> listener.animalInfoChanged(animal));
+    }
 
 }

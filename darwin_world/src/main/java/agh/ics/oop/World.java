@@ -3,6 +3,8 @@ package agh.ics.oop;
 import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.genotype.GenotypeType;
+import agh.ics.oop.model.listeners.ConsoleMapDisplay;
+import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.listeners.SimulationCSVSaver;
 import agh.ics.oop.model.listeners.SimulationChangeListener;
 import agh.ics.oop.model.maps.MapType;
@@ -20,9 +22,11 @@ import java.util.*;
 public class World {
     public static void main(String[] args) {
         System.out.println("system wystartował");
-        PlanetMap planetMap = new PoisonousMap(10, 10);
+//        PoisonousMap planetMap = new PoisonousMap(10, 10);
+//        MapChangeListener mapListener = new ConsoleMapDisplay();
+//        planetMap.addListener(mapListener);
 //        System.out.println(planetMap);
-        Simulation sim = new Simulation(new SimulationSetupData(10, 10, 3, 1, 3, 2, 5, 1, 1, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
+        Simulation sim = new Simulation(new SimulationSetupData(10, 10, 25, 1, 3, 9, 10, 1, 1, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
         Map<String, Method> methods = new HashMap<>();
         try {
             methods.put("dayOfSimulation", SimulationStatsController.class.getDeclaredMethod("getDayOfSimulation"));

@@ -3,6 +3,7 @@ package agh.ics.oop.model.maps;
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.PositionAlreadyOccupiedException;
 import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
@@ -46,6 +47,8 @@ public interface PlanetMap extends Teleporter {
 
     void letAnimalsEat();
 
+    List<Animal> letAnimalsReproduce();
+
 
 //    Collection<T> getElements();
 
@@ -56,5 +59,9 @@ public interface PlanetMap extends Teleporter {
     int getFreePositionsCount();
 
     int getStartingPlantsCount();
+
+    void addListener(MapChangeListener listener);
+
+    void removeListener(MapChangeListener listener);
 
 }
