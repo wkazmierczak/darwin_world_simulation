@@ -47,16 +47,17 @@ public class Simulation implements Runnable {
         AnimalSetupData animalSetupData = new AnimalSetupData(setupData);
         for (Vector2d animalPosition : randomPositionGenerator) {
             Animal newAnimal = new Animal(animalPosition, animalSetupData);
-            try {
-                worldMap.place(newAnimal);
-                animals.add(newAnimal);
-            } catch (
-                    PositionAlreadyOccupiedException e) {
-                throw new RuntimeException(e);
-            }
+//            try {
+            worldMap.place(newAnimal);
+            animals.add(newAnimal);
+//            } catch (
+//                    PositionAlreadyOccupiedException e) {
+//                throw new RuntimeException(e);
+//            }
         }
 //        setAnimalToTrack(animals.get(0));
     }
+
     @Override
     public void run() {
         int flag = 1;
@@ -67,7 +68,7 @@ public class Simulation implements Runnable {
             worldMap.letAnimalsEat();
 //            System.out.println(animals);
             List<Animal> newborns = worldMap.letAnimalsReproduce();
-            if (flag == 1 && !newborns.isEmpty()){ // TODO to remove only for tests, listener ustawiony na pierwsze narodzone dziecko
+            if (flag == 1 && !newborns.isEmpty()) { // TODO to remove only for tests, listener ustawiony na pierwsze narodzone dziecko
                 flag = 0;
                 setAnimalToTrack(newborns.get(0));
             }
@@ -89,7 +90,7 @@ public class Simulation implements Runnable {
 
     private void removeDead() {
         List<Animal> removedDead = worldMap.removeDead(animals, getDayOfSimulation());
-        if (removedDead.contains(animalToTrack)){
+        if (removedDead.contains(animalToTrack)) {
             animalToTrack.notifyAnimalTracker();
         }
         removedDead.forEach(getStatsController()::newDeath);
@@ -99,7 +100,7 @@ public class Simulation implements Runnable {
     private void moveAnimals() {
         for (Animal animal : animals) {
             worldMap.move(animal);
-            if (animal == animalToTrack){
+            if (animal == animalToTrack) {
                 animalToTrack.notifyAnimalTracker();
             }
 //                System.out.println(worldMap); // TODO prowizoryczne wyświetlanie mapy do poprawy to string z animal i wyświetlanie roślin, zwierzaki się nie teleportują, tylko znikają (mogłem użyć złej funkcji place)
@@ -150,7 +151,7 @@ public class Simulation implements Runnable {
         listeners.forEach(listener -> listener.simulationChanged(simulation));
     }
 
-    public void setAnimalToTrack(Animal animal){
+    public void setAnimalToTrack(Animal animal) {
         animalToTrack = animal;
         AnimalChangeListener animalChangeListener = new AnimalTracker();
         animalToTrack.addAnimalTracker(animalChangeListener);

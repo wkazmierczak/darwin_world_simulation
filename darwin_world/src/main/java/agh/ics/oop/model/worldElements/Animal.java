@@ -23,15 +23,10 @@ public class Animal implements WorldElement {
     private Vector2d position;
     private int energyLevel;
     private final Genotype genotype;
-
     private AnimalStats stats;
     private AnimalSetupData setupData;
     List<Animal> parents = new ArrayList<>();
     private final List<AnimalChangeListener> listeners = new LinkedList<>();
-
-
-    private final static Vector2d LEFT_BOTTOM = new Vector2d(0, 0);
-    private final static Vector2d RIGHT_TOP = new Vector2d(4, 4);
 
 
     //animal born on initialization
@@ -102,7 +97,7 @@ public class Animal implements WorldElement {
         this.energyLevel -= energySpendToReproduce;
         other.energyLevel -= energySpendToReproduce;
 
-        return new Animal(energySpendToReproduce*2, genotype.createNewFrom(this, other, setupData.mutationsRange()), this, other);
+        return new Animal(energySpendToReproduce * 2, genotype.createNewFrom(this, other, setupData.mutationsRange()), this, other);
     }
 
 
@@ -139,14 +134,6 @@ public class Animal implements WorldElement {
         return position;
     }
 
-    public static Vector2d getLeftBottom() {
-        return LEFT_BOTTOM;
-    }
-
-    public static Vector2d getRightTop() {
-        return RIGHT_TOP;
-    }
-
     public AnimalSetupData getSetupData() {
         return setupData;
     }
@@ -167,7 +154,7 @@ public class Animal implements WorldElement {
         return stats;
     }
 
-//    public Animal getParent1() {
+    //    public Animal getParent1() {
 //        return parent1;
 //    }
 //
@@ -175,8 +162,8 @@ public class Animal implements WorldElement {
 //        return parent2;
 //    }
     public void addAnimalTracker(AnimalChangeListener listener) {
-    listeners.add(listener);
-}
+        listeners.add(listener);
+    }
 
 
     public void removeAnimalTracker(AnimalChangeListener listener) {

@@ -13,6 +13,10 @@ public class AnimalComparator implements Comparator<Animal> {
         if (ageDiff != 0) {
             return ageDiff;
         }
-        return o2.getStats().getChildrenCount() - o1.getStats().getChildrenCount();
+        int childrenDiff = o2.getStats().getChildrenCount() - o1.getStats().getChildrenCount();
+        if (childrenDiff != 0) {
+            return childrenDiff;
+        }
+        return o1.hashCode() - o2.hashCode();
     }
 }

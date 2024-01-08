@@ -12,10 +12,7 @@ import agh.ics.oop.model.worldElements.PositionDetails;
 import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
@@ -109,7 +106,6 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     @Override
     public PositionDetails moveIntoDirection(Vector2d basePosition, MapDirection baseDirection, Vector2d step) {
-        //TODO naprawić bieguny
         var position = basePosition.add(step);
         var orientation = baseDirection;
         position = position.closeInXTeleport(boundary);
@@ -129,16 +125,14 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     }
 
     private void removeAnimal(Vector2d pos, Animal animal) {
-
-//        if (animalsPos.get(pos).isEmpty()) {
-//            animalsPos.remove(pos);
-//        }
+        if (animalsPos.get(pos) == null)
+            throw new IllegalArgumentException("There is no animal at " + pos);
         animalsPos.get(pos).remove(animal);
     }
 
     protected void removeAnimal(Animal animal) {
         Vector2d pos = animal.getPosition();
-        animalsPos.get(pos).remove(animal);
+        removeAnimal(pos, animal);
     }
 
     protected void handleWhoEats(Vector2d pos, Plant plant) {
@@ -152,15 +146,16 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
         List<Vector2d> positionWithPlantsAndAnimals = plants.keySet().stream().filter(pos -> animalsPos.containsKey(pos) && !animalsPos.get(pos).isEmpty()).toList();
         positionWithPlantsAndAnimals.forEach(pos -> handleWhoEats(pos, plants.get(pos)));
     }
-    protected Animal handleWhoReproduces(Vector2d pos){
+
+    protected Animal handleWhoReproduces(Vector2d pos) {
         List<Animal> parents = animalsPos.get(pos).stream().limit(2).toList();
         Animal child = parents.get(0).reproduce(parents.get(1));
         System.out.println(child + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-        if (child!=null){
+        if (child != null) {
 
-            parents.get(0).getStats().addChildren(child);
-            parents.get(1).getStats().addChildren(child);
+            parents.get(0).getStats().addChild(child);
+            parents.get(1).getStats().addChild(child);
             place(pos, child);
             mapChanged("New child on " + pos.toString());
         }
@@ -168,7 +163,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     }
 
-    public List<Animal> letAnimalsReproduce(){
+    public List<Animal> letAnimalsReproduce() {
         List<Vector2d> positionWithMoreThanOneAnimal = animalsPos.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().size() > 1)

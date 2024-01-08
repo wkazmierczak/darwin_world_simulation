@@ -22,9 +22,9 @@ public class AnimalStats {
         plantsEaten++;
     }
 
-    public void addChildren(Animal child) {
+    public void addChild(Animal child) {
         children.add(child);
-        updateDescendants(child); //TODO niepotrzebnie dwa razy chyba
+        updateDescendants(child);
     }
 
     private void updateDescendants(Animal animal) {
