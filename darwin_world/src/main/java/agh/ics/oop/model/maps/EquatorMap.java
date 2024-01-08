@@ -45,10 +45,9 @@ public class EquatorMap extends AbstractPlanetMap {
     public void growPlants(int count) {
         PlantsPositionGenerator plantsPositionGenerator = new PlantsPositionGenerator(plants, boundary);
         int onEquatorCount = Math.min(equatorBounds.getArea(), (int) new Random().doubles(0, 1).limit(count).filter(i -> i < equatorRatioToGrowNew).count());
-//        List<Vector2d> positions = Stream.concat(plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds).stream(), plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds).stream()).
-//                toList();
-//        positions.forEach(p -> plants.put(p, new BasicPlant(getSetupData().energyAfterConsumingPlant())));
-        Stream.concat(plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds).stream(), plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds).stream()).forEach(p -> plants.put(p, new BasicPlant(getSetupData().energyAfterConsumingPlant())));
+        List<Vector2d> toBePlacedOnEquator = plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds);
+        List<Vector2d> toBePlacedNotOnEquator = plantsPositionGenerator.getFreePositionsNotInBounds(count - toBePlacedOnEquator.size(), equatorBounds);
+        Stream.concat(toBePlacedOnEquator.stream(), toBePlacedNotOnEquator.stream()).forEach(p -> plants.put(p, new BasicPlant(getSetupData().energyAfterConsumingPlant())));
     }
 
 }
