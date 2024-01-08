@@ -46,7 +46,8 @@ public class Vector2d {
     }
 
     int returnCycled(int xl, int x0, int xr) {
-        return (x0 - xl) % Math.abs(xr - xl) + xl;
+        int range = xr - xl + 1;
+        return xl + ((x0 - xl) + range) % range;
     }
 
     public Vector2d closeInY(Boundary boundary) {

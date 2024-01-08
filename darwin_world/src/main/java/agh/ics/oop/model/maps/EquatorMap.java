@@ -4,6 +4,7 @@ import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.worldElements.plants.BasicPlant;
+import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.List;
 import java.util.Random;
@@ -43,10 +44,11 @@ public class EquatorMap extends AbstractPlanetMap {
     @Override
     public void growPlants(int count) {
         PlantsPositionGenerator plantsPositionGenerator = new PlantsPositionGenerator(plants, boundary);
-        int onEquatorCount = (int) new Random().doubles(0, 1).limit(count).filter(i -> i < equatorRatioToGrowNew).count();
-        List<Vector2d> positions = Stream.concat(plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds).stream(), plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds).stream()).
-                toList();
-        positions.forEach(p -> plants.put(p, new BasicPlant(getSetupData().energyAfterConsumingPlant())));
+        int onEquatorCount = Math.min(equatorBounds.getArea(), (int) new Random().doubles(0, 1).limit(count).filter(i -> i < equatorRatioToGrowNew).count());
+//        List<Vector2d> positions = Stream.concat(plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds).stream(), plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds).stream()).
+//                toList();
+//        positions.forEach(p -> plants.put(p, new BasicPlant(getSetupData().energyAfterConsumingPlant())));
+        Stream.concat(plantsPositionGenerator.getNFreePositionsWithinBounds(onEquatorCount, equatorBounds).stream(), plantsPositionGenerator.getFreePositionsNotInBounds(count - onEquatorCount, equatorBounds).stream()).forEach(p -> plants.put(p, new BasicPlant(getSetupData().energyAfterConsumingPlant())));
     }
 
 }
