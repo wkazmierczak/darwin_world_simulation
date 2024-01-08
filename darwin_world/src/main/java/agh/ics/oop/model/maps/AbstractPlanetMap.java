@@ -21,7 +21,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     protected final Boundary boundary;
     protected final WorldSetupData setupData;
     private final List<MapChangeListener> mapChangeListeners = new ArrayList<>();
-    protected String id; //TODO zapytac co to
+    protected String id;
 
 
     protected AbstractPlanetMap(WorldSetupData setupData) {
@@ -44,7 +44,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     public void mapChanged(String message) {
         for (MapChangeListener listener : mapChangeListeners) {
-            listener.mapChanged(this, message); // ! zly typ dla mapchanged
+            listener.mapChanged(this, message);
         }
     }
 
@@ -150,7 +150,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     protected Animal handleWhoReproduces(Vector2d pos) {
         List<Animal> parents = animalsPos.get(pos).stream().limit(2).toList();
         Animal child = parents.get(0).reproduce(parents.get(1));
-        System.out.println(child + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//        System.out.println(child + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         if (child != null) {
 

@@ -25,18 +25,6 @@ public enum MapDirection {
         };
     }
 
-    //    public String toString(){
-//        return switch(this){
-//            case NORTH -> "^";
-//            case NORTHEAST -> "";
-//            case EAST -> ">";
-//            case SOUTHEAST -> "";
-//            case SOUTH -> "v";
-//            case SOUTHWEST -> "";
-//            case WEST -> "<";
-//            case NORTHWEST -> "";
-//        };
-//    }
     public static MapDirection getRandom() {
         return MapDirection.values()[new Random().nextInt(MapDirection.values().length)];
     }

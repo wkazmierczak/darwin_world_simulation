@@ -23,14 +23,6 @@ public enum MoveDirection {
         return Arrays.stream(values())
                 .filter(legNo -> legNo.index == index)
                 .findFirst();
-//    private final MoveDirection[] VALUES = MoveDirection.values();
-
-//    public MoveDirection getFromIndex(int idx) throws IllegalArgumentException {
-//        if (idx < 0 || idx >= VALUES.length)
-//            throw new IllegalArgumentException();
-//        return VALUES[idx];
-//    }
-
     }
 
     public int getIndex() {

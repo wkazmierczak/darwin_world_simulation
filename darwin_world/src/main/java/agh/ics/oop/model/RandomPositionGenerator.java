@@ -70,7 +70,6 @@ public class RandomPositionGenerator implements Iterable<Vector2d> {
         public Vector2d next() {
             if (hasNext()) {
                 return generateNext(generatedCount++);
-//                return positions.get(generatedCount++);
             }
             return null;
         }
