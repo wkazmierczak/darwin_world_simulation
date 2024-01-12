@@ -1,6 +1,5 @@
 package agh.ics.oop.Simulation;
 
-import agh.ics.oop.model.PositionAlreadyOccupiedException;
 import agh.ics.oop.model.RandomPositionGenerator;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.listeners.*;
@@ -11,12 +10,10 @@ import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.stats.SimulationStatsController;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.setupData.AnimalSetupData;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Simulation implements Runnable {
     private final PlanetMap worldMap; //TODO WorldElement ?
@@ -25,9 +22,12 @@ public class Simulation implements Runnable {
     private final SimulationSetupData simulationSetupData;
     private final List<SimulationChangeListener> listeners = new LinkedList<>();
     private Animal animalToTrack = null;
+    private int id;
+    static private int idCounter = 0;
 
     public Simulation(SimulationSetupData setupData) {
         this.simulationSetupData = setupData;
+        this.id = idCounter++;
         int width = setupData.width();
         int height = setupData.height();
         int initialNumOfAnimals = setupData.initialNumOfAnimals();
@@ -61,7 +61,7 @@ public class Simulation implements Runnable {
     @Override
     public void run() {
         int flag = 1;
-        while (statsController.getDayOfSimulation() < 10) { // TODO number only for test
+        while (statsController.getDayOfSimulation() < simulationSetupData.maxDays()) { // TODO number only for test
             nextDay();
             removeDead();
             moveAnimals();
@@ -77,7 +77,7 @@ public class Simulation implements Runnable {
             worldMap.growPlants();
 
             notifySimulationChanged(this);
-            System.out.println(statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            System.out.println("Day of simulation: " +statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
         }
 
@@ -90,11 +90,11 @@ public class Simulation implements Runnable {
 
     private void removeDead() {
         List<Animal> removedDead = worldMap.removeDead(animals, getDayOfSimulation());
-        if (removedDead.contains(animalToTrack)) {
-            animalToTrack.notifyAnimalTracker();
-        }
-        removedDead.forEach(getStatsController()::newDeath);
-        animals.removeAll(removedDead);
+        removedDead.forEach(animal -> {
+            if (animal == animalToTrack) animalToTrack.notifyAnimalTracker();
+            getStatsController().newDeath(animal);
+            animals.remove(animal);
+        });
     }
 
     private void moveAnimals() {
@@ -104,11 +104,11 @@ public class Simulation implements Runnable {
                 animalToTrack.notifyAnimalTracker();
             }
 //                System.out.println(worldMap); // TODO prowizoryczne wyświetlanie mapy do poprawy to string z animal i wyświetlanie roślin, zwierzaki się nie teleportują, tylko znikają (mogłem użyć złej funkcji place)
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -157,4 +157,7 @@ public class Simulation implements Runnable {
         animalToTrack.addAnimalTracker(animalChangeListener);
     }
 
+    public int getId() {
+        return id;
+    }
 }

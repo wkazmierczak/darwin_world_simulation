@@ -6,6 +6,7 @@ import agh.ics.oop.model.util.MyRange;
 
 public record SimulationSetupData(int width,
                                   int height,
+                                  int maxDays,
                                   int startingPlantsCount,
                                   int energyAfterConsumingPlant,
                                   int plantsPerDay,

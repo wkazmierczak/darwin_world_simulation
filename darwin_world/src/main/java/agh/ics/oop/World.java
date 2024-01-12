@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.Simulation.Simulation;
+import agh.ics.oop.Simulation.SimulationEngine;
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.genotype.GenotypeType;
 import agh.ics.oop.model.listeners.ConsoleMapDisplay;
@@ -27,17 +28,28 @@ public class World {
 //        planetMap.addListener(mapListener);
 //        System.out.println(planetMap);
 //        Simulation sim = new Simulation(new SimulationSetupData(10, 10, 25, 1, 3, 9, 10, 2, 2, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
-        Simulation sim = new Simulation(new SimulationSetupData(5, 5, 36, 1, 3, 1, 10, 2, 2, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
-        Map<String, Method> methods = new HashMap<>();
-        try {
-            methods.put("dayOfSimulation", SimulationStatsController.class.getDeclaredMethod("getDayOfSimulation"));
-            methods.put("plants", SimulationStatsController.class.getDeclaredMethod("getNumOfPlants"));
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
+        SimulationSetupData setupData = new SimulationSetupData(10, 10, 10,25, 1, 3, 5, 10, 2, 2, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP);
+        //list of 10 simulations
+        List<Simulation> sims = new LinkedList<>();
+        for (int i = 0; i < 1; i++) {
+            Simulation sim = new Simulation(setupData);
+            sims.add(sim);
         }
-        SimulationChangeListener listener = new SimulationCSVSaver("simulation3.csv", methods);
-        sim.addSimulationChangeListener(listener);
-        sim.run();
+        SimulationEngine engine = new SimulationEngine(sims);
+        engine.runAsync();
+
+
+//        Simulation sim = new Simulation(new SimulationSetupData(5, 5, 36, 1, 3, 1, 10, 2, 2, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
+//        Map<String, Method> methods = new HashMap<>();
+//        try {
+//            methods.put("dayOfSimulation", SimulationStatsController.class.getDeclaredMethod("getDayOfSimulation"));
+//            methods.put("plants", SimulationStatsController.class.getDeclaredMethod("getNumOfPlants"));
+//        } catch (NoSuchMethodException e) {
+//            throw new RuntimeException(e);
+//        }
+//        SimulationChangeListener listener = new SimulationCSVSaver("simulation3.csv", methods);
+//        sim.addSimulationChangeListener(listener);
+//        sim.run();
 
 //        TODO symulacja jeszcze nie współgra z obserwatorami
 
