@@ -10,6 +10,7 @@ import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.stats.SimulationStatsController;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.setupData.AnimalSetupData;
+import agh.ics.oop.presenter.SimulationPresenter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -32,12 +33,8 @@ public class Simulation implements Runnable {
         int height = setupData.height();
         int initialNumOfAnimals = setupData.initialNumOfAnimals();
         MapType mapType = setupData.mapType();
-
         this.animals = new ArrayList<>();
-
         this.worldMap = mapType.createPlanetMap(new WorldSetupData(setupData));
-        MapChangeListener mapChangeListener = new ConsoleMapDisplay();
-        worldMap.addListener(mapChangeListener);
 
 
 //        this.statsController = new SimulationStatsController(setupData.initialNumOfAnimals(), setupData.startingPlantsCount());
@@ -47,15 +44,14 @@ public class Simulation implements Runnable {
         AnimalSetupData animalSetupData = new AnimalSetupData(setupData);
         for (Vector2d animalPosition : randomPositionGenerator) {
             Animal newAnimal = new Animal(animalPosition, animalSetupData);
-//            try {
             worldMap.place(newAnimal);
             animals.add(newAnimal);
-//            } catch (
-//                    PositionAlreadyOccupiedException e) {
-//                throw new RuntimeException(e);
-//            }
         }
 //        setAnimalToTrack(animals.get(0));
+    }
+
+    public void setMapChangeListener(MapChangeListener mapChangeListener) {
+        worldMap.addListener(mapChangeListener);
     }
 
     @Override
@@ -77,7 +73,7 @@ public class Simulation implements Runnable {
             worldMap.growPlants();
 
             notifySimulationChanged(this);
-            System.out.println("Day of simulation: " +statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//            System.out.println("Day of simulation: " + statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
         }
 
