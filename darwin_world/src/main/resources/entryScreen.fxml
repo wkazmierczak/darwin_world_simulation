@@ -42,7 +42,7 @@
     <TextField fx:id="initialAnimalEnergyTextField" GridPane.columnIndex="1" GridPane.rowIndex="7" text="20"/>
     <TextField fx:id="reproduceEnergyMinTextField" GridPane.columnIndex="1" GridPane.rowIndex="8" text="20"/>
     <TextField fx:id="energySpendToReproduceTextField" GridPane.columnIndex="1" GridPane.rowIndex="9" text="20"/>
-    <TextField fx:id="genotypeLengthTextField" GridPane.columnIndex="1" GridPane.rowIndex="10" text="20"/>
+    <TextField fx:id="genotypeLengthTextField" GridPane.columnIndex="1" GridPane.rowIndex="10" text="10"/>
 
 
     <Label text="Genotype Type:" GridPane.columnIndex="0" GridPane.rowIndex="11"/>

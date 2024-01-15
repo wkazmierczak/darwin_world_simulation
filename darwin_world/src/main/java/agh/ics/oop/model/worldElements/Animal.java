@@ -46,10 +46,8 @@ public class Animal implements WorldElement {
         this.orientation = MapDirection.getRandom();
         this.energyLevel = initialEnergy;
         this.genotype = genotypeFromParents;
-        this.stats = new AnimalStats(); //TODO for each sim different values
+        this.stats = new AnimalStats();
         this.parents = List.of(parent1, parent2);
-//        this.parent1 = parent1;
-//        this.parent2 = parent2;
     }
 
     @Override
@@ -101,22 +99,6 @@ public class Animal implements WorldElement {
         return new Animal(energySpendToReproduce * 2, genotype.createNewFrom(this, other, setupData.mutationsRange()), this, other);
     }
 
-
-//    public void nextDay(Teleporter teleport) {
-//        energyLevel--;
-////        MoveDirection direction = genotype.next();
-//        move(teleport);
-//        Plant plant = teleport.plantAt(position);
-//        if (plant != null) {
-////            eat(plant);
-//        } // TODO dodanie logiki związanej z jedzeniem
-////        TODO rozmanażanie się zwierzaków
-//
-////        if (energyLevel <= 0){
-////            this.getStats().getDayOfDeath() = //TODO get day of simulation;
-////        }
-//    }
-
     public void nextDay() {
         energyLevel--;
         stats.incrementAge();
@@ -124,7 +106,6 @@ public class Animal implements WorldElement {
 
     public boolean isDead() {
         return energyLevel <= 0;
-//        return this.getStats().getDayOfDeath() != null;
     }
 
     public MapDirection getOrientation() {
@@ -155,13 +136,6 @@ public class Animal implements WorldElement {
         return stats;
     }
 
-    //    public Animal getParent1() {
-//        return parent1;
-//    }
-//
-//    public Animal getParent2() {
-//        return parent2;
-//    }
     public void addAnimalTracker(AnimalChangeListener listener) {
         listeners.add(listener);
     }
