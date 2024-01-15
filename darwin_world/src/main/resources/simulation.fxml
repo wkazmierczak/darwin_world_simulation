@@ -17,12 +17,13 @@
                 <TextField fx:id="movesInput" text="f r f l f f l b l b b f l b r l f f f f b r b f f"/>
                 <Button fx:id="start" text="Start" onAction="#onSimulationStartClicked"/>
             </HBox>
-            <VBox spacing="5">
-                <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER"/>
+            <HBox spacing="5">
+
+                <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" maxHeight="100"/>
                 <VBox alignment="CENTER">
                     <Label fx:id="description"/>
                 </VBox>
-            </VBox>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>

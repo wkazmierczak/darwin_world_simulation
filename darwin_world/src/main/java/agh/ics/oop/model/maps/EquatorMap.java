@@ -50,4 +50,9 @@ public class EquatorMap extends AbstractPlanetMap {
         Stream.concat(toBePlacedOnEquator.stream(), toBePlacedNotOnEquator.stream()).forEach(p -> plants.put(p, new BasicPlant(getSetupData().energyAfterConsumingPlant())));
     }
 
+
+    @Override
+    public Boundary getSpecialAreaBounds() {
+        return equatorBounds;
+    }
 }

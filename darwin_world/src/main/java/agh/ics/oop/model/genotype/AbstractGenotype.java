@@ -40,11 +40,12 @@ public abstract class AbstractGenotype implements Genotype {
 
         if (siteForStronger.equals("left")) {
             int splitPoint = (strongerEnergy / (strongerEnergy + weakerEnergy) * size);
-            genotypeList = strongerGenotypeList.subList(0, splitPoint);
+            genotypeList = new ArrayList<>(strongerGenotypeList.subList(0, splitPoint));
             genotypeList.addAll(weakerGenotypeList.subList(splitPoint, size));
         } else if (siteForStronger.equals("right")) {
             int splitPoint = (weakerEnergy / (strongerEnergy + weakerEnergy) * size);
-            genotypeList = weakerGenotypeList.subList(0, splitPoint);
+
+            genotypeList =new ArrayList<>(weakerGenotypeList.subList(0, splitPoint));;
             genotypeList.addAll(strongerGenotypeList.subList(splitPoint, size));
         }
 

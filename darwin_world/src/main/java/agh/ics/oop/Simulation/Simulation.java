@@ -37,7 +37,6 @@ public class Simulation implements Runnable {
         this.worldMap = mapType.createPlanetMap(new WorldSetupData(setupData));
 
 
-//        this.statsController = new SimulationStatsController(setupData.initialNumOfAnimals(), setupData.startingPlantsCount());
         this.statsController = new SimulationStatsController(this);
 
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(width, height, initialNumOfAnimals);
@@ -50,10 +49,6 @@ public class Simulation implements Runnable {
 //        setAnimalToTrack(animals.get(0));
     }
 
-    public void setMapChangeListener(MapChangeListener mapChangeListener) {
-        worldMap.addListener(mapChangeListener);
-    }
-
     @Override
     public void run() {
         int flag = 1;
@@ -63,18 +58,22 @@ public class Simulation implements Runnable {
             moveAnimals();
             worldMap.letAnimalsEat();
 //            System.out.println(animals);
+            // TODO extract to method
             List<Animal> newborns = worldMap.letAnimalsReproduce();
             if (flag == 1 && !newborns.isEmpty()) { // TODO to remove only for tests, listener ustawiony na pierwsze narodzone dziecko
                 flag = 0;
                 setAnimalToTrack(newborns.get(0));
             }
             animals.addAll(newborns);
-//            System.out.println(animals);
             worldMap.growPlants();
 
             notifySimulationChanged(this);
-//            System.out.println("Day of simulation: " + statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-
+            System.out.println("Day of simulation: " + statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
@@ -87,7 +86,8 @@ public class Simulation implements Runnable {
     private void removeDead() {
         List<Animal> removedDead = worldMap.removeDead(animals, getDayOfSimulation());
         removedDead.forEach(animal -> {
-            if (animal == animalToTrack) animalToTrack.notifyAnimalTracker();
+            if (animal == animalToTrack)
+                animalToTrack.notifyAnimalTracker();
             getStatsController().newDeath(animal);
             animals.remove(animal);
         });
@@ -98,12 +98,6 @@ public class Simulation implements Runnable {
             worldMap.move(animal);
             if (animal == animalToTrack) {
                 animalToTrack.notifyAnimalTracker();
-            }
-//                System.out.println(worldMap); // TODO prowizoryczne wyświetlanie mapy do poprawy to string z animal i wyświetlanie roślin, zwierzaki się nie teleportują, tylko znikają (mogłem użyć złej funkcji place)
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
         }
     }

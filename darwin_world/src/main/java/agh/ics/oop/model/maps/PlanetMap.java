@@ -64,4 +64,6 @@ public interface PlanetMap extends Teleporter {
 
     void removeListener(MapChangeListener listener);
 
+    Boundary getSpecialAreaBounds();
+
 }

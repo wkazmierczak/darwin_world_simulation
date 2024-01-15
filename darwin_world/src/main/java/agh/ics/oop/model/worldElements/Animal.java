@@ -41,6 +41,7 @@ public class Animal implements WorldElement {
     }
 
     public Animal(int initialEnergy, Genotype genotypeFromParents, Animal parent1, Animal parent2) {
+        this.setupData = parent1.getSetupData();
         this.position = parent1.getPosition();
         this.orientation = MapDirection.getRandom();
         this.energyLevel = initialEnergy;
