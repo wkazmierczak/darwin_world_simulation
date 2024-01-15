@@ -10,7 +10,6 @@ import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.stats.SimulationStatsController;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.setupData.AnimalSetupData;
-import agh.ics.oop.presenter.SimulationPresenter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,17 +27,20 @@ public class Simulation implements Runnable {
     public Simulation(SimulationSetupData setupData) {
         this.simulationSetupData = setupData;
         this.id = idCounter++;
+
         int width = setupData.width();
         int height = setupData.height();
         int initialNumOfAnimals = setupData.initialNumOfAnimals();
+
         MapType mapType = setupData.mapType();
+
         this.animals = new ArrayList<>();
         this.worldMap = mapType.createPlanetMap(new WorldSetupData(setupData));
-
         this.statsController = new SimulationStatsController(this);
 
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(width, height, initialNumOfAnimals);
         AnimalSetupData animalSetupData = new AnimalSetupData(setupData);
+
         for (Vector2d animalPosition : randomPositionGenerator) {
             Animal newAnimal = new Animal(animalPosition, animalSetupData);
             worldMap.place(newAnimal);
@@ -48,18 +50,16 @@ public class Simulation implements Runnable {
 
     @Override
     public void run() {
-        int flag = 1;
-        while (statsController.getDayOfSimulation() < simulationSetupData.maxDays()) { // TODO number only for test
+        while (statsController.getDayOfSimulation() < simulationSetupData.maxDays()) {
             nextDay();
             removeDead();
             moveAnimals();
             worldMap.letAnimalsEat();
-            List<Animal> newborns = worldMap.letAnimalsReproduce();
-            animals.addAll(newborns);
+            letReproduce();
             worldMap.growPlants();
 
             notifySimulationChanged(this);
-            System.out.println("Day of simulation: " + statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+
             try {
                 Thread.sleep(20);
             } catch (InterruptedException e) {
@@ -88,21 +88,17 @@ public class Simulation implements Runnable {
         });
     }
 
+    private void letReproduce() {
+        List<Animal> newborns = worldMap.letAnimalsReproduce();
+        animals.addAll(newborns);
+    }
+
     private void moveAnimals() {
         for (Animal animal : animals) {
             worldMap.move(animal);
             animal.notifyAnimalTracker();
         }
     }
-
-    private void letAnimalEat() {
-        worldMap.letAnimalsEat();
-    }
-
-    private void letAnimalsReproduce() {
-//        worldMap.
-    }
-
 
     public SimulationStatsController getStatsController() {
         return statsController;
