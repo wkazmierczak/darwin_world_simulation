@@ -4,6 +4,7 @@ import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.Simulation.SimulationEngine;
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.genotype.Genotype;
 import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.listeners.SimulationChangeListener;
 import agh.ics.oop.model.maps.EquatorMap;
@@ -78,8 +79,8 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     private double CELL_ELEMENT_SIZE;
     private double ANIMAL_IMG_SIZE;
     private SimulationEngine engine;
-    private boolean started = false;
-    private boolean paused = false;
+    private boolean markMostPopular = false;
+    private List<Integer> mostPopular;
 
     public void setSetupData(SimulationSetupData setupData) {
         Simulation simulation = new Simulation(setupData);
@@ -97,12 +98,21 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     public void onPauseClicked() {
         System.out.println("Pause clicked");
         simulation.freeze();
-//        engine.pauseSimulation(simulation);
+        markMostPopular = true;
+        mostPopular = simulation.getStatsController().getMostPopularGenotype();
+        simulationChanged(simulation);
     }
+
 
     public void onResumeClicked() {
         simulation.unfreeze();
+        markMostPopular = false;
 //        engine.resumeSimulation(simulation);
+    }
+
+    private boolean isMostPopular(int i, int j, List<Integer> mostPopular) {
+        Collection<Animal> animals = map.animalsAt(new Vector2d(i, j));
+        return animals != null && animals.stream().anyMatch(a -> a.getGenotype().getGenotypeList().equals(mostPopular));
     }
 
 
@@ -154,12 +164,11 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         Boundary bounds = map.getCurrentBounds();
         for (int i = 0; i <= bounds.upperRight().getX() - bounds.bottomLeft().getX(); i++) {
             for (int j = 0; j <= bounds.upperRight().getY() - bounds.bottomLeft().getY(); j++) {
-
                 mapGrid.add(drawCell(i, j), i + 1, j);
 
             }
-
         }
+//        markMostPopular = false;
     }
 
     private GridPane drawCell(int i, int j) {
@@ -170,8 +179,15 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         Plant plant = map.plantAt(position);
         Collection<Animal> animals = map.animalsAt(position);
         GridPane cell = configureCell();
+        if (markMostPopular && isMostPopular(x, y, mostPopular)) {
+            VBox highlightBox = new VBox();
+            highlightBox.setAlignment(Pos.CENTER_LEFT);
+            highlightBox.setPadding(new Insets(CELL_SIZE * 0.5));
+            highlightBox.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(50), new Insets(0))));
+            cell.add(highlightBox, 0, 1);
+        }
         if (animals != null && !animals.isEmpty()) {
-            drawAnimal(cell, animals.size());
+            drawAnimal(cell, animals.size(), markMostPopular && isMostPopular(i, j, mostPopular));
         }
         if (plant != null) {
             drawPlant(cell, plant);
@@ -179,10 +195,11 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         if (position.inBounds(map.getSpecialAreaBounds())) {
             drawSpecialArea(cell, new Color(0, 0.9, 0, 0.2));
         }
+
         return cell;
     }
 
-    private void drawAnimal(GridPane cell, int count) {
+    private void drawAnimal(GridPane cell, int count, boolean hasMostPopular) {
 
         ImageView animalImgView = new ImageView(wolfImg);
         animalImgView.setFitHeight(ANIMAL_IMG_SIZE);
@@ -201,6 +218,10 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
             Color color = new Color(1, 0, 0, Math.min(count / 5.0, 1));
             animalBox.setBackground(new Background(new BackgroundFill(color, new CornerRadii(100), new Insets(10))));
         }
+//        if (markMostPopular && hasMostPopular) {
+//            animalBox.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(80), new Insets(0))));
+//        }
+
         cell.add(animalBox, 0, 1);
     }
 
@@ -250,35 +271,53 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         System.out.println("Animal: " + animal.toString());
     }
 
-    //TODO dont know how to connect animal with animal listener
     @Override
     public synchronized void animalInfoChanged(Animal animal) {
+        String genotypeListStr = String.valueOf(animal.getGenotype().getGenotypeList());
+        String activeGenotypeStr = String.valueOf(animal.getGenotype().getCurrent());
+        String energyLevelStr = String.valueOf(animal.getEnergyLevel());
+        String numOfEatenPlantsStr = String.valueOf(animal.getStats().getPlantsEaten());
+        String numOfChildrenStr = String.valueOf(animal.getStats().getChildrenCount());
+        String numOfDescendantsStr = String.valueOf(animal.getStats().getDescendantsCount());
+        String ageStr = String.valueOf(animal.getStats().getAge());
+        String dayOfDeathStr = String.valueOf(animal.getStats().getDayOfDeath());
+
         Platform.runLater(() -> {
-            genotype.setText(String.valueOf(animal.getGenotype().getGenotypeList()));
-            activeGenotype.setText(String.valueOf(animal.getGenotype().getCurrent()));
-            energyLevel.setText(String.valueOf(animal.getEnergyLevel()));
-            numOfEatenPlants.setText(String.valueOf(animal.getStats().getPlantsEaten()));
-            numOfChildren.setText(String.valueOf(animal.getStats().getChildrenCount()));
-            numOfDescendants.setText(String.valueOf(animal.getStats().getDescendantsCount()));
-            age.setText(String.valueOf(animal.getStats().getAge()));
-            dayOfDeath.setText(String.valueOf(animal.getStats().getDayOfDeath()));
+            genotype.setText(genotypeListStr);
+            activeGenotype.setText(activeGenotypeStr);
+            energyLevel.setText(energyLevelStr);
+            numOfEatenPlants.setText(numOfEatenPlantsStr);
+            numOfChildren.setText(numOfChildrenStr);
+            numOfDescendants.setText(numOfDescendantsStr);
+            age.setText(ageStr);
+            dayOfDeath.setText(dayOfDeathStr);
         });
     }
 
     @Override
     public synchronized void simulationChanged(Simulation simulation) {
+        String dayOfSimStr = String.valueOf(simulation.getDayOfSimulation());
+        String numOfAnimalsStr = String.valueOf(simulation.getAnimals().size());
+        String numOfPlantsStr = String.valueOf(simulation.getWorldMap().getPlantsCount());
+        String numOfFreeSpotsStr = String.valueOf(simulation.getWorldMap().getFreePositionsCount());
+        String mostCommonGenotypeStr = String.valueOf(simulation.getStatsController().getMostPopularGenotype());
+        String avgEnergyLevelStr = String.valueOf(simulation.getStatsController().getAvgEnergyLevel());
+        String avgLifespanStr = String.valueOf(simulation.getStatsController().getAvgLifespanForDeadAnimals());
+        String avgChildrenNumStr = String.valueOf(simulation.getStatsController().getAvgNumOfChildrenForAliveAnimals(simulation.getAnimals()));
+
         Platform.runLater(() -> {
             drawMap();
-            dayOfSim.setText(String.valueOf(simulation.getDayOfSimulation()));
-            numOfAnimals.setText(String.valueOf(simulation.getAnimals().size()));
-            numOfPlants.setText(String.valueOf(simulation.getWorldMap().getPlantsCount()));
-            numOFreeSpots.setText(String.valueOf(simulation.getWorldMap().getFreePositionsCount()));
-            mostCommonGenotype.setText(String.valueOf(simulation.getStatsController().getMostPopularGenotype()));
-            avgEnergyLevel.setText(String.valueOf(simulation.getStatsController().getAvgEnergyLevel()));
-            avgLifespan.setText(String.valueOf(simulation.getStatsController().getAvgLifespanForDeadAnimals()));
-            avgChildrenNum.setText(String.valueOf(simulation.getStatsController().getAvgNumOfChildrenForAliveAnimals(simulation.getAnimals())));
+            dayOfSim.setText(dayOfSimStr);
+            numOfAnimals.setText(numOfAnimalsStr);
+            numOfPlants.setText(numOfPlantsStr);
+            numOFreeSpots.setText(numOfFreeSpotsStr);
+            mostCommonGenotype.setText(mostCommonGenotypeStr);
+            avgEnergyLevel.setText(avgEnergyLevelStr);
+            avgLifespan.setText(avgLifespanStr);
+            avgChildrenNum.setText(avgChildrenNumStr);
         });
     }
+
 
 //    public void setAnimalToTrack(Animal animalToTrack){
 //        animalToTrack.addAnimalTracker(this);

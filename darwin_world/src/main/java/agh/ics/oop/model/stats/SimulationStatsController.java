@@ -4,6 +4,7 @@ import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.model.maps.PlanetMap;
 import agh.ics.oop.model.worldElements.Animal;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class SimulationStatsController {
         Map<List<Integer>, Long> genotypeCounts = simulation.getAnimals().stream()
                 .map(animal -> animal.getGenotype().getGenotypeList())
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
 
         return genotypeCounts.entrySet().stream()
                 .max(Map.Entry.comparingByValue())

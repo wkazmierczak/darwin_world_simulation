@@ -9,6 +9,7 @@ import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * The interface responsible for interacting with the map of the world.
@@ -47,7 +48,8 @@ public interface PlanetMap extends Teleporter {
 
     void letAnimalsEat();
 
-    List<Animal> letAnimalsReproduce();
+    //    List<Animal> letAnimalsReproduce();
+    Stream<Animal> letAnimalsReproduce();
 
 
 //    Collection<T> getElements();

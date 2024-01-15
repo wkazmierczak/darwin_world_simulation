@@ -148,10 +148,10 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     protected Animal handleWhoReproduces(Vector2d pos) {
         List<Animal> parents = animalsPos.get(pos).stream().limit(2).toList();
+        if (parents.size() < 2)
+            throw new IllegalArgumentException("There is less than 2 animals at " + pos);
         Animal child = parents.get(0).reproduce(parents.get(1));
-
         if (child != null) {
-
             parents.get(0).getStats().addChild(child);
             parents.get(1).getStats().addChild(child);
             place(pos, child);
@@ -161,18 +161,8 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     }
 
-    public List<Animal> letAnimalsReproduce() {
-        List<Vector2d> positionWithMoreThanOneAnimal = animalsPos.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().size() > 1)
-                .map(Map.Entry::getKey)
-                .toList();
-
-        return positionWithMoreThanOneAnimal.stream()
-                .map(this::handleWhoReproduces)
-                .filter(Objects::nonNull)
-                .toList();
-
+    public Stream<Animal> letAnimalsReproduce() {
+        return animalsPos.entrySet().stream().filter(entry -> entry.getValue().size() > 1).map(Map.Entry::getKey).map(this::handleWhoReproduces).filter(Objects::nonNull);
     }
 
     protected void removePlant(Vector2d pos) {
@@ -207,9 +197,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     @Override
     public int getFreePositionsCount() {
-        return (int) (boundary.getWidth() * boundary.getHeight() - Stream.concat(plants.keySet().stream(), animalsPos.keySet().stream())
-                .distinct()
-                .count());
+        return (int) (boundary.getWidth() * boundary.getHeight() - Stream.concat(plants.keySet().stream(), animalsPos.keySet().stream().filter(p -> !animalsPos.get(p).isEmpty())).distinct().count());
     }
 
     public int getStartingPlantsCount() {
