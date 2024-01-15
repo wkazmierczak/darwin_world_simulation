@@ -10,7 +10,6 @@ import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.stats.SimulationStatsController;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.setupData.AnimalSetupData;
-import agh.ics.oop.presenter.SimulationPresenter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -57,7 +56,7 @@ public class Simulation implements Runnable {
             removeDead();
             moveAnimals();
             worldMap.letAnimalsEat();
-            addNewborns();
+            letReproduce();
             worldMap.growPlants();
 
             notifySimulationChanged(this);
@@ -86,7 +85,7 @@ public class Simulation implements Runnable {
         });
     }
 
-    private void addNewborns() {
+    private void letReproduce() {
         List<Animal> newborns = worldMap.letAnimalsReproduce();
         animals.addAll(newborns);
     }
