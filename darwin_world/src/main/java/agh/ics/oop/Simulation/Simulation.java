@@ -62,7 +62,7 @@ public class Simulation implements Runnable {
             notifySimulationChanged(this);
 
             try {
-                Thread.sleep(20);
+                Thread.sleep(simulationSetupData.delay());
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -75,11 +75,12 @@ public class Simulation implements Runnable {
                         throw new RuntimeException(e);
                     }
                 }
-            }try { //tymczasowe
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
+//            try { //tymczasowe
+//                Thread.sleep(simulationSetupData.delay());
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
         }
 
     }

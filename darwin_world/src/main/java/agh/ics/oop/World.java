@@ -28,7 +28,7 @@ public class World {
 //        planetMap.addListener(mapListener);
 //        System.out.println(planetMap);
 //        Simulation sim = new Simulation(new SimulationSetupData(10, 10, 25, 1, 3, 9, 10, 2, 2, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP));
-        SimulationSetupData setupData = new SimulationSetupData(10, 10, 10,25, 1, 3, 5, 10, 2, 2, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP);
+        SimulationSetupData setupData = new SimulationSetupData(10, 10, 10,25, 1, 3, 5, 10, 2, 2, new MyRange(1, 3), 5, GenotypeType.BASIC_GENOTYPE, MapType.EQUATOR_MAP, 10);
         //list of 10 simulations
         List<Simulation> sims = new LinkedList<>();
         for (int i = 0; i < 1; i++) {

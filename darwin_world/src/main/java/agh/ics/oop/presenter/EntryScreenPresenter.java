@@ -13,13 +13,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class EntryScreenPresenter {
     public TextField widthTextField;
@@ -35,6 +43,10 @@ public class EntryScreenPresenter {
     public TextField lowTextField;
     public TextField highTextField;
     public TextField genotypeLengthTextField;
+    public Button readCSVButton;
+    public ComboBox<String> filesComboBox;
+    public CheckBox saveToCSVCheckBox;
+    public TextField delayTextField;
     private SimulationSetupData setupData;
     @FXML
     private ComboBox<GenotypeType> genotypeTypeComboBox;
@@ -46,6 +58,12 @@ public class EntryScreenPresenter {
     private void initialize() {
         genotypeTypeComboBox.setItems(FXCollections.observableArrayList(GenotypeType.values()));
         mapTypeComboBox.setItems(FXCollections.observableArrayList(MapType.values()));
+
+        List<String> results = Arrays.stream(Objects.requireNonNull(new File("src/main/java/agh/ics/oop/model/setupFiles").listFiles(File::isFile)))
+                .map(File::getName)
+                .collect(Collectors.toList());
+
+        filesComboBox.setItems(FXCollections.observableArrayList(results));
     }
 
     public Button submitButton;
@@ -64,6 +82,7 @@ public class EntryScreenPresenter {
             int reproduceEnergyMin = Integer.parseInt(reproduceEnergyMinTextField.getText());
             int energySpendToReproduce = Integer.parseInt(energySpendToReproduceTextField.getText());
             int genotypeLength = Integer.parseInt(genotypeLengthTextField.getText());
+            int delay = Integer.parseInt(delayTextField.getText());
 
             MyRange mutationCountRange = new MyRange(Integer.parseInt(lowTextField.getText()), Integer.parseInt(highTextField.getText()));
             GenotypeType genotypeType = genotypeTypeComboBox.getValue();
@@ -83,48 +102,57 @@ public class EntryScreenPresenter {
                     mutationCountRange,
                     genotypeLength,
                     genotypeType,
-                    mapType
+                    mapType,
+                    delay
             );
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Please enter valid numbers.");
         }
-
-//        Stage primaryStage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-//        primaryStage.close();
-
-//        openSecondWindow();
-
     }
 
+    @FXML
+    private void setDefaultValuesFromFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/java/agh/ics/oop/model/setupFiles/" + filesComboBox.getValue()))) {
+            String line;
+            if ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
 
-    private void openSecondWindow() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
-            BorderPane root = loader.load();
-            Stage stage = new Stage();
-            Scene scene = new Scene(root, 400, 300);
-//            SimulationPresenter presenter = loader.getController();
+                if (values.length >= 16) {
+                    widthTextField.setText(values[0].trim());
+                    heightTextField.setText(values[1].trim());
+                    maxDaysTextField.setText(values[2].trim());
+                    startingPlantsCountTextField.setText(values[3].trim());
+                    energyAfterConsumingPlantTextField.setText(values[4].trim());
+                    plantsPerDayTextField.setText(values[5].trim());
+                    initialNumOfAnimalsTextField.setText(values[6].trim());
+                    initialAnimalEnergyTextField.setText(values[7].trim());
+                    reproduceEnergyMinTextField.setText(values[8].trim());
+                    energySpendToReproduceTextField.setText(values[9].trim());
+                    genotypeLengthTextField.setText(values[10].trim());
 
-            stage.setTitle("Second Window");
-            stage.setScene(scene);
-            stage.minWidthProperty().bind(root.minWidthProperty());
-            stage.minHeightProperty().bind(root.minHeightProperty());
-
-//            Simulation simulation2 = new Simulation(setupData);
-//            simulation2.addSimulationChangeListener(presenter);
-//            List<Simulation> sims = List.of(simulation2);
-//            SimulationEngine engine = new SimulationEngine(sims);
-//            engine.runAsync();
-
-            stage.show();
-
-        }
-        catch(Exception e){
-            System.out.println("Can't load new window: " + e.getMessage());
+                    if (values[11].trim().equals("BASIC_GENOTYPE")){
+                        genotypeTypeComboBox.getSelectionModel().select(0);
+                    }
+                    else if (values[11].trim().equals("PING_PONG_GENOTYPE")){
+                        genotypeTypeComboBox.getSelectionModel().select(1);
+                    }
+                    if (values[12].trim().equals("EQUATOR_MAP")){
+                        mapTypeComboBox.getSelectionModel().select(0);
+                    }
+                    else if (values[12].trim().equals("POISONOUS_MAP")){
+                        mapTypeComboBox.getSelectionModel().select(1);
+                    }
+                    lowTextField.setText(values[13].trim());
+                    highTextField.setText(values[14].trim());
+                    delayTextField.setText(values[15].trim());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 
     public SimulationSetupData getSetupData() {
         return setupData;
