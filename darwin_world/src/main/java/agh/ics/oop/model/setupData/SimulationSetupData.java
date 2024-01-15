@@ -17,5 +17,6 @@ public record SimulationSetupData(int width,
                                   MyRange mutationCountRange,
                                   int genotypeLength,
                                   GenotypeType genotypeType,
-                                  MapType mapType) {
+                                  MapType mapType,
+                                  int delay) {
 }

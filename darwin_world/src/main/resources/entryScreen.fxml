@@ -23,13 +23,8 @@
     <Label text="Reproduce Energy Min:" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
     <Label text="Energy Spend To Reproduce:" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
     <Label text="Genotype Length:" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
-    <Label text="Set Range:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
-
-    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="13">
-        <TextField fx:id="lowTextField" GridPane.columnIndex="0" text="1"/>
-        <TextField fx:id="highTextField" GridPane.columnIndex="1" text="5"/>
-    </GridPane>
-
+    <Label text="Set Random Range:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
+    <Label text="Delay:" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
 
     <TextField fx:id="widthTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" text="20"/>
     <TextField fx:id="heightTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" text="20"/>
@@ -43,6 +38,7 @@
     <TextField fx:id="reproduceEnergyMinTextField" GridPane.columnIndex="1" GridPane.rowIndex="8" text="20"/>
     <TextField fx:id="energySpendToReproduceTextField" GridPane.columnIndex="1" GridPane.rowIndex="9" text="20"/>
     <TextField fx:id="genotypeLengthTextField" GridPane.columnIndex="1" GridPane.rowIndex="10" text="10"/>
+    <TextField fx:id="delayTextField" GridPane.columnIndex="1" GridPane.rowIndex="14" text="50"/>
 
 
     <Label text="Genotype Type:" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
@@ -51,7 +47,22 @@
     <Label text="Map Type:" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
     <ComboBox fx:id="mapTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
 
-    <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="14">
+    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="13">
+        <TextField fx:id="lowTextField" GridPane.columnIndex="0" text="1"/>
+        <TextField fx:id="highTextField" GridPane.columnIndex="1" text="5"/>
+    </GridPane>
+
+    <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="15">
+        <CheckBox fx:id="saveToCSVCheckBox" text="Save simulation stats to CSV"/>
+    </HBox>
+
+    <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="16">
+        <ComboBox fx:id="filesComboBox" promptText="Choose file"/>
+        <Button fx:id="readCSVButton" alignment="CENTER" contentDisplay="BOTTOM" prefHeight="26.0" prefWidth="180.0"
+                text="Read from chosen file" onAction="#setDefaultValuesFromFile"/>
+    </HBox>
+
+    <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="17">
         <Button fx:id="submitButton" alignment="CENTER" contentDisplay="BOTTOM" prefHeight="26.0" prefWidth="60.0"
                 text="Submit"/>
     </HBox>
