@@ -45,8 +45,6 @@ import java.util.List;
 
 
 public class SimulationPresenter implements AnimalChangeListener, SimulationChangeListener {
-    private static final double CELL_WIDTH = 30;
-    private static final double CELL_HEIGHT = 30;
     private PlanetMap map;
     private Simulation simulation;
     public Label genotype;
@@ -65,13 +63,7 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     public Label energyLevel;
     public Label age;
     public Label dayOfDeath;
-    private SimulationSetupData setupData;
 
-    @FXML
-    private Label description;
-
-    @FXML
-    private TextField movesInput;
 
     @FXML
     private GridPane mapGrid;
@@ -83,22 +75,19 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     private double CELL_ELEMENT_SIZE;
     private double ANIMAL_IMG_SIZE;
 
-    public SimulationSetupData getSetupData() {
-        return setupData;
-    }
 
     public void setSetupData(SimulationSetupData setupData) {
-        this.setupData = setupData;
-    }
-
-    public void onSimulationStartClicked() {
         Simulation simulation = new Simulation(setupData);
         simulation.addSimulationChangeListener(this);
 //        simulation.setMapChangeListener(presenter);
         this.simulation = simulation;
         this.map = simulation.getWorldMap();
+    }
+
+    public void onSimulationStartClicked() {
+
         SimulationEngine engine = new SimulationEngine(simulation);
-        engine.runAsyncInThreadPool();
+        engine.runAsync();
     }
 
 
