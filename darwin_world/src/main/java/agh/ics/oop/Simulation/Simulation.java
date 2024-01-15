@@ -10,6 +10,7 @@ import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.stats.SimulationStatsController;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.setupData.AnimalSetupData;
+import agh.ics.oop.presenter.SimulationPresenter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -32,12 +33,8 @@ public class Simulation implements Runnable {
         int height = setupData.height();
         int initialNumOfAnimals = setupData.initialNumOfAnimals();
         MapType mapType = setupData.mapType();
-
         this.animals = new ArrayList<>();
-
         this.worldMap = mapType.createPlanetMap(new WorldSetupData(setupData));
-        MapChangeListener mapChangeListener = new ConsoleMapDisplay();
-        worldMap.addListener(mapChangeListener);
 
         this.statsController = new SimulationStatsController(this);
 
@@ -45,13 +42,8 @@ public class Simulation implements Runnable {
         AnimalSetupData animalSetupData = new AnimalSetupData(setupData);
         for (Vector2d animalPosition : randomPositionGenerator) {
             Animal newAnimal = new Animal(animalPosition, animalSetupData);
-//            try {
             worldMap.place(newAnimal);
             animals.add(newAnimal);
-//            } catch (
-//                    PositionAlreadyOccupiedException e) {
-//                throw new RuntimeException(e);
-//            }
         }
 //        setAnimalToTrack(animals.get(0));
     }
@@ -64,7 +56,6 @@ public class Simulation implements Runnable {
             removeDead();
             moveAnimals();
             worldMap.letAnimalsEat();
-
             List<Animal> newborns = worldMap.letAnimalsReproduce();
             if (flag == 1 && !newborns.isEmpty()) { // TODO to remove only for tests, listener ustawiony na pierwsze narodzone dziecko
                 flag = 0;
@@ -75,7 +66,6 @@ public class Simulation implements Runnable {
 
             notifySimulationChanged(this);
             System.out.println("Day of simulation: " + statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-
         }
 
     }
@@ -88,7 +78,8 @@ public class Simulation implements Runnable {
     private void removeDead() {
         List<Animal> removedDead = worldMap.removeDead(animals, getDayOfSimulation());
         removedDead.forEach(animal -> {
-            if (animal == animalToTrack) animalToTrack.notifyAnimalTracker();
+            if (animal == animalToTrack)
+                animalToTrack.notifyAnimalTracker();
             getStatsController().newDeath(animal);
             animals.remove(animal);
         });

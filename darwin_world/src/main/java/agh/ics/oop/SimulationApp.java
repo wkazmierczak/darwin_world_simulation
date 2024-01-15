@@ -1,7 +1,6 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
-import agh.ics.oop.model.setupData.SimulationSetupData;
 import agh.ics.oop.presenter.EntryScreenPresenter;
 import agh.ics.oop.presenter.SimulationPresenter;
 import javafx.application.Application;
@@ -15,8 +14,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.util.List;
+    private void initSimulation(SimulationSetupData setupData, SimulationPresenter presenter) {
+        Simulation simulation = new Simulation(setupData);
+        simulation.addSimulationChangeListener(presenter);
+//        simulation.setMapChangeListener(presenter);
+        presenter.assignSimulationAndMap(simulation, simulation.getWorldMap());
+
 
 public class SimulationApp extends Application {
     @Override
@@ -34,12 +37,19 @@ public class SimulationApp extends Application {
             presenter.getInput();
             SimulationSetupData setupData = presenter.getSetupData();
 //            primaryStage.close();
-
+initSimulation(setupData, presenter);
             openSimWindow(setupData);
         });
         System.out.println(4);
 
     }
+  
+
+    private void initSimulation(SimulationSetupData setupData, SimulationPresenter presenter) {
+        Simulation simulation = new Simulation(setupData);
+        simulation.addSimulationChangeListener(presenter);
+//        simulation.setMapChangeListener(presenter);
+        presenter.assignSimulationAndMap(simulation, simulation.getWorldMap());
     private void openSimWindow(SimulationSetupData setupData) {
         try {
             FXMLLoader loader = new FXMLLoader();

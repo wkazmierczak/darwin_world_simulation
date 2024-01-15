@@ -5,55 +5,43 @@ import java.util.*;
 public class RandomPositionGenerator implements Iterable<Vector2d> {
     private final int maxWidth;
     private final int maxHeight;
-    private final int elemsCount;
+    private final int elemCount;
 
     public RandomPositionGenerator(int maxWidth, int maxHeight, int elemsCount) {
         this.maxWidth = maxWidth;
         this.maxHeight = maxHeight;
-        this.elemsCount = elemsCount;
+        this.elemCount = elemsCount;
 
     }
 
     @Override
     public Iterator<Vector2d> iterator() {
-        return new RandomPositionIterator(maxWidth, maxHeight, elemsCount);
+        return new RandomPositionIterator(maxWidth, maxHeight, elemCount);
     }
 
     private class RandomPositionIterator implements Iterator<Vector2d> {
 
         private final int maxWidth;
         private final int maxHeight;
-        private final int elemsCount;
+        private int elemCount;
         private final Random rand = new Random();
-        ;
-        private int generatedCount;
-        private final List<Vector2d> positions;
 
-        //new imlementation
+        private int generatedCount;
+//        private final List<Vector2d> positions;
+
         int step;
 
-        public RandomPositionIterator(int maxWidth, int maxHeight, int elemsCount) {
+        public RandomPositionIterator(int maxWidth, int maxHeight, int elemCount) {
             this.maxWidth = maxWidth;
             this.maxHeight = maxHeight;
-            this.elemsCount = elemsCount;
+            this.elemCount = elemCount;
             this.generatedCount = 0;
+            calculateStep();
+        }
 
+        private void calculateStep() {
             int range = maxWidth * maxHeight;
-            this.step = range / elemsCount;
-
-            this.positions = new ArrayList<>();
-            for (int x = 0; x < maxWidth; x++) {
-                for (int y = 0; y < maxHeight; y++) {
-                    positions.add(new Vector2d(x, y));
-                }
-            }
-
-            Random rand = new Random();
-            for (int i = positions.size() - 1; i > 0; i--) {
-                int j = rand.nextInt(i + 1);
-                Collections.swap(positions, i, j);
-            }
-
+            this.step = Math.max(1, range / elemCount);
         }
 
         private Vector2d generateNext(int i) {
@@ -63,7 +51,15 @@ public class RandomPositionGenerator implements Iterable<Vector2d> {
 
         @Override
         public boolean hasNext() {
-            return generatedCount < elemsCount;
+            if (generatedCount == elemCount) {
+                return false;
+            }
+            if (generatedCount == maxWidth * maxHeight) {
+                elemCount -= generatedCount;
+                generatedCount = 0;
+                calculateStep();
+            }
+            return true;
         }
 
         @Override

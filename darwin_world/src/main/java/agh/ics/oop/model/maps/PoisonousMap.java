@@ -60,4 +60,8 @@ public class PoisonousMap extends AbstractPlanetMap {
 
     }
 
+    @Override
+    public Boundary getSpecialAreaBounds() {
+        return poisonsAreaBounds;
+    }
 }

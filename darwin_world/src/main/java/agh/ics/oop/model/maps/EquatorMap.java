@@ -17,8 +17,8 @@ public class EquatorMap extends AbstractPlanetMap {
     private final float equatorSurface = 0.2F;
     private final float equatorRatioToGrowNew = 0.8F;
 
-    public EquatorMap(WorldSetupData data) {
-        super(data);
+    public EquatorMap(WorldSetupData setupData) {
+        super(setupData);
         this.equatorBounds = getEquatorBounds();
         growPlants(getStartingPlantsCount());
     }
@@ -50,4 +50,9 @@ public class EquatorMap extends AbstractPlanetMap {
         Stream.concat(toBePlacedOnEquator.stream(), toBePlacedNotOnEquator.stream()).forEach(p -> plants.put(p, new BasicPlant(getSetupData().energyAfterConsumingPlant())));
     }
 
+
+    @Override
+    public Boundary getSpecialAreaBounds() {
+        return equatorBounds;
+    }
 }
