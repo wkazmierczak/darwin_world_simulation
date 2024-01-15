@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.setupData.SimulationSetupData;
 import agh.ics.oop.presenter.EntryScreenPresenter;
 import agh.ics.oop.presenter.SimulationPresenter;
 import javafx.application.Application;
@@ -13,12 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
-    private void initSimulation(SimulationSetupData setupData, SimulationPresenter presenter) {
-        Simulation simulation = new Simulation(setupData);
-        simulation.addSimulationChangeListener(presenter);
-//        simulation.setMapChangeListener(presenter);
-        presenter.assignSimulationAndMap(simulation, simulation.getWorldMap());
 
 
 public class SimulationApp extends Application {
@@ -37,20 +32,15 @@ public class SimulationApp extends Application {
             presenter.getInput();
             SimulationSetupData setupData = presenter.getSetupData();
 //            primaryStage.close();
-initSimulation(setupData, presenter);
             openSimWindow(setupData);
         });
         System.out.println(4);
 
     }
-  
 
-    private void initSimulation(SimulationSetupData setupData, SimulationPresenter presenter) {
-        Simulation simulation = new Simulation(setupData);
-        simulation.addSimulationChangeListener(presenter);
-//        simulation.setMapChangeListener(presenter);
-        presenter.assignSimulationAndMap(simulation, simulation.getWorldMap());
-    private void openSimWindow(SimulationSetupData setupData) {
+
+    private void openSimWindow
+            (SimulationSetupData setupData) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
@@ -58,9 +48,7 @@ initSimulation(setupData, presenter);
             BorderPane viewRoot = loader.load();
             configureStage(scndStage, viewRoot);
             SimulationPresenter simulationPresenter = loader.getController();
-            System.out.println(setupData);
             simulationPresenter.setSetupData(setupData);
-
             scndStage.show();
 
         } catch (Exception e) {
@@ -69,7 +57,8 @@ initSimulation(setupData, presenter);
     }
 
 
-    private void configureStageGridPane(Stage primaryStage, GridPane viewRoot) {
+    private void configureStageGridPane(Stage
+                                                primaryStage, GridPane viewRoot) {
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Simulation app");
@@ -78,7 +67,8 @@ initSimulation(setupData, presenter);
         viewRoot.setPadding(new Insets(10, 10, 10, 10));
     }
 
-    private void configureStage(Stage primaryStage, BorderPane viewRoot) {
+    private void configureStage(Stage
+                                        primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Simulation app");

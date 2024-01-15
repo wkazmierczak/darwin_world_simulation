@@ -41,14 +41,14 @@ import javafx.stage.Window;
 
 import javax.swing.*;
 import java.util.Collection;
+import java.util.List;
 
 
-
-
-public class SimulationPresenter implements MapChangeListener, AnimalChangeListener, SimulationChangeListener {
-    private static final double CELL_WIDTH = 30 ;
+public class SimulationPresenter implements AnimalChangeListener, SimulationChangeListener {
+    private static final double CELL_WIDTH = 30;
     private static final double CELL_HEIGHT = 30;
-    private static PlanetMap map;
+    private PlanetMap map;
+    private Simulation simulation;
     public Label genotype;
     public Label dayOfSim;
     public Label numOfAnimals;
@@ -83,84 +83,22 @@ public class SimulationPresenter implements MapChangeListener, AnimalChangeListe
     private double CELL_ELEMENT_SIZE;
     private double ANIMAL_IMG_SIZE;
 
-    public void assignSimulationAndMap(Simulation simulation, PlanetMap map) {
+    public SimulationSetupData getSetupData() {
+        return setupData;
+    }
+
+    public void setSetupData(SimulationSetupData setupData) {
+        this.setupData = setupData;
+    }
+
+    public void onSimulationStartClicked() {
+        Simulation simulation = new Simulation(setupData);
+        simulation.addSimulationChangeListener(this);
+//        simulation.setMapChangeListener(presenter);
         this.simulation = simulation;
-        this.map = map;
-        setSizes();
-    }
-
-    @FXML
-    void onSimulationStartClicked() {
+        this.map = simulation.getWorldMap();
         SimulationEngine engine = new SimulationEngine(simulation);
-        engine.runAsync();
-//        engine.awaitSimulationEnd();
-//        simulationState.setText("finished");
-    }
-
-    public String[] collectInput() {
-        return movesInput.getText().split(" ");
-    }
-
-    public void simulationSettings(){
-        Vector2d lowerLeft = map.getCurrentBounds().bottomLeft();
-        Vector2d upperRight = map.getCurrentBounds().upperRight();
-
-        int rows = upperRight.getY() - lowerLeft.getY() + 1;
-        int columns = upperRight.getX() - lowerLeft.getX() + 1;
-
-        for (int i = 0; i < columns+1; i++) {
-            mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
-        }
-
-        for (int i = 0; i < rows+1; i++) {
-            mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
-        }
-
-        Label cellLabel1 = new Label();
-        cellLabel1.setMinSize(10, 10);
-        cellLabel1.setText("y\\x");
-        mapGrid.add(cellLabel1, 0, 0);
-        GridPane.setHalignment(cellLabel1, HPos.CENTER);
-
-        for (int i = 1; i < columns+1; i++) {
-            Label cellLabel = new Label();
-            cellLabel.setMinSize(10, 10);
-            cellLabel.setText("" + (lowerLeft.getX()+i-1));
-            mapGrid.add(cellLabel, i, 0);
-            GridPane.setHalignment(cellLabel, HPos.CENTER);
-
-        }
-
-        for (int i = 1; i < rows+1; i++) {
-            Label cellLabel = new Label();
-            cellLabel.setMinSize(10, 10);
-            cellLabel.setText("" + (upperRight.getY()-i+1));
-            mapGrid.add(cellLabel, 0, i);
-            GridPane.setHalignment(cellLabel, HPos.CENTER);
-        }
-
-        int col = 1;
-        int row;
-
-        for (int x = lowerLeft.getX();x<=upperRight.getX();x++) {
-            row = 1;
-            for (int y = upperRight.getY();y>=lowerLeft.getY();y--) {
-
-                Vector2d currentPosition = new Vector2d(x, y);
-                WorldElement elem = (WorldElement) map.plantAt(currentPosition);
-                if (elem != null){
-                    Label cellLabel = new Label();
-                    cellLabel.setMinSize(10, 10);
-                    cellLabel.setText(map.plantAt(currentPosition).toString());
-                    mapGrid.add(cellLabel, col,row);
-                    GridPane.setHalignment(cellLabel, HPos.CENTER);
-
-
-                }
-                row++;
-            }
-            col++;
-        }
+        engine.runAsyncInThreadPool();
     }
 
 
@@ -199,6 +137,12 @@ public class SimulationPresenter implements MapChangeListener, AnimalChangeListe
         ANIMAL_IMG_SIZE = CELL_ELEMENT_SIZE * 2;
     }
 
+    private void clearGrid() {
+        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0)); // hack to retain visible grid lines
+        mapGrid.getColumnConstraints().clear();
+        mapGrid.getRowConstraints().clear();
+    }
+
     public void drawMap() {
         clearGrid();
         setSizes();
@@ -209,8 +153,9 @@ public class SimulationPresenter implements MapChangeListener, AnimalChangeListe
 
                 mapGrid.add(drawCell(i, j), i + 1, j);
 
-        }
+            }
 
+        }
     }
 
     private GridPane drawCell(int i, int j) {
@@ -273,46 +218,17 @@ public class SimulationPresenter implements MapChangeListener, AnimalChangeListe
         for (int i = 0; i < cellColumns; i++)
             cell.getColumnConstraints().add(new ColumnConstraints((double) CELL_SIZE / 3));
 
+        for (int i = 0; i < cellRows; i++)
+            cell.getRowConstraints().add(new RowConstraints((double) CELL_SIZE / 3));
 
-    @Override
-    public void simulationChanged(Simulation simulation) {
-        Platform.runLater(this::drawMap);
-    }
-    public void onSimulationStartClicked(ActionEvent actionEvent) {
-
-
-        Simulation simulation2 = new Simulation(setupData);
-        simulation2.addSimulationChangeListener(this);
-        List<Simulation> sims = List.of(simulation2);
-        SimulationEngine engine = new SimulationEngine(sims);
-//        engine.runSync();
-        engine.runAsyncInThreadPool();
-//        engine.awaitSimulationEnd();
-
-
-//        simulation2.run();
+        return cell;
     }
 
-
-
-    private void clearGrid() {
-        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0)); // hack to retain visible grid lines
-        mapGrid.getColumnConstraints().clear();
-        mapGrid.getRowConstraints().clear();
-    }
-
-    public SimulationSetupData getSetupData() {
-        return setupData;
-    }
-
-    public void setSetupData(SimulationSetupData setupData) {
-        this.setupData = setupData;
-    }
 
     //TODO dont know how to connect animal with animal listener
     @Override
     public synchronized void animalInfoChanged(Animal animal) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             genotype.setText(String.valueOf(animal.getGenotype().getGenotypeList()));
             activeGenotype.setText(String.valueOf(animal.getGenotype().next()));
             energyLevel.setText(String.valueOf(animal.getEnergyLevel()));
@@ -326,7 +242,8 @@ public class SimulationPresenter implements MapChangeListener, AnimalChangeListe
 
     @Override
     public synchronized void simulationChanged(Simulation simulation) {
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
+            drawMap();
             dayOfSim.setText(String.valueOf(simulation.getDayOfSimulation()));
             numOfAnimals.setText(String.valueOf(simulation.getAnimals().size()));
             numOfPlants.setText(String.valueOf(simulation.getWorldMap().getPlantsCount()));
