@@ -21,8 +21,7 @@ public class Simulation implements Runnable {
     private final SimulationStatsController statsController;
     private final SimulationSetupData simulationSetupData;
     private final List<SimulationChangeListener> listeners = new LinkedList<>();
-    private Animal animalToTrack = null;
-    private int id;
+    private final int id;
     static private int idCounter = 0;
 
     public Simulation(SimulationSetupData setupData) {
@@ -66,6 +65,11 @@ public class Simulation implements Runnable {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            try { //tymczasowe
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
@@ -78,8 +82,7 @@ public class Simulation implements Runnable {
     private void removeDead() {
         List<Animal> removedDead = worldMap.removeDead(animals, getDayOfSimulation());
         removedDead.forEach(animal -> {
-            if (animal == animalToTrack)
-                animalToTrack.notifyAnimalTracker();
+            animal.notifyAnimalTracker();
             getStatsController().newDeath(animal);
             animals.remove(animal);
         });
@@ -93,9 +96,7 @@ public class Simulation implements Runnable {
     private void moveAnimals() {
         for (Animal animal : animals) {
             worldMap.move(animal);
-            if (animal == animalToTrack) {
-                animalToTrack.notifyAnimalTracker();
-            }
+            animal.notifyAnimalTracker();
         }
     }
 
@@ -129,11 +130,6 @@ public class Simulation implements Runnable {
         listeners.forEach(listener -> listener.simulationChanged(simulation));
     }
 
-    public void setAnimalToTrack(Animal animal) {
-        animalToTrack = animal;
-        AnimalChangeListener animalChangeListener = new AnimalTracker();
-        animalToTrack.addAnimalTracker(animalChangeListener);
-    }
 
     public int getId() {
         return id;

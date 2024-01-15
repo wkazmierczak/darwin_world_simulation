@@ -32,7 +32,6 @@ public class SimulationEngine {
         for (Simulation sim : simulations) {
             threads.add(new Thread(sim));
         }
-
         for (Thread th : threads) {
             th.start();
         }

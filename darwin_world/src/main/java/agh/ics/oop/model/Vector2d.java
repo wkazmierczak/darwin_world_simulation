@@ -65,7 +65,7 @@ public class Vector2d {
 
     public Vector2d closeInXTeleport(Boundary boundary) {
         int xl = boundary.bottomLeft().getX();
-        int xr = boundary.upperRight().getY();
+        int xr = boundary.upperRight().getX();
         return new Vector2d(returnCycled(xl, getX(), xr), getY());
     }
 

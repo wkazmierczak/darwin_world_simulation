@@ -42,6 +42,7 @@ import javafx.stage.Window;
 import javax.swing.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 
 public class SimulationPresenter implements AnimalChangeListener, SimulationChangeListener {
@@ -210,9 +211,30 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         for (int i = 0; i < cellRows; i++)
             cell.getRowConstraints().add(new RowConstraints((double) CELL_SIZE / 3));
 
+
+        cell.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, e -> {
+            Boundary bounds = map.getCurrentBounds();
+            int x = GridPane.getColumnIndex(cell);
+            int y = GridPane.getRowIndex(cell);
+            int y2 = bounds.upperRight().getY() - y + 1;
+            int x2 = bounds.bottomLeft().getX() + x - 1;
+            Vector2d position = new Vector2d(x2, y2);
+            System.out.println("Clicked on " + position);
+            handleOnClick(position);
+        });
         return cell;
     }
 
+    private void handleOnClick(Vector2d position) {
+        Collection<Animal> animals = map.animalsAt(position);
+        if (animals == null || animals.isEmpty()) {
+            System.out.println("No animals here");
+            return;
+        }
+        Animal animal = animals.stream().findFirst().get();
+        animal.addAnimalTracker(this);
+        System.out.println("Animal: " + animal.toString());
+    }
 
     //TODO dont know how to connect animal with animal listener
     @Override
