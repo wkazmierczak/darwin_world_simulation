@@ -17,55 +17,56 @@
             <Label text="Simulation Info" alignment="CENTER_RIGHT" style="-fx-font-weight: bold;"/>
             <Label/>
             <GridPane fx:id="simulationInfo" gridLinesVisible="true" alignment="CENTER">
-                <Label text="Day of simulation" GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER" />
-                <Label fx:id="dayOfSim" GridPane.columnIndex="0" GridPane.rowIndex="1" alignment="CENTER" />
-                <Label text="Number of animals" GridPane.columnIndex="0" GridPane.rowIndex="2" alignment="CENTER" />
-                <Label fx:id="numOfAnimals" GridPane.columnIndex="0" GridPane.rowIndex="3" alignment="CENTER" />
-                <Label text="Number of plants" GridPane.columnIndex="0" GridPane.rowIndex="4" alignment="CENTER" />
-                <Label fx:id="numOfPlants" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                <Label text="Number of free spots" GridPane.columnIndex="0" GridPane.rowIndex="6" alignment="CENTER" />
-                <Label fx:id="numOFreeSpots" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                <Label text="Most common genotype" GridPane.columnIndex="0" GridPane.rowIndex="8" alignment="CENTER" />
-                <Label fx:id="mostCommonGenotype" GridPane.columnIndex="0" GridPane.rowIndex="9" alignment="CENTER" />
-                <Label text="Avg energy level" GridPane.columnIndex="0" GridPane.rowIndex="10" alignment="CENTER" />
-                <Label fx:id="avgEnergyLevel" GridPane.columnIndex="0" GridPane.rowIndex="11" alignment="CENTER" />
-                <Label text="Avg lifespan of dead animals" GridPane.columnIndex="0" GridPane.rowIndex="12" alignment="CENTER" />
-                <Label fx:id="avgLifespan" GridPane.columnIndex="0" GridPane.rowIndex="13" alignment="CENTER" />
-                <Label text="Avg num of children" GridPane.columnIndex="0" GridPane.rowIndex="14" alignment="CENTER" />
-                <Label fx:id="avgChildrenNum" GridPane.columnIndex="0" GridPane.rowIndex="15" alignment="CENTER" />
+                <Label text="Day of simulation" GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER"/>
+                <Label fx:id="dayOfSim" GridPane.columnIndex="0" GridPane.rowIndex="1" alignment="CENTER"/>
+                <Label text="Number of animals" GridPane.columnIndex="0" GridPane.rowIndex="2" alignment="CENTER"/>
+                <Label fx:id="numOfAnimals" GridPane.columnIndex="0" GridPane.rowIndex="3" alignment="CENTER"/>
+                <Label text="Number of plants" GridPane.columnIndex="0" GridPane.rowIndex="4" alignment="CENTER"/>
+                <Label fx:id="numOfPlants" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <Label text="Number of free spots" GridPane.columnIndex="0" GridPane.rowIndex="6" alignment="CENTER"/>
+                <Label fx:id="numOFreeSpots" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                <Label text="Most common genotype" GridPane.columnIndex="0" GridPane.rowIndex="8" alignment="CENTER"/>
+                <Label fx:id="mostCommonGenotype" GridPane.columnIndex="0" GridPane.rowIndex="9" alignment="CENTER"/>
+                <Label text="Avg energy level" GridPane.columnIndex="0" GridPane.rowIndex="10" alignment="CENTER"/>
+                <Label fx:id="avgEnergyLevel" GridPane.columnIndex="0" GridPane.rowIndex="11" alignment="CENTER"/>
+                <Label text="Avg lifespan of dead animals" GridPane.columnIndex="0" GridPane.rowIndex="12"
+                       alignment="CENTER"/>
+                <Label fx:id="avgLifespan" GridPane.columnIndex="0" GridPane.rowIndex="13" alignment="CENTER"/>
+                <Label text="Avg num of children" GridPane.columnIndex="0" GridPane.rowIndex="14" alignment="CENTER"/>
+                <Label fx:id="avgChildrenNum" GridPane.columnIndex="0" GridPane.rowIndex="15" alignment="CENTER"/>
             </GridPane>
         </VBox>
     </left>
+<!--    <center>-->
+<!--        <HBox>-->
+<!--            <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" maxHeight="100"/>-->
+<!--        </HBox>-->
+<!--    </center>-->
     <right>
         <VBox>
             <Label text="Animal Info" alignment="CENTER_RIGHT" style="-fx-font-weight: bold;"/>
             <Label/>
             <GridPane fx:id="trackedAnimalInfo" gridLinesVisible="true" alignment="CENTER">
-                <Label text="Genotype" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <Label fx:id="genotype" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Label text="Active genome" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <Label fx:id="activeGenotype" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                <Label text="Energy level" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                <Label fx:id="energyLevel" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                <Label text="Number of eaten plants" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                <Label fx:id="numOfEatenPlants" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                <Label text="Number of children" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-                <Label fx:id="numOfChildren" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-                <Label text="Number of descendants" GridPane.columnIndex="0" GridPane.rowIndex="10" />
-                <Label fx:id="numOfDescendants" GridPane.columnIndex="0" GridPane.rowIndex="11" />
-                <Label text="Age" GridPane.columnIndex="0" GridPane.rowIndex="12" />
-                <Label fx:id="age" GridPane.columnIndex="0" GridPane.rowIndex="13" />
-                <Label text="Day of death" GridPane.columnIndex="0" GridPane.rowIndex="14" />
-                <Label fx:id="dayOfDeath" GridPane.columnIndex="0" GridPane.rowIndex="15" />
+                <Label text="Genotype" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <Label fx:id="genotype" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <Label text="Active genome" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <Label fx:id="activeGenotype" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <Label text="Energy level" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <Label fx:id="energyLevel" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <Label text="Number of eaten plants" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <Label fx:id="numOfEatenPlants" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                <Label text="Number of children" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+                <Label fx:id="numOfChildren" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+                <Label text="Number of descendants" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+                <Label fx:id="numOfDescendants" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
+                <Label text="Age" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+                <Label fx:id="age" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
+                <Label text="Day of death" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
+                <Label fx:id="dayOfDeath" GridPane.columnIndex="0" GridPane.rowIndex="15"/>
             </GridPane>
         </VBox>
     </right>
     <top>
-        <HBox spacing="10" alignment="CENTER">
-<!--            <TextField fx:id="textField" />-->
-            <Label fx:id="infoLabel" text="Simulation" textAlignment="CENTER" style="-fx-font-weight: bold;"/>
-        </HBox>
-
     </top>
     <center>
         <VBox alignment="TOP_CENTER" spacing="50">
@@ -73,12 +74,11 @@
                 <Button fx:id="start" text="Start" onAction="#onSimulationStartClicked"/>
             </HBox>
             <HBox spacing="5">
-
                 <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" maxHeight="100"/>
-                <VBox alignment="CENTER">
-                    <Label fx:id="description"/>
-                </VBox>
             </HBox>
         </VBox>
+        <!--    <HBox>-->
+        <!--        <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" maxHeight="100"/>-->
+        <!--    </HBox>-->
     </center>
 </BorderPane>

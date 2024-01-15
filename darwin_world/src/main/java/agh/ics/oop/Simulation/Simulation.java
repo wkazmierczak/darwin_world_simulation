@@ -96,11 +96,6 @@ public class Simulation implements Runnable {
             if (animal == animalToTrack) {
                 animalToTrack.notifyAnimalTracker();
             }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 

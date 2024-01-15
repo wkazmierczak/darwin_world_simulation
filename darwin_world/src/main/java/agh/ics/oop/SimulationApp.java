@@ -34,13 +34,11 @@ public class SimulationApp extends Application {
 //            primaryStage.close();
             openSimWindow(setupData);
         });
-        System.out.println(4);
 
     }
 
 
-    private void openSimWindow
-            (SimulationSetupData setupData) {
+    private void openSimWindow(SimulationSetupData setupData) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
