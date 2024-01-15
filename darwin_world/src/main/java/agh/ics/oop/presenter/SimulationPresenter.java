@@ -49,6 +49,7 @@ import java.util.Vector;
 public class SimulationPresenter implements AnimalChangeListener, SimulationChangeListener {
     private PlanetMap map;
     private Simulation simulation;
+
     public Label genotype;
     public Label dayOfSim;
     public Label numOfAnimals;
@@ -254,7 +255,7 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     public synchronized void animalInfoChanged(Animal animal) {
         Platform.runLater(() -> {
             genotype.setText(String.valueOf(animal.getGenotype().getGenotypeList()));
-            activeGenotype.setText(String.valueOf(animal.getGenotype().next()));
+            activeGenotype.setText(String.valueOf(animal.getGenotype().getCurrent()));
             energyLevel.setText(String.valueOf(animal.getEnergyLevel()));
             numOfEatenPlants.setText(String.valueOf(animal.getStats().getPlantsEaten()));
             numOfChildren.setText(String.valueOf(animal.getStats().getChildrenCount()));

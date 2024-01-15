@@ -19,11 +19,11 @@ public abstract class AbstractGenotype implements Genotype {
 
     protected AbstractGenotype(int length) {
         genotypeList = IntStream.generate(this::getRandomFromLegalRange).limit(length).boxed().collect(Collectors.toCollection(ArrayList::new));
-        currentIdx = new Random().nextInt(sides.length);
+        currentIdx = 0;
     }
 
     protected AbstractGenotype(Animal animal1, Animal animal2, MyRange mutations) {
-        currentIdx = new Random().nextInt(sides.length);
+        currentIdx = 0;
 
         Animal stronger = animal1.getEnergyLevel() > animal2.getEnergyLevel() ? animal1 : animal2;
         Animal weaker = animal1.getEnergyLevel() <= animal2.getEnergyLevel() ? animal1 : animal2;
@@ -84,5 +84,10 @@ public abstract class AbstractGenotype implements Genotype {
             genotypeList.set(idx, mutated);
         }
 
+    }
+
+    @Override
+    public int getCurrent() {
+        return genotypeList.get(currentIdx);
     }
 }

@@ -11,5 +11,7 @@ public interface Genotype {
     int next();
     List<Integer> getGenotypeList();
 
+    int getCurrent();
+
 
 }
