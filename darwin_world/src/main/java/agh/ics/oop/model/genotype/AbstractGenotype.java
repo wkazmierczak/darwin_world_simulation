@@ -2,7 +2,6 @@ package agh.ics.oop.model.genotype;
 
 import agh.ics.oop.model.util.MyRange;
 import agh.ics.oop.model.worldElements.Animal;
-import org.w3c.dom.ranges.Range;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,15 +15,15 @@ public abstract class AbstractGenotype implements Genotype {
     protected List<Integer> genotypeList;
     protected int currentIdx;
 
-    private static final String[] sites = {"left", "right"};
+    private static final String[] sides = {"left", "right"};
 
     protected AbstractGenotype(int length) {
         genotypeList = IntStream.generate(this::getRandomFromLegalRange).limit(length).boxed().collect(Collectors.toCollection(ArrayList::new));
-        currentIdx = new Random().nextInt(sites.length);
+        currentIdx = new Random().nextInt(sides.length);
     }
 
     protected AbstractGenotype(Animal animal1, Animal animal2, MyRange mutations) {
-        currentIdx = new Random().nextInt(sites.length);
+        currentIdx = new Random().nextInt(sides.length);
 
         Animal stronger = animal1.getEnergyLevel() > animal2.getEnergyLevel() ? animal1 : animal2;
         Animal weaker = animal1.getEnergyLevel() <= animal2.getEnergyLevel() ? animal1 : animal2;
@@ -36,17 +35,16 @@ public abstract class AbstractGenotype implements Genotype {
         int strongerEnergy = stronger.getEnergyLevel();
         int weakerEnergy = weaker.getEnergyLevel();
 
-        String siteForStronger = sites[new Random().nextInt(2)];
+        String sideForStronger = sides[new Random().nextInt(2)];
 
-        if (siteForStronger.equals("left")) {
+        if (sideForStronger.equals("left")) {
             int splitPoint = (strongerEnergy / (strongerEnergy + weakerEnergy) * size);
             genotypeList = new ArrayList<>(strongerGenotypeList.subList(0, splitPoint));
-            genotypeList.addAll(weakerGenotypeList.subList(splitPoint, size));
-        } else if (siteForStronger.equals("right")) {
+            genotypeList.addAll(new ArrayList<>(weakerGenotypeList.subList(splitPoint, size)));
+        } else if (sideForStronger.equals("right")) {
             int splitPoint = (weakerEnergy / (strongerEnergy + weakerEnergy) * size);
-
-            genotypeList =new ArrayList<>(weakerGenotypeList.subList(0, splitPoint));;
-            genotypeList.addAll(strongerGenotypeList.subList(splitPoint, size));
+            genotypeList = new ArrayList<>(weakerGenotypeList.subList(0, splitPoint));
+            genotypeList.addAll(new ArrayList<>(strongerGenotypeList.subList(splitPoint, size)));
         }
 
         int numberOfMutations = new Random().nextInt(mutations.low(), mutations.high() + 1);

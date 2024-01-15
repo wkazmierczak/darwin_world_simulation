@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="agh.ics.oop.presenter.EntryScreenPresenter">
+
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+
+
+    <Label text="Width:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <Label text="Height:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <Label text="Max Days:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label text="Starting Plants Count:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Label text="Energy After Consuming Plant:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <Label text="Plants Per Day:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+    <Label text="Initial Number of Animals:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+    <Label text="Initial Animal Energy:" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+    <Label text="Reproduce Energy Min:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+    <Label text="Energy Spend To Reproduce:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+    <Label text="Genotype Length:" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+    <Label text="Set Range:" GridPane.columnIndex="0" GridPane.rowIndex="13" />
+
+    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="13">
+        <TextField fx:id="lowTextField" GridPane.columnIndex="0" />
+        <TextField fx:id="highTextField" GridPane.columnIndex="1" />
+    </GridPane>
+
+
+    <TextField fx:id="widthTextField" GridPane.columnIndex="1" GridPane.rowIndex="0"  />
+    <TextField fx:id="heightTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TextField fx:id="maxDaysTextField" prefHeight="26.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <TextField fx:id="startingPlantsCountTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <TextField fx:id="energyAfterConsumingPlantTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <TextField fx:id="plantsPerDayTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+    <TextField fx:id="initialNumOfAnimalsTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <TextField fx:id="initialAnimalEnergyTextField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+    <TextField fx:id="reproduceEnergyMinTextField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+    <TextField fx:id="energySpendToReproduceTextField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+    <TextField fx:id="genotypeLengthTextField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+
+
+    <Label text="Genotype Type:" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+    <ComboBox fx:id="genotypeTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+
+    <Label text="Map Type:" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+    <ComboBox fx:id="mapTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+
+    <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="14">
+        <Button fx:id="submitButton" alignment="CENTER" contentDisplay="BOTTOM" prefHeight="26.0" prefWidth="60.0" text="Submit" />
+    </HBox>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

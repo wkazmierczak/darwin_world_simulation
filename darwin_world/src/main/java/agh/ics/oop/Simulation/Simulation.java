@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Simulation implements Runnable {
-    private final PlanetMap worldMap; //TODO WorldElement ?
+    private final PlanetMap worldMap;
     private final List<Animal> animals;
     private final SimulationStatsController statsController;
     private final SimulationSetupData simulationSetupData;
@@ -35,7 +35,6 @@ public class Simulation implements Runnable {
         MapType mapType = setupData.mapType();
         this.animals = new ArrayList<>();
         this.worldMap = mapType.createPlanetMap(new WorldSetupData(setupData));
-
 
         this.statsController = new SimulationStatsController(this);
 
@@ -57,8 +56,6 @@ public class Simulation implements Runnable {
             removeDead();
             moveAnimals();
             worldMap.letAnimalsEat();
-//            System.out.println(animals);
-            // TODO extract to method
             List<Animal> newborns = worldMap.letAnimalsReproduce();
             if (flag == 1 && !newborns.isEmpty()) { // TODO to remove only for tests, listener ustawiony na pierwsze narodzone dziecko
                 flag = 0;
@@ -69,11 +66,6 @@ public class Simulation implements Runnable {
 
             notifySimulationChanged(this);
             System.out.println("Day of simulation: " + statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
 
     }
@@ -98,6 +90,11 @@ public class Simulation implements Runnable {
             worldMap.move(animal);
             if (animal == animalToTrack) {
                 animalToTrack.notifyAnimalTracker();
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
