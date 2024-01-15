@@ -5,7 +5,6 @@ import agh.ics.oop.model.worldElements.Animal;
 public class AnimalTracker implements AnimalChangeListener{
     @Override
     public synchronized void animalInfoChanged(Animal animal) {
-
         System.out.println("Genotype: " + animal.getGenotype().getGenotypeList());
         System.out.println("Active genome: " + animal.getGenotype().next());
         System.out.println("Energy level: " + animal.getEnergyLevel());

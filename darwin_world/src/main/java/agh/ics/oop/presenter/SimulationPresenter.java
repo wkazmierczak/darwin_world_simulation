@@ -23,6 +23,7 @@ import agh.ics.oop.model.setupData.SimulationSetupData;
 import agh.ics.oop.model.util.MyRange;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.worldElements.plants.Plant;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -75,7 +76,9 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     private double CELL_SIZE;
     private double CELL_ELEMENT_SIZE;
     private double ANIMAL_IMG_SIZE;
-
+    private SimulationEngine engine;
+    private boolean started = false;
+    private boolean paused = false;
 
     public void setSetupData(SimulationSetupData setupData) {
         Simulation simulation = new Simulation(setupData);
@@ -86,9 +89,19 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     }
 
     public void onSimulationStartClicked() {
-
-        SimulationEngine engine = new SimulationEngine(simulation);
+        this.engine = new SimulationEngine(simulation);
         engine.runAsync();
+    }
+
+    public void onPauseClicked() {
+        System.out.println("Pause clicked");
+        simulation.freeze();
+//        engine.pauseSimulation(simulation);
+    }
+
+    public void onResumeClicked() {
+        simulation.unfreeze();
+//        engine.resumeSimulation(simulation);
     }
 
 
