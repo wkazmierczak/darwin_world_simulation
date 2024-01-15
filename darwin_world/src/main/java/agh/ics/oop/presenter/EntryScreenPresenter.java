@@ -131,16 +131,14 @@ public class EntryScreenPresenter {
                     energySpendToReproduceTextField.setText(values[9].trim());
                     genotypeLengthTextField.setText(values[10].trim());
 
-                    if (values[11].trim().equals("BASIC_GENOTYPE")){
+                    if (values[11].trim().equals("BASIC_GENOTYPE")) {
                         genotypeTypeComboBox.getSelectionModel().select(0);
-                    }
-                    else if (values[11].trim().equals("PING_PONG_GENOTYPE")){
+                    } else if (values[11].trim().equals("PING_PONG_GENOTYPE")) {
                         genotypeTypeComboBox.getSelectionModel().select(1);
                     }
-                    if (values[12].trim().equals("EQUATOR_MAP")){
+                    if (values[12].trim().equals("EQUATOR_MAP")) {
                         mapTypeComboBox.getSelectionModel().select(0);
-                    }
-                    else if (values[12].trim().equals("POISONOUS_MAP")){
+                    } else if (values[12].trim().equals("POISONOUS_MAP")) {
                         mapTypeComboBox.getSelectionModel().select(1);
                     }
                     lowTextField.setText(values[13].trim());
@@ -156,6 +154,10 @@ public class EntryScreenPresenter {
 
     public SimulationSetupData getSetupData() {
         return setupData;
+    }
+
+    public boolean saveToCSV() {
+        return saveToCSVCheckBox.isSelected();
     }
 
     public Button getSubmitButton() {

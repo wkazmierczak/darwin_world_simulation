@@ -4,12 +4,15 @@ import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.model.maps.PlanetMap;
 import agh.ics.oop.model.worldElements.Animal;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.lang.reflect.Method;
+import java.util.Map;
 
 public class SimulationStatsController {
     private final Simulation simulation;
@@ -22,10 +25,26 @@ public class SimulationStatsController {
         this.simulation = simulation;
     }
 
+    public static Map<String, Method> getMethods() {
+        try {
+            return Map.ofEntries(
+                    Map.entry("dayOfSimulation", SimulationStatsController.class.getDeclaredMethod("getDayOfSimulation")),
+                    Map.entry("numOfAnimals", SimulationStatsController.class.getDeclaredMethod("getNumOfAnimals")),
+                    Map.entry("numOfPlants", SimulationStatsController.class.getDeclaredMethod("getNumOfPlants")),
+                    Map.entry("freePositionsCount", SimulationStatsController.class.getDeclaredMethod("getFreePositionsCount")),
+                    Map.entry("mostPopularGenotype", SimulationStatsController.class.getDeclaredMethod("getMostPopularGenotype")),
+                    Map.entry("avgEnergyLevel", SimulationStatsController.class.getDeclaredMethod("getAvgEnergyLevel")),
+                    Map.entry("avgLifespanForDeadAnimals", SimulationStatsController.class.getDeclaredMethod("getAvgLifespanForDeadAnimals")),
+                    Map.entry("avgNumOfChildrenForAliveAnimals", SimulationStatsController.class.getDeclaredMethod("getAvgNumOfChildrenForAliveAnimals"))
+            );
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void nextDay() {
         dayOfSimulation++;
     }
-
 
 
     public int getNumOfAnimals() {
@@ -37,8 +56,8 @@ public class SimulationStatsController {
 
     }
 
-    public int getFreePositionsCount(PlanetMap map) {
-        return map.getFreePositionsCount();
+    public int getFreePositionsCount() {
+        return simulation.getWorldMap().getFreePositionsCount();
     }
 
     public List<Integer> getMostPopularGenotype() {
@@ -68,8 +87,8 @@ public class SimulationStatsController {
                 .orElse(0.0);
     }
 
-    public double getAvgNumOfChildrenForAliveAnimals(List<Animal> aliveAnimals) {
-        return aliveAnimals.stream()
+    public double getAvgNumOfChildrenForAliveAnimals() {
+        return simulation.getAnimals().stream()
                 .mapToInt(animal -> animal.getStats().getChildrenCount())
                 .average()
                 .orElse(0.0);

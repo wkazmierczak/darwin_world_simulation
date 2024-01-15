@@ -53,17 +53,11 @@ public class Simulation implements Runnable {
     public void run() {
         while (statsController.getDayOfSimulation() < simulationSetupData.maxDays()) {
             nextDay();
-            System.out.println("Day " + getDayOfSimulation() + " of simulation " + id);
             removeDead();
-            System.out.println("removed dead");
             moveAnimals();
-            System.out.println("moved animals");
             worldMap.letAnimalsEat();
-            System.out.println("animals ate");
             letReproduce();
-            System.out.println("animals reproduced");
             worldMap.growPlants();
-            System.out.println("plants grew");
 
             notifySimulationChanged(this);
 

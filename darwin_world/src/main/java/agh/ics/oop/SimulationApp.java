@@ -31,14 +31,13 @@ public class SimulationApp extends Application {
         submitButton.setOnAction(e -> {
             presenter.getInput();
             SimulationSetupData setupData = presenter.getSetupData();
-
-            openSimWindow(setupData);
+            openSimWindow(setupData, presenter.saveToCSV());
         });
 
     }
 
 
-    private void openSimWindow(SimulationSetupData setupData) {
+    private void openSimWindow(SimulationSetupData setupData,boolean saveToCSV) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
@@ -46,7 +45,7 @@ public class SimulationApp extends Application {
             BorderPane viewRoot = loader.load();
             configureStage(scndStage, viewRoot);
             SimulationPresenter simulationPresenter = loader.getController();
-            simulationPresenter.setSetupData(setupData);
+            simulationPresenter.setSetupData(setupData,saveToCSV);
             scndStage.show();
 
         } catch (Exception e) {

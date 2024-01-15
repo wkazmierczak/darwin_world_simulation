@@ -115,6 +115,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
         return new PositionDetails(position, orientation);
     }
 
+
     @Override
     public List<Animal> removeDead(List<Animal> animals, int day) {
         List<Animal> removed = animals.stream().filter(Animal::isDead).toList();
