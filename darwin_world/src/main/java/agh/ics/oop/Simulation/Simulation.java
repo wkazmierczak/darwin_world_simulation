@@ -22,8 +22,7 @@ public class Simulation implements Runnable {
     private final SimulationStatsController statsController;
     private final SimulationSetupData simulationSetupData;
     private final List<SimulationChangeListener> listeners = new LinkedList<>();
-    private Animal animalToTrack = null;
-    private int id;
+    private final int id;
     static private int idCounter = 0;
 
     public Simulation(SimulationSetupData setupData) {
@@ -45,7 +44,6 @@ public class Simulation implements Runnable {
             worldMap.place(newAnimal);
             animals.add(newAnimal);
         }
-//        setAnimalToTrack(animals.get(0));
     }
 
     @Override
@@ -57,10 +55,6 @@ public class Simulation implements Runnable {
             moveAnimals();
             worldMap.letAnimalsEat();
             List<Animal> newborns = worldMap.letAnimalsReproduce();
-            if (flag == 1 && !newborns.isEmpty()) { // TODO to remove only for tests, listener ustawiony na pierwsze narodzone dziecko
-                flag = 0;
-                setAnimalToTrack(newborns.get(0));
-            }
             animals.addAll(newborns);
             worldMap.growPlants();
 
@@ -68,6 +62,11 @@ public class Simulation implements Runnable {
             System.out.println("Day of simulation: " + statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             try {
                 Thread.sleep(20);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            try { //tymczasowe
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -83,8 +82,7 @@ public class Simulation implements Runnable {
     private void removeDead() {
         List<Animal> removedDead = worldMap.removeDead(animals, getDayOfSimulation());
         removedDead.forEach(animal -> {
-            if (animal == animalToTrack)
-                animalToTrack.notifyAnimalTracker();
+            animal.notifyAnimalTracker();
             getStatsController().newDeath(animal);
             animals.remove(animal);
         });
@@ -93,9 +91,7 @@ public class Simulation implements Runnable {
     private void moveAnimals() {
         for (Animal animal : animals) {
             worldMap.move(animal);
-            if (animal == animalToTrack) {
-                animalToTrack.notifyAnimalTracker();
-            }
+            animal.notifyAnimalTracker();
         }
     }
 
@@ -138,11 +134,6 @@ public class Simulation implements Runnable {
         listeners.forEach(listener -> listener.simulationChanged(simulation));
     }
 
-    public void setAnimalToTrack(Animal animal) {
-        animalToTrack = animal;
-        AnimalChangeListener animalChangeListener = new AnimalTracker();
-        animalToTrack.addAnimalTracker(animalChangeListener);
-    }
 
     public int getId() {
         return id;

@@ -32,7 +32,7 @@ public class EquatorMap extends AbstractPlanetMap {
 
     private Boundary getEquatorBounds() {
         int xl = boundary.bottomLeft().getX();
-        int xr = boundary.upperRight().getY();
+        int xr = boundary.upperRight().getX();
         int yd = boundary.bottomLeft().getY();
         int yu = boundary.upperRight().getY();
         int yMid = (yu + yd) / 2;

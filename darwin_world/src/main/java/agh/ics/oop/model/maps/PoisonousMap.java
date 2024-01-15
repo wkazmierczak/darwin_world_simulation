@@ -31,7 +31,7 @@ public class PoisonousMap extends AbstractPlanetMap {
 
     private Boundary getPoisonsAreaBounds() {
         int xl = boundary.bottomLeft().getX();
-        int xr = boundary.upperRight().getY();
+        int xr = boundary.upperRight().getX();
         int yd = boundary.bottomLeft().getY();
         int yu = boundary.upperRight().getY();
         int poisonousAreaSide = (int) Math.sqrt((xr - xl) * (yu - yd) * poisonousAreaSurface);
