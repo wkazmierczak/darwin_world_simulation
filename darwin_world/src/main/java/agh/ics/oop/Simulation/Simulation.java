@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Simulation implements Runnable {
-    private final PlanetMap worldMap; //TODO WorldElement ?
+    private final PlanetMap worldMap;
     private final List<Animal> animals;
     private final SimulationStatsController statsController;
     private final SimulationSetupData simulationSetupData;
@@ -39,8 +39,6 @@ public class Simulation implements Runnable {
         MapChangeListener mapChangeListener = new ConsoleMapDisplay();
         worldMap.addListener(mapChangeListener);
 
-
-//        this.statsController = new SimulationStatsController(setupData.initialNumOfAnimals(), setupData.startingPlantsCount());
         this.statsController = new SimulationStatsController(this);
 
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(width, height, initialNumOfAnimals);
@@ -66,18 +64,17 @@ public class Simulation implements Runnable {
             removeDead();
             moveAnimals();
             worldMap.letAnimalsEat();
-//            System.out.println(animals);
+
             List<Animal> newborns = worldMap.letAnimalsReproduce();
             if (flag == 1 && !newborns.isEmpty()) { // TODO to remove only for tests, listener ustawiony na pierwsze narodzone dziecko
                 flag = 0;
                 setAnimalToTrack(newborns.get(0));
             }
             animals.addAll(newborns);
-//            System.out.println(animals);
             worldMap.growPlants();
 
             notifySimulationChanged(this);
-            System.out.println("Day of simulation: " +statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            System.out.println("Day of simulation: " + statsController.getDayOfSimulation() + " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
         }
 
@@ -103,7 +100,6 @@ public class Simulation implements Runnable {
             if (animal == animalToTrack) {
                 animalToTrack.notifyAnimalTracker();
             }
-//                System.out.println(worldMap); // TODO prowizoryczne wyświetlanie mapy do poprawy to string z animal i wyświetlanie roślin, zwierzaki się nie teleportują, tylko znikają (mogłem użyć złej funkcji place)
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
