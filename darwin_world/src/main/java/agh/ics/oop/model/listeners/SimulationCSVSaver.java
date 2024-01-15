@@ -18,10 +18,10 @@ public class SimulationCSVSaver implements SimulationChangeListener {
     private final File destinationFile;
     private final Map<String, Method> methods;
 
-    public SimulationCSVSaver(String destinationFile, Map<String, Method> methods) {
+    public SimulationCSVSaver(String destinationFile) {
         String destinationFilePath = new File("").getAbsolutePath().concat("\\src\\main\\java\\agh\\ics\\oop\\model\\logs\\") + destinationFile;
         this.destinationFile = new File(destinationFilePath);
-        this.methods = methods;
+        this.methods = SimulationStatsController.getMethods();
         printHeader();
     }
 

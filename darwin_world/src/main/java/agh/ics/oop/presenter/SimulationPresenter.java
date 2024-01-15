@@ -5,8 +5,7 @@ import agh.ics.oop.Simulation.SimulationEngine;
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.genotype.Genotype;
-import agh.ics.oop.model.listeners.MapChangeListener;
-import agh.ics.oop.model.listeners.SimulationChangeListener;
+import agh.ics.oop.model.listeners.*;
 import agh.ics.oop.model.maps.EquatorMap;
 import agh.ics.oop.model.maps.PlanetMap;
 import agh.ics.oop.OptionsParser;
@@ -14,7 +13,6 @@ import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.Simulation.SimulationEngine;
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.genotype.GenotypeType;
-import agh.ics.oop.model.listeners.AnimalChangeListener;
 import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.listeners.SimulationChangeListener;
 import agh.ics.oop.model.maps.MapType;
@@ -82,8 +80,11 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     private boolean markMostPopular = false;
     private List<Integer> mostPopular;
 
-    public void setSetupData(SimulationSetupData setupData) {
+    public void setSetupData(SimulationSetupData setupData, boolean saveToCSV) {
         Simulation simulation = new Simulation(setupData);
+        if (saveToCSV) {
+            simulation.addSimulationChangeListener(new SimulationCSVSaver("simulation.csv"));
+        }
         simulation.addSimulationChangeListener(this);
 //        simulation.setMapChangeListener(presenter);
         this.simulation = simulation;
@@ -268,7 +269,7 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         }
         Animal animal = animals.stream().findFirst().get();
         animal.addAnimalTracker(this);
-        System.out.println("Animal: " + animal.toString());
+        System.out.println("Animal: " + animal);
     }
 
     @Override
@@ -303,7 +304,7 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         String mostCommonGenotypeStr = String.valueOf(simulation.getStatsController().getMostPopularGenotype());
         String avgEnergyLevelStr = String.valueOf(simulation.getStatsController().getAvgEnergyLevel());
         String avgLifespanStr = String.valueOf(simulation.getStatsController().getAvgLifespanForDeadAnimals());
-        String avgChildrenNumStr = String.valueOf(simulation.getStatsController().getAvgNumOfChildrenForAliveAnimals(simulation.getAnimals()));
+        String avgChildrenNumStr = String.valueOf(simulation.getStatsController().getAvgNumOfChildrenForAliveAnimals());
 
         Platform.runLater(() -> {
             drawMap();
