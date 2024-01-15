@@ -95,11 +95,13 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
 
     public void onPauseClicked() {
         System.out.println("Pause clicked");
-        engine.pauseSimulation(simulation);
+        simulation.freeze();
+//        engine.pauseSimulation(simulation);
     }
 
     public void onResumeClicked() {
-        engine.resumeSimulation(simulation);
+        simulation.unfreeze();
+//        engine.resumeSimulation(simulation);
     }
 
 

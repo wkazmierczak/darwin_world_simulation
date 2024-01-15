@@ -24,6 +24,7 @@ public class Simulation implements Runnable {
     private final List<SimulationChangeListener> listeners = new LinkedList<>();
     private final int id;
     static private int idCounter = 0;
+    private boolean frozen;
 
     public Simulation(SimulationSetupData setupData) {
         this.simulationSetupData = setupData;
@@ -65,7 +66,17 @@ public class Simulation implements Runnable {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-//            try { //tymczasowe
+            synchronized (this) {
+                while (frozen) {
+                    try {
+                        this.wait();
+                    } catch (
+                            InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            //            try { //tymczasowe
 //                Thread.sleep(2000);
 //            } catch (InterruptedException e) {
 //                throw new RuntimeException(e);
@@ -134,6 +145,16 @@ public class Simulation implements Runnable {
         listeners.forEach(listener -> listener.simulationChanged(simulation));
     }
 
+    public void freeze() {
+        frozen = true;
+    }
+
+    public void unfreeze() {
+        frozen = false;
+        synchronized (this) {
+            this.notify();
+        }
+    }
 
     public int getId() {
         return id;
