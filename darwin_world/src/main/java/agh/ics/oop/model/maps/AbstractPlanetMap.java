@@ -21,7 +21,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     protected final Boundary boundary;
     protected final WorldSetupData setupData;
     private final List<MapChangeListener> mapChangeListeners = new ArrayList<>();
-    protected String id; //TODO zapytac co to
+    protected String id;
 
 
     protected AbstractPlanetMap(WorldSetupData setupData) {
@@ -56,7 +56,6 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
             animalsOnPos.add(animal);
             animalsPos.put(pos, animalsOnPos);
         }
-//        mapChanged(animal + " placed at " + pos);
     }
 
     @Override
@@ -191,7 +190,7 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
 
     @Override
     public String toString() {
-        MapVisualizer visualizer = new MapVisualizer(this); //does not work
+        MapVisualizer visualizer = new MapVisualizer(this);
         Boundary boundaries = getCurrentBounds();
         return visualizer.draw(boundaries.bottomLeft(), boundaries.upperRight());
     }

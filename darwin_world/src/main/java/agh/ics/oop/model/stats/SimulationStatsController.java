@@ -13,51 +13,27 @@ import java.util.stream.Collectors;
 public class SimulationStatsController {
     private final Simulation simulation;
     private int dayOfSimulation = 0;
-//    private int totalAgeOfDead = 0;
-//    private int totalFreeSlots = 0;
-//    private int deadCount = 0;
 
-//    private int numOfAnimals; //done
-//
-//    private int numOfPlants;//done
-
-    private final List<Integer> lifeSpansOfDeadAnimals = new LinkedList<>(); //done
+    private final List<Integer> lifeSpansOfDeadAnimals = new LinkedList<>();
 
 
     public SimulationStatsController(Simulation simulation) {
         this.simulation = simulation;
-//        this.numOfAnimals = initialNumOfAnimals;
-//        this.numOfPlants = initialNumOfPlants;
     }
 
     public void nextDay() {
         dayOfSimulation++;
     }
 
-//    public void incrementNumOfAnimals() {
-//        numOfAnimals++;
-//    }
-//
-//    public void decrementNumOfAnimals() {
-//        numOfAnimals--;
-//    }
-//
-//    public void incrementNumOfPlants() {
-//        numOfPlants++;
-//    }
-//
-//    public void decrementNumOfPlants() {
-//        numOfPlants--;
-//    }
+
 
     public int getNumOfAnimals() {
         return simulation.getAnimals().size();
-//        return numOfAnimals;
     }
 
     public int getNumOfPlants() {
         return simulation.getWorldMap().getPlantsCount();
-//        return numOfPlants;
+
     }
 
     public int getFreePositionsCount(PlanetMap map) {

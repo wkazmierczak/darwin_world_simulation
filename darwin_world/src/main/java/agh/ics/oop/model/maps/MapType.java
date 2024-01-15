@@ -8,7 +8,7 @@ public enum MapType {
     EQUATOR_MAP,
     POISONOUS_MAP;
 
-    public PlanetMap createPlanetMap(WorldSetupData data) { // TODO typ Animal do weryfikacji
+    public PlanetMap createPlanetMap(WorldSetupData data) {
         return switch (this) {
             case EQUATOR_MAP ->
                     new EquatorMap(data);

@@ -31,7 +31,7 @@ public class SimulationApp extends Application {
         submitButton.setOnAction(e -> {
             presenter.getInput();
             SimulationSetupData setupData = presenter.getSetupData();
-//            primaryStage.close();
+
             openSimWindow(setupData);
         });
 
@@ -55,8 +55,7 @@ public class SimulationApp extends Application {
     }
 
 
-    private void configureStageGridPane(Stage
-                                                primaryStage, GridPane viewRoot) {
+    private void configureStageGridPane(Stage primaryStage, GridPane viewRoot) {
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Simulation app");
@@ -65,8 +64,7 @@ public class SimulationApp extends Application {
         viewRoot.setPadding(new Insets(10, 10, 10, 10));
     }
 
-    private void configureStage(Stage
-                                        primaryStage, BorderPane viewRoot) {
+    private void configureStage(Stage primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Simulation app");
