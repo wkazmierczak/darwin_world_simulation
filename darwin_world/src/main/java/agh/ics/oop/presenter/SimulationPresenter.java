@@ -108,7 +108,6 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     public void onResumeClicked() {
         simulation.unfreeze();
         markMostPopular = false;
-//        engine.resumeSimulation(simulation);
     }
 
     private boolean isMostPopular(int i, int j, List<Integer> mostPopular) {
@@ -169,7 +168,6 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
 
             }
         }
-//        markMostPopular = false;
     }
 
     private GridPane drawCell(int i, int j) {
@@ -209,7 +207,6 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         animalBox.setAlignment(Pos.CENTER_LEFT);
         animalBox.getChildren().add(animalImgView);
         animalBox.setPadding(new Insets(CELL_ELEMENT_SIZE * 1.2));
-//        animalBox.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(100), new Insets(10))));
 
         if (CELL_ELEMENT_SIZE > 15) { //visible size
             Label animalCount = new Label('x' + Integer.toString(count));
@@ -219,9 +216,6 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
             Color color = new Color(1, 0, 0, Math.min(count / 5.0, 1));
             animalBox.setBackground(new Background(new BackgroundFill(color, new CornerRadii(100), new Insets(10))));
         }
-//        if (markMostPopular && hasMostPopular) {
-//            animalBox.setBackground(new Background(new BackgroundFill(Color.BLUEVIOLET, new CornerRadii(80), new Insets(0))));
-//        }
 
         cell.add(animalBox, 0, 1);
     }
