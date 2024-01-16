@@ -1,8 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.OptionsParser;
 import agh.ics.oop.model.MoveDirection;
-import agh.ics.oop.model.PositionAlreadyOccupiedException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

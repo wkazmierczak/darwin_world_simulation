@@ -4,45 +4,29 @@ import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.Simulation.SimulationEngine;
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.genotype.Genotype;
 import agh.ics.oop.model.listeners.*;
-import agh.ics.oop.model.maps.EquatorMap;
 import agh.ics.oop.model.maps.PlanetMap;
-import agh.ics.oop.OptionsParser;
-import agh.ics.oop.Simulation.Simulation;
-import agh.ics.oop.Simulation.SimulationEngine;
-import agh.ics.oop.model.*;
-import agh.ics.oop.model.genotype.GenotypeType;
-import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.listeners.SimulationChangeListener;
-import agh.ics.oop.model.maps.MapType;
-import agh.ics.oop.model.maps.PlanetMap;
 
 import agh.ics.oop.model.setupData.SimulationSetupData;
-import agh.ics.oop.model.util.MyRange;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.worldElements.plants.Plant;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
 import javafx.stage.Window;
 
-import javax.swing.*;
 import java.util.Collection;
 import java.util.List;
-import java.util.Vector;
 
 
 public class SimulationPresenter implements AnimalChangeListener, SimulationChangeListener {
@@ -66,38 +50,32 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     public Label age;
     public Label dayOfDeath;
 
-
     @FXML
     private GridPane mapGrid;
-    private final Image penguinImg = new Image(getClass().getClassLoader().getResource("penguin.png").toString());
     private final Image wolfImg = new Image(getClass().getClassLoader().getResource("wolf.png").toString());
     private final Image plantImg = new Image(getClass().getClassLoader().getResource("plant.png").toString());
     private final Image poisonousPlantImg = new Image(getClass().getClassLoader().getResource("plant_poisonous.png").toString());
     private double CELL_SIZE;
     private double CELL_ELEMENT_SIZE;
     private double ANIMAL_IMG_SIZE;
-    private SimulationEngine engine;
     private boolean markMostPopular = false;
     private List<Integer> mostPopular;
 
     public void setSetupData(SimulationSetupData setupData, boolean saveToCSV) {
         Simulation simulation = new Simulation(setupData);
-        if (saveToCSV) {
+        if (saveToCSV)
             simulation.addSimulationChangeListener(new SimulationCSVSaver("simulation.csv"));
-        }
         simulation.addSimulationChangeListener(this);
-//        simulation.setMapChangeListener(presenter);
         this.simulation = simulation;
         this.map = simulation.getWorldMap();
     }
 
     public void onSimulationStartClicked() {
-        this.engine = new SimulationEngine(simulation);
+        SimulationEngine engine = new SimulationEngine(simulation);
         engine.runAsync();
     }
 
     public void onPauseClicked() {
-        System.out.println("Pause clicked");
         simulation.freeze();
         markMostPopular = true;
         mostPopular = simulation.getStatsController().getMostPopularGenotype();
@@ -249,7 +227,6 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
             int y2 = bounds.upperRight().getY() - y + 1;
             int x2 = bounds.bottomLeft().getX() + x - 1;
             Vector2d position = new Vector2d(x2, y2);
-            System.out.println("Clicked on " + position);
             handleOnClick(position);
         });
         return cell;
@@ -263,7 +240,7 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         }
         Animal animal = animals.stream().findFirst().get();
         animal.addAnimalTracker(this);
-        System.out.println("Animal: " + animal);
+        System.out.println("Animal: " + animal.getPosition());
     }
 
     @Override
@@ -312,9 +289,4 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
             avgChildrenNum.setText(avgChildrenNumStr);
         });
     }
-
-
-//    public void setAnimalToTrack(Animal animalToTrack){
-//        animalToTrack.addAnimalTracker(this);
-//    }
 }
