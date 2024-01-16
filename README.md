@@ -4,7 +4,7 @@
 
 ### App in action: <br>
 
-![Example GIF](darwin_world\example.gif)
+![Example GIF](example.gif)
 
 ### Design patterns: <br>
 
