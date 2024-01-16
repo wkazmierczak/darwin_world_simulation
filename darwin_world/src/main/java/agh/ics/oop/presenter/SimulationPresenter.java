@@ -164,7 +164,7 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
             cell.add(highlightBox, 0, 1);
         }
         if (animals != null && !animals.isEmpty()) {
-            drawAnimal(cell, animals.size(), markMostPopular && isMostPopular(i, j, mostPopular));
+            drawAnimal(cell, animals.size());
         }
         if (plant != null) {
             drawPlant(cell, plant);
@@ -176,7 +176,7 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
         return cell;
     }
 
-    private void drawAnimal(GridPane cell, int count, boolean hasMostPopular) {
+    private void drawAnimal(GridPane cell, int count) {
 
         ImageView animalImgView = new ImageView(wolfImg);
         animalImgView.setFitHeight(ANIMAL_IMG_SIZE);
