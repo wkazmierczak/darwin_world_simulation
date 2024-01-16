@@ -1,4 +1,4 @@
-# Darwin World - application simulating living animals
+# Darwin World - simulating living animals
 
 ### Project at the end of the Object-Oriented-Programming course.
 
