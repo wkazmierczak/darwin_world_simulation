@@ -163,7 +163,8 @@ public abstract class AbstractPlanetMap implements PlanetMap, Teleporter {
     }
 
     public Stream<Animal> letAnimalsReproduce() {
-        return animalsPos.entrySet().stream().filter(entry -> entry.getValue().size() > 1).map(Map.Entry::getKey).map(this::handleWhoReproduces).filter(Objects::nonNull);
+        return animalsPos.entrySet().stream().filter(entry -> entry.getValue().size() > 1).map(Map.Entry::getKey).map(this::handleWhoReproduces).
+                filter(Objects::nonNull);
     }
 
     protected void removePlant(Vector2d pos) {

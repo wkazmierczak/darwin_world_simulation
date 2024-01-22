@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Random;
 
 public class RandomPositionGenerator implements Iterable<Vector2d> {
     private final int maxWidth;

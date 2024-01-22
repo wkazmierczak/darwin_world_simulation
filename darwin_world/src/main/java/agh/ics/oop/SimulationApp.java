@@ -1,12 +1,9 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.*;
 import agh.ics.oop.model.setupData.SimulationSetupData;
 import agh.ics.oop.presenter.EntryScreenPresenter;
 import agh.ics.oop.presenter.SimulationPresenter;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

@@ -19,7 +19,6 @@ public class PlantsPositionGenerator {
     }
 
     public Stream<Vector2d> getAllPositionsShuffled() {
-
         final int n = boundary.getHeight();
         final int m = boundary.getWidth();
         List<Integer> allIt = IntStream.range(0, n * m).boxed().collect(Collectors.toCollection(ArrayList::new));

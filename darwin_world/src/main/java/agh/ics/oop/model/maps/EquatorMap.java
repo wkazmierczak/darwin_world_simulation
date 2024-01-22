@@ -4,7 +4,6 @@ import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.worldElements.plants.BasicPlant;
-import agh.ics.oop.model.worldElements.plants.Plant;
 
 import java.util.List;
 import java.util.Random;

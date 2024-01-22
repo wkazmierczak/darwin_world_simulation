@@ -1,7 +1,6 @@
 package agh.ics.oop.model.maps;
 
 import agh.ics.oop.model.Boundary.Boundary;
-import agh.ics.oop.model.PositionAlreadyOccupiedException;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.listeners.MapChangeListener;
 import agh.ics.oop.model.worldElements.Animal;

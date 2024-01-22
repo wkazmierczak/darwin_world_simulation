@@ -1,29 +1,20 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.Simulation.Simulation;
-import agh.ics.oop.Simulation.SimulationEngine;
 import agh.ics.oop.model.genotype.GenotypeType;
 import agh.ics.oop.model.maps.MapType;
 import agh.ics.oop.model.setupData.SimulationSetupData;
 import agh.ics.oop.model.util.MyRange;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

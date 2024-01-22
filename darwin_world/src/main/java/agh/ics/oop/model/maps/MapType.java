@@ -1,8 +1,6 @@
 package agh.ics.oop.model.maps;
 
-import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.setupData.WorldSetupData;
-import agh.ics.oop.model.worldElements.Animal;
 
 public enum MapType {
     EQUATOR_MAP,

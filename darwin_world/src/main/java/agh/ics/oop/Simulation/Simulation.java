@@ -2,14 +2,14 @@ package agh.ics.oop.Simulation;
 
 import agh.ics.oop.model.RandomPositionGenerator;
 import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.listeners.*;
+import agh.ics.oop.model.listeners.SimulationChangeListener;
 import agh.ics.oop.model.maps.MapType;
 import agh.ics.oop.model.maps.PlanetMap;
+import agh.ics.oop.model.setupData.AnimalSetupData;
 import agh.ics.oop.model.setupData.SimulationSetupData;
 import agh.ics.oop.model.setupData.WorldSetupData;
 import agh.ics.oop.model.stats.SimulationStatsController;
 import agh.ics.oop.model.worldElements.Animal;
-import agh.ics.oop.model.setupData.AnimalSetupData;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

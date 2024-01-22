@@ -1,13 +1,10 @@
 package agh.ics.oop.model.worldElements;
 
 
-import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.model.MapDirection;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.genotype.Genotype;
 import agh.ics.oop.model.listeners.AnimalChangeListener;
-import agh.ics.oop.model.listeners.AnimalTracker;
-import agh.ics.oop.model.listeners.SimulationChangeListener;
 import agh.ics.oop.model.maps.Teleporter;
 import agh.ics.oop.model.setupData.AnimalSetupData;
 import agh.ics.oop.model.stats.AnimalStats;

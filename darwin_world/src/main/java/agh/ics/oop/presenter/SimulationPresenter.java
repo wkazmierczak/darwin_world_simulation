@@ -4,10 +4,10 @@ import agh.ics.oop.Simulation.Simulation;
 import agh.ics.oop.Simulation.SimulationEngine;
 import agh.ics.oop.model.Boundary.Boundary;
 import agh.ics.oop.model.Vector2d;
-import agh.ics.oop.model.listeners.*;
-import agh.ics.oop.model.maps.PlanetMap;
+import agh.ics.oop.model.listeners.AnimalChangeListener;
+import agh.ics.oop.model.listeners.SimulationCSVSaver;
 import agh.ics.oop.model.listeners.SimulationChangeListener;
-
+import agh.ics.oop.model.maps.PlanetMap;
 import agh.ics.oop.model.setupData.SimulationSetupData;
 import agh.ics.oop.model.worldElements.Animal;
 import agh.ics.oop.model.worldElements.plants.Plant;
@@ -17,10 +17,9 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Window;
@@ -52,7 +51,9 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
 
     @FXML
     private GridPane mapGrid;
-    private final Image wolfImg = new Image(getClass().getClassLoader().getResource("wolf.png").toString());
+
+//    private final Image animalImg = new Image(getClass().getClassLoader().getResource("wolf.png").toString());
+    private final Image animalImg = new Image(getClass().getClassLoader().getResource("penguin.png").toString());
     private final Image plantImg = new Image(getClass().getClassLoader().getResource("plant.png").toString());
     private final Image poisonousPlantImg = new Image(getClass().getClassLoader().getResource("plant_poisonous.png").toString());
     private double CELL_SIZE;
@@ -178,7 +179,7 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
 
     private void drawAnimal(GridPane cell, int count) {
 
-        ImageView animalImgView = new ImageView(wolfImg);
+        ImageView animalImgView = new ImageView(animalImg);
         animalImgView.setFitHeight(ANIMAL_IMG_SIZE);
         animalImgView.setFitWidth(ANIMAL_IMG_SIZE);
         VBox animalBox = new VBox();

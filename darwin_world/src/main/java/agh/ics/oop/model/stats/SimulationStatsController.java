@@ -1,18 +1,14 @@
 package agh.ics.oop.model.stats;
 
 import agh.ics.oop.Simulation.Simulation;
-import agh.ics.oop.model.maps.PlanetMap;
 import agh.ics.oop.model.worldElements.Animal;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.lang.reflect.Method;
-import java.util.Map;
 
 public class SimulationStatsController {
     private final Simulation simulation;
