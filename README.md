@@ -35,3 +35,12 @@
 ## Design patterns: <br>
 
 - observer (we used observer to notify UI about changes in the simulation, world and animals)
+
+## Authors:
+
+- [Piotr Rzadkowski](https://github.com/ReptilianEye)
+- [Wojciech Kaźmierczak](https://github.com/wkazmierczak)
+
+## License:
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
