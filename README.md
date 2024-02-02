@@ -4,7 +4,9 @@
 
 ### App in action: <br>
 
-![Example GIF](example.gif)
+<div align="center">
+    <img src="example.gif" alt="Example GIF">
+</div>
 
 ### Design patterns: <br>
 

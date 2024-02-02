@@ -37,6 +37,18 @@
             </GridPane>
         </VBox>
     </left>
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="50">
+            <HBox alignment="CENTER">
+                <Button text="Start" onAction="#onSimulationStartClicked"/>
+                <Button text="Stop" onAction="#onPauseClicked"/>
+                <Button text="Resume" onAction="#onResumeClicked"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="5">
+                <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" maxHeight="100"/>
+            </HBox>
+        </VBox>
+    </center>
     <right>
         <VBox>
             <Label text="Animal Info" alignment="CENTER_RIGHT" style="-fx-font-weight: bold;"/>
@@ -63,16 +75,5 @@
     </right>
     <top>
     </top>
-    <center>
-        <VBox alignment="TOP_CENTER" spacing="50">
-            <HBox alignment="CENTER">
-                <Button text="Start" onAction="#onSimulationStartClicked"/>
-                <Button text="Stop" onAction="#onPauseClicked"/>
-                <Button text="Resume" onAction="#onResumeClicked"/>
-            </HBox>
-            <HBox spacing="5">
-                <GridPane fx:id="mapGrid" gridLinesVisible="true" alignment="CENTER" maxHeight="100"/>
-            </HBox>
-        </VBox>
-    </center>
+
 </BorderPane>
