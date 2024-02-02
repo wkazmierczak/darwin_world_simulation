@@ -52,8 +52,8 @@ public class SimulationPresenter implements AnimalChangeListener, SimulationChan
     @FXML
     private GridPane mapGrid;
 
-//    private final Image animalImg = new Image(getClass().getClassLoader().getResource("wolf.png").toString());
-    private final Image animalImg = new Image(getClass().getClassLoader().getResource("penguin.png").toString());
+    private final Image animalImg = new Image(getClass().getClassLoader().getResource("wolf.png").toString());
+//    private final Image animalImg = new Image(getClass().getClassLoader().getResource("penguin.png").toString());
     private final Image plantImg = new Image(getClass().getClassLoader().getResource("plant.png").toString());
     private final Image poisonousPlantImg = new Image(getClass().getClassLoader().getResource("plant_poisonous.png").toString());
     private double CELL_SIZE;
