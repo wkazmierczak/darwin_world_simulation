@@ -1,4 +1,6 @@
-# Darwin World - simulating living animals
+# Darwin World - simulating life of animals
+
+<h3> Veteratian wolfs in out case :wink: </h3>
 
 ### Project at the end of the Object-Oriented-Programming course.
 
