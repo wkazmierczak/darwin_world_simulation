@@ -1,6 +1,6 @@
-# Darwin World - simulating life of animals
+# Darwin World - simulating the life of animals
 
-(Veteratian wolfs in this case :wink:)
+(Herbivorous wolfs in this case :wink:)
 
 ### Project at the end of the Object-Oriented-Programming course.
 
@@ -34,7 +34,7 @@
 
 ## Design patterns: <br>
 
-- observer (we used observer to notify UI about changes in the simulation, world and animals)
+- observer (we used observer to notify UI about changes in the simulation, world, and animals)
 
 ## Authors:
 
